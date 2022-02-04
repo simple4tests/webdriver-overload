@@ -1,0 +1,7 @@
+arguments:
+  - "--start-maximized"
+  - "--disable-dev-shm-usage"
+  - "--ignore-certificate-errors"
+capabilities:
+  acceptSslCerts: true
+  acceptInsecureCerts: true
