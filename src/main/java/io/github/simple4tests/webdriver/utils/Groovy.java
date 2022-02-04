@@ -5,7 +5,6 @@ import groovy.lang.GroovyShell;
 import org.codehaus.groovy.control.CompilerConfiguration;
 import org.codehaus.groovy.control.customizers.ImportCustomizer;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -13,8 +12,8 @@ public class Groovy {
 
     private static final ThreadLocal<GroovyShell> localGroovyShell = new ThreadLocal<>();
 
-    private static final List<String> IMPORT_DEFAULT = new ArrayList<>();
-    private static final List<String> IMPORT_ASSERTIONS = List.of("org.hamcrest.MatcherAssert", "org.hamcrest.Matchers");
+    public static final List<String> IMPORT_EMPTY = List.of();
+    public static final List<String> IMPORT_HAMCREST_MATCHERS = List.of("org.hamcrest.MatcherAssert", "org.hamcrest.Matchers");
 
     private static List<String> currentImports;
 
@@ -45,22 +44,21 @@ public class Groovy {
         return localGroovyShell.get();
     }
 
-    public static String evaluate(final List<String> classNames, final String script) {
+    public static Object evaluate(final List<String> classNames, final String script) {
         try {
-            getShell(classNames).evaluate(script);
-            return "OK";
+            return getShell(classNames).evaluate(script);
         } catch (Exception e) {
             return e.getMessage();
         }
     }
 
-    public static String evaluate(final String script) {
-        return evaluate(IMPORT_DEFAULT, script);
+    public static Object evaluate(final String script) {
+        return evaluate(IMPORT_EMPTY, script);
     }
 
-    public static String evalAssertion(String script) {
+    public static String evalAssertion(final List<String> classNames, String script) {
         try {
-            getShell(IMPORT_ASSERTIONS).evaluate(script);
+            getShell(classNames).evaluate(script);
             return "OK";
         } catch (AssertionError e) {
             return e.getMessage();
@@ -71,11 +69,11 @@ public class Groovy {
 
     // Eval HamcrestAssertion
     public static String evalAssertThat(String actual, String expected) {
-        return evalAssertion(String.format("assertThat '%s', %s", actual, expected));
+        return evalAssertion(IMPORT_HAMCREST_MATCHERS, String.format("assertThat '%s', %s", actual, expected));
     }
 
     // Eval GroovyAssertion/PowerAssertion
     public static String evalAssert(String assertExpression) {
-        return evalAssertion("assert ".concat(assertExpression));
+        return evalAssertion(IMPORT_EMPTY, "assert ".concat(assertExpression));
     }
 }

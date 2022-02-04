@@ -1,9 +1,9 @@
 package io.github.simple4tests.webdriver.reporting;
 
+import io.github.simple4tests.webdriver.utils.Groovy;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.StringDescription;
-import io.github.simple4tests.webdriver.utils.Groovy;
 
 import java.util.ArrayList;
 import java.util.List;
