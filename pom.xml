@@ -61,6 +61,7 @@
         <groovy.version>3.0.9</groovy.version>
         <snakeyaml.version>1.30</snakeyaml.version>
         <serenity.version>3.1.20</serenity.version>
+        <junit.version>5.8.2</junit.version>
     </properties>
 
     <dependencies>
@@ -68,6 +69,12 @@
             <groupId>io.github.simple4tests</groupId>
             <artifactId>interactions-webdriver</artifactId>
             <version>${interactions-webdriver.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.serenity-bdd</groupId>
+            <artifactId>serenity-core</artifactId>
+            <version>${serenity.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.hamcrest</groupId>
@@ -85,16 +92,10 @@
             <version>${snakeyaml.version}</version>
         </dependency>
         <dependency>
-            <groupId>net.serenity-bdd</groupId>
-            <artifactId>serenity-core</artifactId>
-            <version>${serenity.version}</version>
-            <scope>provided</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.seleniumhq.selenium</groupId>
-                    <artifactId>selenium-java</artifactId>
-                </exclusion>
-            </exclusions>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

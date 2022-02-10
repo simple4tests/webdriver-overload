@@ -35,7 +35,6 @@ public class FirefoxOptionsProvider {
     }
 
     public static FirefoxOptions get(OptionsData optionsData) {
-
         FirefoxOptions options = new FirefoxOptions();
 
         options.addArguments(optionsData.arguments);

@@ -46,34 +46,14 @@ public class Groovy {
 
     public static Object evaluate(final List<String> classNames, final String script) {
         try {
-            return getShell(classNames).evaluate(script);
-        } catch (Exception e) {
-            return e.getMessage();
+            Object evaluate = getShell(classNames).evaluate(script);
+            return null == evaluate ? "" : evaluate;
+        } catch (Throwable t) {
+            return t.getMessage();
         }
     }
 
     public static Object evaluate(final String script) {
         return evaluate(IMPORT_EMPTY, script);
-    }
-
-    public static String evalAssertion(final List<String> classNames, String script) {
-        try {
-            getShell(classNames).evaluate(script);
-            return "OK";
-        } catch (AssertionError e) {
-            return e.getMessage();
-        } catch (Exception e) {
-            return "Groovy exception: ".concat(e.getMessage());
-        }
-    }
-
-    // Eval HamcrestAssertion
-    public static String evalAssertThat(String actual, String expected) {
-        return evalAssertion(IMPORT_HAMCREST_MATCHERS, String.format("assertThat '%s', %s", actual, expected));
-    }
-
-    // Eval GroovyAssertion/PowerAssertion
-    public static String evalAssert(String assertExpression) {
-        return evalAssertion(IMPORT_EMPTY, "assert ".concat(assertExpression));
     }
 }

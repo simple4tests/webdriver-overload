@@ -15,7 +15,7 @@ public class SystemOutReporter implements Reporter {
 
     @Override
     public void addStepEvidence(String title, String stepEvidence) {
-        System.out.printf("Test error '%s': \n", title);
+        System.out.printf("Test evidence '%s': \n", title);
         System.out.println(stepEvidence.concat("\n"));
     }
 

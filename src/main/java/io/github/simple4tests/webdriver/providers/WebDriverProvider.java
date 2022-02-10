@@ -11,7 +11,6 @@ import java.nio.file.Path;
 public class WebDriverProvider {
 
     public static WebDriver get(String browser, Path driverPath, String optionsAsYamlResource) {
-
         if (null == browser) {
             browser = "";
         }
@@ -29,7 +28,6 @@ public class WebDriverProvider {
     }
 
     public static WebDriver get(String browser, URL seleniumServer, String optionsAsYamlResource) {
-
         if (null == browser) {
             browser = "";
         }

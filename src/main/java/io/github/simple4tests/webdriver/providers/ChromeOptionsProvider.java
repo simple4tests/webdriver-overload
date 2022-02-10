@@ -1,7 +1,7 @@
 package io.github.simple4tests.webdriver.providers;
 
-import org.openqa.selenium.chrome.ChromeOptions;
 import io.github.simple4tests.webdriver.utils.Yml;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.io.File;
 import java.util.ArrayList;

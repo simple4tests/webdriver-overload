@@ -12,6 +12,12 @@ The simple4tests.webdriver-overload package includes required functions to apply
 For full examples based on cucumber and including the 'simple4tests.webdriver-overload' package,
 checkout [wdi-ex-cucumber](https://github.com/simple4tests/wdi-ex-cucumber) on GitHub
 
+## Support & Contact
+
+Additional information can be found at https://simple4tests.github.io/
+and https://simple4tests.github.io/webdriver-overload/
+Contact us at simple4tests@gmail.com
+
 ## License
 
 ```
