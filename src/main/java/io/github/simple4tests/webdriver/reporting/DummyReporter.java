@@ -1,20 +1,37 @@
 package io.github.simple4tests.webdriver.reporting;
 
+import java.nio.file.Path;
+
 public class DummyReporter implements Reporter {
 
     @Override
-    public void addStep(String stepDescription) {
+    public void reportAction(String action) {
     }
 
     @Override
-    public void addStepData(String title, String stepData) {
+    public void reportData(String data) {
     }
 
     @Override
-    public void addStepEvidence(String title, String stepData) {
+    public void reportData(Path path) {
     }
 
     @Override
-    public void takeScreenshot() {
+    public void reportCheck(String check) {
+        reportScreenshot();
+    }
+
+    @Override
+    public void reportError(String error) {
+        errors.add(error);
+    }
+
+    @Override
+    public void reportError(Path path) {
+        errors.add(path.toAbsolutePath().toString());
+    }
+
+    @Override
+    public void reportScreenshot() {
     }
 }

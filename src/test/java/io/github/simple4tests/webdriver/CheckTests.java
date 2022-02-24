@@ -22,23 +22,26 @@ public class CheckTests {
     public void checkTest() {
 
         SystemOutReporter reporter = new SystemOutReporter();
+        reporter.clearErrors();
+
+        reporter.reportAction("My first action");
 
         Assertions.assertThat("One STRING").isEqualToIgnoringCase("One String");
-        reporter.addCheck("Vérifier l'égalité à la case près d’une chaîne de caractères A",
+        reporter.assertThat("Vérifier l'égalité à la case près d’une chaîne de caractères A",
                 "One STRING",
-                Matchers.equalToIgnoringCase("One String"));
-        reporter.addGroovyAssertThatCheck("Vérifier l'égalité à la case près d’une chaîne de caractères B",
+                Matchers.equalToIgnoringCase("One Stringx"));
+        reporter.groovyAssertThat("Vérifier l'égalité à la case près d’une chaîne de caractères B",
                 "One STRING",
-                "equalToIgnoringCase('One String')");
-        reporter.addGroovyAssertCheck("Vérifier l'égalité à la case près d’une chaîne de caractères C",
-                "'One STRING'.equalsIgnoreCase('One String')");
+                "equalToIgnoringCase('One Stringx')");
+        reporter.groovyAssert("Vérifier l'égalité à la case près d’une chaîne de caractères C",
+                "'One STRING'.equalsIgnoreCase('One Stringx')");
 
         Assertions.assertThat("The Lord of the Rings")
                 .isNotNull()
                 .startsWith("The")
                 .contains("Lord")
                 .endsWith("Rings");
-        reporter.addCheck("Vérifier plusieurs critères sur une chaine de caractères A",
+        reporter.assertThat("Vérifier plusieurs critères sur une chaine de caractères A",
                 "The Lord of the Rings",
                 Matchers.allOf(
                         Matchers.notNullValue(),
@@ -47,27 +50,27 @@ public class CheckTests {
                         Matchers.endsWith("Rings")));
 
         Assertions.assertThat("One STRING or TWO").contains("STRING or");
-        reporter.addCheck("Vérifier le contenu d’une chaîne de caractères A",
+        reporter.assertThat("Vérifier le contenu d’une chaîne de caractères A",
                 "One STRING or TWO",
                 Matchers.containsString("STRING or"));
-        reporter.addGroovyAssertThatCheck("Vérifier le contenu d’une chaîne de caractères B",
+        reporter.groovyAssertThat("Vérifier le contenu d’une chaîne de caractères B",
                 "One STRING or TWO",
                 "containsString('STRING or')");
-        reporter.addGroovyAssertCheck("Vérifier le contenu d’une chaîne de caractères C",
+        reporter.groovyAssert("Vérifier le contenu d’une chaîne de caractères C",
                 "'One STRING or TWO'.contains('STRING or')");
 
         Assertions.assertThat(1).isEqualTo(1);
-        reporter.addCheck("Vérifier un entier A",
+        reporter.assertThat("Vérifier un entier A",
                 1,
                 Matchers.equalTo(1));
-        reporter.addGroovyAssertThatCheck("Vérifier un entier B",
+        reporter.groovyAssertThat("Vérifier un entier B",
                 "1",
                 "equalTo('1')");
-        reporter.addGroovyAssertCheck("Vérifier un entier C",
+        reporter.groovyAssert("Vérifier un entier C",
                 "1.equals(1)");
 
         Assertions.assertThat(List.of("toto", "titi", "tata")).containsExactlyInAnyOrder("toto", "tata", "titi");
-        reporter.addCheck("Vérifier le contenu d’une liste A",
+        reporter.assertThat("Vérifier le contenu d’une liste A",
                 List.of("toto", "titi", "tata"),
                 Matchers.containsInAnyOrder("toto", "tata", "titi"));
 
@@ -79,7 +82,7 @@ public class CheckTests {
                 .hasSize(3)
                 .allMatch(country -> !country.name.isEmpty())
                 .allMatch(country -> country.size > 10);
-        reporter.addCheck("Vérifier les propriétés d'un objet A",
+        reporter.assertThat("Vérifier les propriétés d'un objet A",
                 countries,
                 Matchers.allOf(
                         Matchers.hasSize(3),
@@ -87,6 +90,6 @@ public class CheckTests {
                         Matchers.everyItem(Matchers.hasProperty("size", Matchers.greaterThan(10)))
                 ));
 
-        reporter.reportErrors();
+        reporter.throwAssertionErrorIfAny(true);
     }
 }

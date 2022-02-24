@@ -1,25 +1,47 @@
 package io.github.simple4tests.webdriver.reporting;
 
+import java.nio.file.Path;
+
 public class SystemOutReporter implements Reporter {
 
-    @Override
-    public void addStep(String stepDescription) {
-        System.out.println("Test Step : ".concat(stepDescription));
+    private void printResult(String description) {
+        System.out.println(description);
     }
 
     @Override
-    public void addStepData(String title, String stepData) {
-        System.out.printf("Test data '%s': \n", title);
-        System.out.println(stepData.concat("\n"));
+    public void reportAction(String action) {
+        printResult("Test action : ".concat(action));
     }
 
     @Override
-    public void addStepEvidence(String title, String stepEvidence) {
-        System.out.printf("Test evidence '%s': \n", title);
-        System.out.println(stepEvidence.concat("\n"));
+    public void reportData(String data) {
+        printResult(String.format("Test data : \n%s", data));
     }
 
     @Override
-    public void takeScreenshot() {
+    public void reportData(Path path) {
+        printResult(String.format("Test data : \n%s", path.toAbsolutePath()));
+    }
+
+    @Override
+    public void reportCheck(String check) {
+        printResult("Test check : ".concat(check));
+        reportScreenshot();
+    }
+
+    @Override
+    public void reportError(String error) {
+        errors.add(error);
+        printResult(String.format("Test error : %s", error));
+    }
+
+    @Override
+    public void reportError(Path path) {
+        errors.add(path.toAbsolutePath().toString());
+        printResult(String.format("Test error : %s", path.toAbsolutePath()));
+    }
+
+    @Override
+    public void reportScreenshot() {
     }
 }

@@ -1,47 +1,74 @@
 package io.github.simple4tests.webdriver.integration;
 
 import io.github.simple4tests.webdriver.reporting.Reporter;
-import net.serenitybdd.core.Serenity;
-import net.thucydides.core.annotations.Step;
+import net.thucydides.core.model.ReportData;
+import net.thucydides.core.model.TestOutcome;
+import net.thucydides.core.model.TestResult;
+import net.thucydides.core.model.TestStep;
+import net.thucydides.core.steps.ExecutedStepDescription;
+import net.thucydides.core.steps.StepEventBus;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 
 public class SerenityReporter implements Reporter {
 
-    @Override
-    @Step("{0}")
-    public void addStep(String stepDescription) {
+    private TestStep getCurrentStep() {
+        TestOutcome outcome = StepEventBus.getEventBus().getBaseStepListener().getCurrentTestOutcome();
+        return outcome.currentStep().isPresent() ?
+                outcome.currentStep().get() :
+                outcome.recordStep(TestStep.forStepCalled("Background").withResult(TestResult.SUCCESS)).currentStep().get();
     }
 
     @Override
-    public void addStepData(String title, String stepData) {
-        Serenity.recordReportData().withTitle(title).andContents(stepData);
+    public void reportAction(String action) {
+        StepEventBus.getEventBus().stepStarted(ExecutedStepDescription.withTitle(action));
+        StepEventBus.getEventBus().stepFinished();
     }
 
-    public void addStepData(String title, Path stepData) {
+    @Override
+    public void reportData(String data) {
+        getCurrentStep().recordReportData(ReportData.withTitle("DATA").andContents(data).asEvidence(false));
+    }
+
+    // Charset.forName(StandardCharsets.UTF_8.name());
+    @Override
+    public void reportData(Path path) {
         try {
-            Serenity.recordReportData().withTitle(title).fromFile(stepData);
+            getCurrentStep().recordReportData(ReportData
+                    .withTitle("DATA").fromFile(path, StandardCharsets.UTF_8).asEvidence(false));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    public void addStepEvidence(String title, String stepData) {
-        Serenity.recordReportData().asEvidence().withTitle(title).andContents(stepData);
+    public void reportCheck(String check) {
+        StepEventBus.getEventBus().stepStarted(ExecutedStepDescription.withTitle(check));
+        reportScreenshot();
+        StepEventBus.getEventBus().stepFinished();
     }
 
-    public void addStepEvidence(String title, Path stepData) {
+    @Override
+    public void reportError(String error) {
+        errors.add(error);
+        getCurrentStep().recordReportData(ReportData.withTitle("ERROR").andContents(error).asEvidence(true));
+        getCurrentStep().setResult(TestResult.ERROR);
+    }
+
+    @Override
+    public void reportError(Path path) {
         try {
-            Serenity.recordReportData().asEvidence().withTitle(title).fromFile(stepData);
+            getCurrentStep().withReportData(ReportData
+                    .withTitle("ERROR").fromFile(path, StandardCharsets.UTF_8).asEvidence(true));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    public void takeScreenshot() {
-        Serenity.takeScreenshot();
+    public void reportScreenshot() {
+        StepEventBus.getEventBus().takeScreenshot();
     }
 }

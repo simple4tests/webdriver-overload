@@ -1,11 +1,10 @@
 package io.github.simple4tests.webdriver.reporting;
 
 import io.github.simple4tests.webdriver.utils.Groovy;
-import org.assertj.core.api.Assertions;
-import org.hamcrest.Description;
 import org.hamcrest.Matcher;
-import org.hamcrest.StringDescription;
+import org.hamcrest.MatcherAssert;
 
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,89 +16,70 @@ public interface Reporter {
         errors.clear();
     }
 
-    default void reportErrors() {
-        if (0 < errors.size()) {
-            addStep("ERRORS LIST");
-            addStepEvidence("ERROR(S)", formatedErrors());
-            Assertions.fail("Error(s) found");
-        }
-    }
-
     default boolean hasErrors() {
         return 0 < errors.size();
     }
 
-    private String formatErrorDescription(String checkName, String errorDescription) {
-        return checkName.concat(" ? \n").concat(errorDescription);
-    }
-
-    private String formatedErrors() {
-        StringBuilder formatedErrors = new StringBuilder();
-        for (String error : errors) {
-            formatedErrors.append(error.concat("\n"));
+    default String getErrorsSummary() {
+        if (hasErrors()) {
+             return String.format("ERROR(S) SUMMARY\n%s\n", String.join("\n", errors));
         }
-        return formatedErrors.toString();
+        return "ERROR(S) SUMMARY\n*** CONGRATULATIONS! NO ERRORS FOUND ***\n";
     }
 
-    default <T> void addCheck(final String checkName, final T actual, final Matcher<? super T> expected) {
-        addStep(checkName);
-        takeScreenshot();
-        addCheckData(checkName, actual, expected);
-    }
-
-    default <T> void addCheckData(final String checkName, final T actual, final Matcher<? super T> expected) {
-        if (!expected.matches(actual)) {
-            final Description description = new StringDescription();
-            description
-                    .appendText("Actual: ")
-                    .appendText(actual.toString())
-                    .appendText("\nExpected: ")
-                    .appendDescriptionOf(expected)
-                    .appendText("\n\tbut: ");
-            expected.describeMismatch(actual, description);
-//            addStepEvidence(checkName.concat(" KO"), description.toString());
-            addStepEvidence("ERROR", description.toString());
-            errors.add(formatErrorDescription(checkName, description.toString()));
+    default void throwAssertionErrorIfAny(boolean reportErrorsSummary) {
+        if (hasErrors()) {
+            if (reportErrorsSummary) {
+                reportAction("Report error(s) summary");
+                reportData(getErrorsSummary());
+            }
+            throw new AssertionError(String.format("%d error(s) found", errors.size()));
         }
     }
 
-    default void addGroovyAssertThatCheck(final String checkName, final String actual, final String expected) {
-        addStep(checkName);
-        takeScreenshot();
-        addGroovyAssertThatCheckData(checkName, actual, expected);
-    }
-
-    default void addGroovyAssertThatCheckData(final String checkName, final String actual, final String expected) {
-        String evalAssertThat = Groovy.evaluate(
-                        Groovy.IMPORT_HAMCREST_MATCHERS,
-                        String.format("assertThat '%s', %s", actual, expected))
-                .toString();
-        if (!evalAssertThat.isEmpty()) {
-            evalAssertThat = "Actual: ".concat(actual).concat(evalAssertThat);
-            addStepEvidence("ERROR", evalAssertThat);
-            errors.add(formatErrorDescription(checkName, evalAssertThat));
+    default <T> void assertThat(final String check, final T actual, final Matcher<? super T> expected) {
+        reportCheck(check);
+        try {
+            MatcherAssert.assertThat("", actual, expected);
+        } catch (AssertionError e) {
+            reportError(getErrorDescription(check, String.format("Actual: %s%s", actual, e.getMessage())));
         }
     }
 
-    default void addGroovyAssertCheck(final String checkName, final String assertExpression) {
-        addStep(checkName);
-        takeScreenshot();
-        addGroovyAssertCheckData(checkName, assertExpression);
-    }
-
-    default void addGroovyAssertCheckData(final String checkName, final String assertExpression) {
-        String evalAssert = Groovy.evaluate("assert ".concat(assertExpression)).toString();
-        if (!evalAssert.isEmpty()) {
-            addStepEvidence("ERROR", evalAssert);
-            errors.add(formatErrorDescription(checkName, evalAssert));
+    default void groovyAssertThat(final String check, final String actual, final String expectedAsGroovyMatcher) {
+        reportCheck(check);
+        try {
+            Groovy.getShell(Groovy.IMPORT_HAMCREST_MATCHERS)
+                    .evaluate(String.format("assertThat '%s', %s", actual, expectedAsGroovyMatcher));
+        } catch (Throwable t) {
+            reportError(getErrorDescription(check, String.format("Actual: %s%s", actual, t.getMessage())));
         }
     }
 
-    void addStep(String stepDescription);
+    default void groovyAssert(final String check, final String groovyAssertExpression) {
+        reportCheck(check);
+        try {
+            Groovy.getShell().evaluate(String.format("assert %s", groovyAssertExpression));
+        } catch (Throwable t) {
+            reportError(getErrorDescription(check, t.getMessage()));
+        }
+    }
 
-    void addStepData(String title, String stepData);
+    private String getErrorDescription(String check, String mismatch) {
+        return String.format("%s ?\n%s\n", check, mismatch);
+    }
 
-    void addStepEvidence(String title, String stepData);
+    void reportAction(String action);
 
-    void takeScreenshot();
+    void reportData(String data);
+
+    void reportData(Path path);
+
+    void reportCheck(String check);
+
+    void reportError(String error);
+
+    void reportError(Path path);
+
+    void reportScreenshot();
 }

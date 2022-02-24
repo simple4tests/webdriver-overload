@@ -34,7 +34,11 @@ public class Groovy {
         return new GroovyShell(Groovy.class.getClassLoader(), new Binding(), configuration);
     }
 
-    private static GroovyShell getShell(final List<String> classNames) {
+    public static GroovyShell getShell() {
+        return getShell(IMPORT_EMPTY);
+    }
+
+    public static GroovyShell getShell(final List<String> classNames) {
         if (Objects.isNull(localGroovyShell.get())) {
             localGroovyShell.set(initShell(classNames));
         } else if (!currentImports.stream().sorted().equals(classNames.stream().sorted())) {
@@ -42,18 +46,5 @@ public class Groovy {
             localGroovyShell.set(initShell(classNames));
         }
         return localGroovyShell.get();
-    }
-
-    public static Object evaluate(final List<String> classNames, final String script) {
-        try {
-            Object evaluate = getShell(classNames).evaluate(script);
-            return null == evaluate ? "" : evaluate;
-        } catch (Throwable t) {
-            return t.getMessage();
-        }
-    }
-
-    public static Object evaluate(final String script) {
-        return evaluate(IMPORT_EMPTY, script);
     }
 }
