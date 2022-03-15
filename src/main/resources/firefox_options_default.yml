@@ -1,13 +1,17 @@
-arguments:
-  - "-marionette"
 capabilities:
+  marionette: true
   strictFileInteractability: false
   unexpectedAlertBehaviour: "ignore"
   acceptSslCerts: true
   acceptInsecureCerts: true
-preferences:
-  browser.download.manager.showWhenStarting: false
-  browser.helperApps.neverAsk.saveToDisk: "text/plain,text/csv,application/octet-stream,application/pdf,application/x-pdf,application/vnd.pdf"
-  pdfjs.disabled: true
-  browser.download.dir: "downloads"
-  browser.download.folderList: 2
+profile:
+  preferences:
+    browser.cache.disk.enable: false
+    browser.helperApps.neverAsk.saveToDisk: "application/csv,application/json,application/octet-stream,application/pdf,application/vnd.pdf,application/x-compressed,application/x-pdf,application/x-zip-compressed,application/xml,application/zip,image/bmp,image/gif,image/jpeg,image/png,image/tiff,multipart/x-zip,text/csv,text/html,text/plain,text/xml"
+    browser.helperApps.neverAsk.openFile: "application/csv,application/json,application/octet-stream,application/pdf,application/vnd.pdf,application/x-compressed,application/x-pdf,application/x-zip-compressed,application/xml,application/zip,image/bmp,image/gif,image/jpeg,image/png,image/tiff,multipart/x-zip,text/csv,text/html,text/plain,text/xml"
+    browser.helperApps.alwaysAsk.force: false
+    browser.download.manager.showWhenStarting: false
+    browser.download.viewableInternally.enabledTypes: "application/csv,application/json,application/octet-stream,application/pdf,application/vnd.pdf,application/x-compressed,application/x-pdf,application/x-zip-compressed,application/xml,application/zip,image/bmp,image/gif,image/jpeg,image/png,image/tiff,multipart/x-zip,text/csv,text/html,text/plain,text/xml"
+    pdfjs.disabled: false
+    pdfjs.enabledCache.state: false
+    PDFViewerApplication.viewerPrefs.showPreviousViewOnLoad: false

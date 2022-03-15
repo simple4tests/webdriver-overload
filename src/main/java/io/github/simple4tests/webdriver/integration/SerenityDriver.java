@@ -7,10 +7,11 @@ import org.openqa.selenium.WebDriver;
 import java.net.URL;
 import java.nio.file.Paths;
 
-public class SerenityWebDriver implements DriverSource {
+public class SerenityDriver implements DriverSource {
 
     @Override
     public WebDriver newDriver() {
+        if (null == System.getProperty("browser")) return null;
         if (null != System.getProperty("driverPath") && !System.getProperty("driverPath").isEmpty()) {
             try {
                 return WebDriverProvider.get(
@@ -21,11 +22,11 @@ public class SerenityWebDriver implements DriverSource {
                 System.out.println(e.getMessage());
             }
         }
-        if (null != System.getProperty("seleniumServer") && !System.getProperty("seleniumServer").isEmpty()) {
+        if (null != System.getProperty("gridUrl") && !System.getProperty("gridUrl").isEmpty()) {
             try {
                 return WebDriverProvider.get(
                         System.getProperty("browser"),
-                        new URL(System.getProperty("seleniumServer")),
+                        new URL(System.getProperty("gridUrl")),
                         System.getProperty("optionsAsYamlResource"));
             } catch (Exception e) {
                 System.out.println(e.getMessage());
