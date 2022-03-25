@@ -5,7 +5,7 @@
 
     <groupId>io.github.simple4tests</groupId>
     <artifactId>webdriver-overload</artifactId>
-    <version>1.2.1</version>
+    <version>1.2.2-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
@@ -57,6 +57,7 @@
         <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
 
         <interactions-webdriver.version>1.2.1</interactions-webdriver.version>
+        <commons-lang.version>2.6</commons-lang.version>
         <hamcrest.version>2.2</hamcrest.version>
         <groovy.version>3.0.10</groovy.version>
         <snakeyaml.version>1.30</snakeyaml.version>
@@ -69,6 +70,11 @@
             <groupId>io.github.simple4tests</groupId>
             <artifactId>interactions-webdriver</artifactId>
             <version>${interactions-webdriver.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>${commons-lang.version}</version>
         </dependency>
         <dependency>
             <groupId>org.hamcrest</groupId>
