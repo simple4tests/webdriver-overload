@@ -1,4 +1,4 @@
-package io.github.simple4tests.webdriver;
+package io.github.simple4tests.webdriver.reporters;
 
 import io.github.simple4tests.webdriver.framework.DefaultReporter;
 import lombok.AllArgsConstructor;

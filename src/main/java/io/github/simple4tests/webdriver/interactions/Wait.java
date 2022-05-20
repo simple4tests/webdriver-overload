@@ -35,9 +35,9 @@ import java.util.function.Function;
 
 public class Wait {
 
-    private static final Duration DEFAULT_INTERVAL = Duration.ofMillis(250);
-    private static final Duration DEFAULT_TIMEOUT = Duration.ofSeconds(30);
-    private static final Collection<Class<? extends Throwable>> DEFAULT_IGNORED_EXCEPTIONS = ImmutableList.of();
+    public static final Duration DEFAULT_INTERVAL = Duration.ofMillis(250);
+    public static final Duration DEFAULT_TIMEOUT = Duration.ofSeconds(30);
+    public static final Collection<Class<? extends Throwable>> DEFAULT_IGNORED_EXCEPTIONS = ImmutableList.of();
 
     private final WebDriver driver;
     private Duration interval;

@@ -38,14 +38,14 @@ public class RElement extends Core {
     private String scrollBlock;
     private String scrollInline;
 
+    private boolean clearAll;
+    private boolean clearNext;
+
     private LocatorTypes locatorType;
     private String xpath;
     private String selector;
     private By by;
     private WebElement webElement;
-
-    private boolean clearAll;
-    private boolean clearNext;
 
     public RElement(WebDriver driver) {
         super(driver);
@@ -59,7 +59,7 @@ public class RElement extends Core {
         scrollBlock = DEFAULT_SCROLL_BLOCK;
         scrollInline = DEFAULT_SCROLL_INLINE;
 
-        clearNext = clearAll = false;
+        clearAll(false);
         resetLocator();
     }
 
@@ -131,9 +131,9 @@ public class RElement extends Core {
     public WebElement getWebElement() {
         switch (locatorType) {
             case XPATH:
-                return JScripts.getElementByXpath(executor, xpath);
+                return JScripts.getElementByXpath(jsExecutor, xpath);
             case SELECTOR:
-                return JScripts.getElementBySelector(executor, selector);
+                return JScripts.getElementBySelector(jsExecutor, selector);
             case BY:
                 return driver.findElement(by);
             case WEBELEMENT:
@@ -146,9 +146,9 @@ public class RElement extends Core {
     public int count() {
         switch (locatorType) {
             case XPATH:
-                return JScripts.countElementsByXpath(executor, xpath);
+                return JScripts.countElementsByXpath(jsExecutor, xpath);
             case SELECTOR:
-                return JScripts.countElementsBySelector(executor, selector);
+                return JScripts.countElementsBySelector(jsExecutor, selector);
             case BY:
                 return driver.findElements(by).size();
             case WEBELEMENT:
@@ -166,8 +166,9 @@ public class RElement extends Core {
         return 0 == count();
     }
 
-    public void waitToBePresent() {
+    public RElement waitToBePresent() {
         waitToBePresent(false);
+        return this;
     }
 
     public boolean waitToBePresent(boolean ignoreTimeoutException) {
@@ -175,8 +176,9 @@ public class RElement extends Core {
         return wait.until(input -> isPresent());
     }
 
-    public void waitToBeAbsent() {
+    public RElement waitToBeAbsent() {
         waitToBeAbsent(false);
+        return this;
     }
 
     public boolean waitToBeAbsent(boolean ignoreTimeoutException) {
@@ -202,7 +204,7 @@ public class RElement extends Core {
     }
 
     public void scrollIntoView(String behavior, String block, String inline) {
-        JScripts.scrollIntoView(executor, getWebElement(), behavior, block, inline);
+        JScripts.scrollIntoView(jsExecutor, getWebElement(), behavior, block, inline);
     }
 
     public RElement scrollIntoView() {
@@ -214,26 +216,26 @@ public class RElement extends Core {
         try {
             waitToBeInteractable().scrollIntoView().getWebElement().click();
         } catch (WebDriverException e) {
-            JScripts.click(executor, waitToBeInteractable().scrollIntoView().getWebElement());
+            JScripts.click(jsExecutor, waitToBeInteractable().scrollIntoView().getWebElement());
         }
     }
 
     public void dblclick() {
-        JScripts.dblclick(executor, waitToBeInteractable().scrollIntoView().getWebElement());
+        JScripts.dblclick(jsExecutor, waitToBeInteractable().scrollIntoView().getWebElement());
     }
 
     public void set(String attribute, String value) {
         if (isNull(attribute) || isNull(value)) {
             return;
         }
-        JScripts.set(executor, waitToBeInteractable().scrollIntoView().getWebElement(), attribute, value);
+        JScripts.set(jsExecutor, waitToBeInteractable().scrollIntoView().getWebElement(), attribute, value);
     }
 
     public void set(String attribute, Boolean value) {
         if (isNull(attribute) || isNull(value)) {
             return;
         }
-        JScripts.set(executor, waitToBeInteractable().scrollIntoView().getWebElement(), attribute, value);
+        JScripts.set(jsExecutor, waitToBeInteractable().scrollIntoView().getWebElement(), attribute, value);
     }
 
     public void clearAll(boolean clearAll) {

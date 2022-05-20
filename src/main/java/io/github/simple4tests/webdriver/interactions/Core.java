@@ -41,18 +41,18 @@ public class Core {
             NoAlertPresentException.class);
 
     public WebDriver driver;
-    public JavascriptExecutor executor;
+    public JavascriptExecutor jsExecutor;
     public Wait wait;
 
     public Core(WebDriver driver) {
         this.driver = driver;
-        this.executor = (JavascriptExecutor) driver;
+        this.jsExecutor = (JavascriptExecutor) driver;
         this.wait = new Wait(driver, DEFAULT_INTERVAL, DEFAULT_TIMEOUT, DEFAULT_IGNORED_EXCEPTIONS);
     }
 
     public Core(Core coreInteraction) {
         this.driver = coreInteraction.driver;
-        this.executor = coreInteraction.executor;
+        this.jsExecutor = coreInteraction.jsExecutor;
         this.wait = coreInteraction.wait;
     }
 
@@ -77,7 +77,7 @@ public class Core {
     }
 
     public boolean isDocumentComplete() {
-        return JScripts.getDocumentState(executor).equals("complete");
+        return JScripts.getDocumentState(jsExecutor).equals("complete");
     }
 
     public void waitDocumentToBeComplete() {
