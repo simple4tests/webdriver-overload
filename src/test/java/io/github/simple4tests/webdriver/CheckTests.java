@@ -1,6 +1,6 @@
 package io.github.simple4tests.webdriver;
 
-import io.github.simple4tests.webdriver.reporting.SystemOutReporter;
+import io.github.simple4tests.webdriver.framework.DefaultReporter;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.assertj.core.api.Assertions;
@@ -21,7 +21,7 @@ public class CheckTests {
     @Test
     public void checkTest() {
 
-        SystemOutReporter reporter = new SystemOutReporter();
+        DefaultReporter reporter = new DefaultReporter();
         reporter.clearErrors();
 
         reporter.reportAction("My first action");

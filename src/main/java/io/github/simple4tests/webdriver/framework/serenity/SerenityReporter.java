@@ -1,6 +1,6 @@
-package io.github.simple4tests.webdriver.integration;
+package io.github.simple4tests.webdriver.framework.serenity;
 
-import io.github.simple4tests.webdriver.reporting.Reporter;
+import io.github.simple4tests.webdriver.framework.Reporter;
 import net.thucydides.core.model.ReportData;
 import net.thucydides.core.model.TestOutcome;
 import net.thucydides.core.model.TestResult;

@@ -9,7 +9,7 @@
     <packaging>jar</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
-    <description>WebDriver overload </description>
+    <description>WebDriver overload</description>
     <url>https://simple4tests.github.io/webdriver-overload/</url>
 
     <licenses>
@@ -56,21 +56,15 @@
         <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
         <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
 
-<!--        <interactions-webdriver.version>1.2.1</interactions-webdriver.version>-->
         <commons-lang.version>2.6</commons-lang.version>
         <hamcrest.version>2.2</hamcrest.version>
         <groovy.version>3.0.10</groovy.version>
         <snakeyaml.version>1.30</snakeyaml.version>
-        <serenity.version>3.2.1-RC1</serenity.version>
+        <serenity.version>3.2.5</serenity.version>
         <junit.version>5.8.2</junit.version>
     </properties>
 
     <dependencies>
-<!--        <dependency>-->
-<!--            <groupId>io.github.simple4tests</groupId>-->
-<!--            <artifactId>interactions-webdriver</artifactId>-->
-<!--            <version>${interactions-webdriver.version}</version>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
@@ -96,6 +90,7 @@
             <artifactId>serenity-core</artifactId>
             <version>${serenity.version}</version>
             <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>

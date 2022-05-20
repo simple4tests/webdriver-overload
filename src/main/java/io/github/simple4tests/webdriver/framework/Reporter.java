@@ -1,4 +1,4 @@
-package io.github.simple4tests.webdriver.reporting;
+package io.github.simple4tests.webdriver.framework;
 
 import io.github.simple4tests.webdriver.utils.Groovy;
 import org.hamcrest.Matcher;
@@ -12,17 +12,17 @@ public interface Reporter {
 
     List<String> errors = new ArrayList<>();
 
-    default void clearErrors() {
-        errors.clear();
-    }
-
     default boolean hasErrors() {
         return 0 < errors.size();
     }
 
+    default void clearErrors() {
+        errors.clear();
+    }
+
     default String getErrorsSummary() {
         if (hasErrors()) {
-             return String.format("ERROR(S) SUMMARY\n%s\n", String.join("\n", errors));
+            return String.format("ERROR(S) SUMMARY\n%s\n", String.join("\n", errors));
         }
         return "ERROR(S) SUMMARY\n*** CONGRATULATIONS! NO ERRORS FOUND ***\n";
     }

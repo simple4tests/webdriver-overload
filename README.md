@@ -5,7 +5,8 @@ maintainable and reliable automated tests.
 
 # simple4tests.webdriver-overload
 
-The simple4tests.webdriver-overload package includes required functions to apply simple4tests best practice for test automation
+The simple4tests.webdriver-overload package includes required functions to apply simple4tests best practice for test
+automation
 
 ### Examples of implementation
 

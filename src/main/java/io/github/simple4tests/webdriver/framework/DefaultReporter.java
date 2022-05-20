@@ -1,8 +1,8 @@
-package io.github.simple4tests.webdriver.reporting;
+package io.github.simple4tests.webdriver.framework;
 
 import java.nio.file.Path;
 
-public class SystemOutReporter implements Reporter {
+public class DefaultReporter implements io.github.simple4tests.webdriver.framework.Reporter {
 
     private void printResult(String description) {
         System.out.println(description);

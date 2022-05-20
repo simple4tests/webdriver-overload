@@ -1,4 +1,4 @@
-package io.github.simple4tests.webdriver.providers;
+package io.github.simple4tests.webdriver.options;
 
 import io.github.simple4tests.webdriver.utils.Substitutor;
 import io.github.simple4tests.webdriver.utils.Yml;
