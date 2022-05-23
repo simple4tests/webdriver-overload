@@ -29,12 +29,12 @@ public class CheckTests {
         Assertions.assertThat("One STRING").isEqualToIgnoringCase("One String");
         reporter.assertThat("Vérifier l'égalité à la case près d’une chaîne de caractères A",
                 "One STRING",
-                Matchers.equalToIgnoringCase("One Stringx"));
+                Matchers.equalToIgnoringCase("One String"));
         reporter.groovyAssertThat("Vérifier l'égalité à la case près d’une chaîne de caractères B",
                 "One STRING",
-                "equalToIgnoringCase('One Stringx')");
+                "equalToIgnoringCase('One String')");
         reporter.groovyAssert("Vérifier l'égalité à la case près d’une chaîne de caractères C",
-                "'One STRING'.equalsIgnoreCase('One Stringx')");
+                "'One STRING'.equalsIgnoreCase('One String')");
 
         Assertions.assertThat("The Lord of the Rings")
                 .isNotNull()

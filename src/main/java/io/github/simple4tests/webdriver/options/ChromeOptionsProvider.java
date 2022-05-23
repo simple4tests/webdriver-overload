@@ -23,9 +23,9 @@ public class ChromeOptionsProvider {
 
         public void normalize() {
             binary = Substitutor.normalizePath(binary);
-            arguments = Substitutor.systemProperties(arguments);
-            capabilities = Substitutor.systemProperties(capabilities);
-            experimentalOptions = Substitutor.systemProperties(experimentalOptions);
+            arguments = Substitutor.replaceSystemProperties(arguments);
+            capabilities = Substitutor.replaceSystemProperties(capabilities);
+            experimentalOptions = Substitutor.replaceSystemProperties(experimentalOptions);
             extensions = Substitutor.normalizePath(extensions);
         }
     }

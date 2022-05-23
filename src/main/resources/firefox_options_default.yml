@@ -1,3 +1,4 @@
+binary: "C:/Program Files/Mozilla Firefox/firefox.exe"
 capabilities:
   marionette: true
   strictFileInteractability: false

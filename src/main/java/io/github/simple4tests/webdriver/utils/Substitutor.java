@@ -9,30 +9,30 @@ import java.util.stream.Collectors;
 
 public class Substitutor {
 
-    public static String systemProperties(String input) {
+    public static String replaceSystemProperties(String input) {
         return StrSubstitutor.replaceSystemProperties(input);
     }
 
-    public static List<String> systemProperties(List<String> inputs) {
-        return inputs.stream().map(Substitutor::systemProperties).collect(Collectors.toList());
+    public static List<String> replaceSystemProperties(List<String> inputs) {
+        return inputs.stream().map(Substitutor::replaceSystemProperties).collect(Collectors.toList());
     }
 
-    public static Object systemProperties(Object input) {
-        return input instanceof String ? systemProperties((String) input) : input;
+    public static Object replaceSystemProperties(Object input) {
+        return input instanceof String ? replaceSystemProperties((String) input) : input;
     }
 
-    public static Map.Entry<String, Object> systemProperties(Map.Entry<String, Object> input) {
-        return Map.entry(input.getKey(), systemProperties(input.getValue()));
+    public static Map.Entry<String, Object> replaceSystemProperties(Map.Entry<String, Object> input) {
+        return Map.entry(input.getKey(), replaceSystemProperties(input.getValue()));
     }
 
-    public static Map<String, Object> systemProperties(Map<String, Object> map) {
+    public static Map<String, Object> replaceSystemProperties(Map<String, Object> map) {
         return map.entrySet().stream()
-                .map(Substitutor::systemProperties)
+                .map(Substitutor::replaceSystemProperties)
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
     public static String normalizePath(String input) {
-        return input.isEmpty() ? input : Paths.get(systemProperties(input)).toAbsolutePath().toString();
+        return input.isEmpty() ? input : Paths.get(replaceSystemProperties(input)).toAbsolutePath().toString();
     }
 
     public static List<String> normalizePath(List<String> inputs) {

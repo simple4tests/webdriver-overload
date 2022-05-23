@@ -15,15 +15,17 @@ public class FirefoxOptionsProvider {
     public static String OPTIONS_HEADLESS = "firefox_options_headless.yml";
 
     public static class Options {
+        public String binary = "";
         public List<String> arguments = List.of();
         public Map<String, Object> capabilities = Map.of();
         public Map<String, Object> preferences = Map.of();
         public Profile profile = new Profile();
 
         public void normalize() {
-            arguments = Substitutor.systemProperties(arguments);
-            capabilities = Substitutor.systemProperties(capabilities);
-            preferences = Substitutor.systemProperties(preferences);
+            binary = Substitutor.normalizePath(binary);
+            arguments = Substitutor.replaceSystemProperties(arguments);
+            capabilities = Substitutor.replaceSystemProperties(capabilities);
+            preferences = Substitutor.replaceSystemProperties(preferences);
             profile.normalize();
         }
 
@@ -32,7 +34,7 @@ public class FirefoxOptionsProvider {
             public List<String> extensions = List.of();
 
             public void normalize() {
-                preferences = Substitutor.systemProperties(preferences);
+                preferences = Substitutor.replaceSystemProperties(preferences);
                 extensions = Substitutor.normalizePath(extensions);
             }
         }
@@ -55,7 +57,12 @@ public class FirefoxOptionsProvider {
         if (null == options) {
             return firefoxOptions;
         }
+
         options.normalize();
+
+        if (!options.binary.isEmpty()) {
+            firefoxOptions.setBinary(options.binary);
+        }
 
         firefoxOptions.addArguments(options.arguments);
 
