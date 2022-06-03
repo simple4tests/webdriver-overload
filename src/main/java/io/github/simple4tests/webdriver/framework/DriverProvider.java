@@ -24,7 +24,7 @@ public class DriverProvider {
                 System.setProperty("webdriver.chrome.driver", driverPath.toString());
                 return new ChromeDriver(ChromeOptionsProvider.get(optionsAsYamlResource));
             default:
-                System.out.println("ONLY FIREFOX OR CHROME DRIVER ARE SUPPORTED BY DriverProvider");
+                System.out.println("ONLY FIREFOX AND CHROME DRIVERS ARE SUPPORTED BY DriverProvider");
                 return null;
         }
     }
@@ -37,7 +37,7 @@ public class DriverProvider {
             case "CHROME":
                 return new RemoteWebDriver(gridUrl, ChromeOptionsProvider.get(optionsAsYamlResource));
             default:
-                System.out.println("ONLY FIREFOX OR CHROME DRIVER ARE SUPPORTED BY DriverProvider");
+                System.out.println("ONLY FIREFOX AND CHROME DRIVERS ARE SUPPORTED BY DriverProvider");
                 return null;
         }
     }

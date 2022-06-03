@@ -2,7 +2,7 @@ package io.github.simple4tests.webdriver.framework;
 
 import java.nio.file.Path;
 
-public class ReporterSystemOut implements io.github.simple4tests.webdriver.framework.Reporter {
+public class ReporterSystemOut implements Reporter {
 
     private void printResult(String description) {
         System.out.println(description);
