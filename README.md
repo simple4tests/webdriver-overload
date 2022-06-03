@@ -5,13 +5,13 @@ maintainable and reliable automated tests.
 
 # simple4tests.webdriver-overload
 
-The simple4tests.webdriver-overload package includes required functions to apply simple4tests best practice for test
+The simple4tests.webdriver-overload package includes required functions to apply simple4tests best practices for test
 automation
 
 ### Examples of implementation
 
 For full examples based on cucumber and including the 'simple4tests.webdriver-overload' package,
-checkout [wdi-ex-cucumber](https://github.com/simple4tests/wdi-ex-cucumber) on GitHub
+checkout [ohrm-tests](https://github.com/simple4tests/ohrm-tests) on GitHub
 
 ## Support & Contact
 
