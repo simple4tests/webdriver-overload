@@ -10,7 +10,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import java.net.URL;
 import java.nio.file.Path;
 
-public class DefaultDriverProvider {
+public class DriverProvider {
 
     public static WebDriver get(String browser, Path driverPath, String optionsAsYamlResource) {
         if (null == browser || null == driverPath) return null;
@@ -24,7 +24,7 @@ public class DefaultDriverProvider {
                 System.setProperty("webdriver.chrome.driver", driverPath.toString());
                 return new ChromeDriver(ChromeOptionsProvider.get(optionsAsYamlResource));
             default:
-                System.out.println("ONLY FIREFOX OR CHROME DRIVER ARE SUPPORTED BY DefaultDriverProvider");
+                System.out.println("ONLY FIREFOX OR CHROME DRIVER ARE SUPPORTED BY DriverProvider");
                 return null;
         }
     }
@@ -37,7 +37,7 @@ public class DefaultDriverProvider {
             case "CHROME":
                 return new RemoteWebDriver(gridUrl, ChromeOptionsProvider.get(optionsAsYamlResource));
             default:
-                System.out.println("ONLY FIREFOX OR CHROME DRIVER ARE SUPPORTED BY DefaultDriverProvider");
+                System.out.println("ONLY FIREFOX OR CHROME DRIVER ARE SUPPORTED BY DriverProvider");
                 return null;
         }
     }

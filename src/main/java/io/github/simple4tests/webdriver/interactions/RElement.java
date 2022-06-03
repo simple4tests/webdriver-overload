@@ -283,8 +283,4 @@ public class RElement extends Core {
             element.click();
         }
     }
-
-//    public RSelect getRSelect() {
-//        return new RSelect(driver).locatedBy(this);
-//    }
 }
