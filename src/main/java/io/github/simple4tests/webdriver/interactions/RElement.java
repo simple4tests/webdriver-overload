@@ -143,6 +143,21 @@ public class RElement extends Core {
         }
     }
 
+    public WebElement getElement() {
+        waitToBePresent();
+        return getWebElement();
+    }
+
+    public WebElement getInteractableElement() {
+        return getInteractableElement(true);
+    }
+
+    public WebElement getInteractableElement(boolean scrollIntoView) {
+        if (!scrollIntoView) waitToBeInteractable();
+        else scrollIntoView();
+        return getWebElement();
+    }
+
     public int count() {
         switch (locatorType) {
             case XPATH:
@@ -203,39 +218,39 @@ public class RElement extends Core {
         this.scrollInline = inline;
     }
 
-    public void scrollIntoView(String behavior, String block, String inline) {
-        JScripts.scrollIntoView(jsExecutor, getWebElement(), behavior, block, inline);
+    public RElement scrollIntoView(String behavior, String block, String inline) {
+        JScripts.scrollIntoView(jsExecutor, getInteractableElement(false), behavior, block, inline);
+        return this;
     }
 
     public RElement scrollIntoView() {
-        scrollIntoView(scrollBehavior, scrollBlock, scrollInline);
-        return this;
+        return scrollIntoView(scrollBehavior, scrollBlock, scrollInline);
     }
 
     public void click() {
         try {
-            waitToBeInteractable().scrollIntoView().getWebElement().click();
+            getInteractableElement().click();
         } catch (WebDriverException e) {
-            JScripts.click(jsExecutor, waitToBeInteractable().scrollIntoView().getWebElement());
+            JScripts.click(jsExecutor, getInteractableElement());
         }
     }
 
     public void dblclick() {
-        JScripts.dblclick(jsExecutor, waitToBeInteractable().scrollIntoView().getWebElement());
+        JScripts.dblclick(jsExecutor, getInteractableElement());
     }
 
     public void set(String attribute, String value) {
         if (isNull(attribute) || isNull(value)) {
             return;
         }
-        JScripts.set(jsExecutor, waitToBeInteractable().scrollIntoView().getWebElement(), attribute, value);
+        JScripts.set(jsExecutor, getInteractableElement(), attribute, value);
     }
 
     public void set(String attribute, Boolean value) {
         if (isNull(attribute) || isNull(value)) {
             return;
         }
-        JScripts.set(jsExecutor, waitToBeInteractable().scrollIntoView().getWebElement(), attribute, value);
+        JScripts.set(jsExecutor, getInteractableElement(), attribute, value);
     }
 
     public void clearAll(boolean clearAll) {
@@ -253,7 +268,7 @@ public class RElement extends Core {
     }
 
     public void clear() {
-        WebElement element = waitToBeInteractable().scrollIntoView().getWebElement();
+        WebElement element = getInteractableElement();
         element.sendKeys(Keys.chord(Keys.CONTROL, "a"), Keys.DELETE);
         element.clear();
     }
@@ -265,20 +280,20 @@ public class RElement extends Core {
             clear();
         }
         if (0 < value.length) {
-            waitToBeInteractable().scrollIntoView().getWebElement().sendKeys(value);
+            getInteractableElement().sendKeys(value);
         }
     }
 
     public void upload(String fileAbsolutePath) {
         if (isNull(fileAbsolutePath) || fileAbsolutePath.isEmpty()) return;
-        waitToBeInteractable().scrollIntoView().getWebElement().sendKeys(fileAbsolutePath);
+        getInteractableElement().sendKeys(fileAbsolutePath);
     }
 
     public void setSelected(boolean select) {
         if (isNull(select)) {
             return;
         }
-        WebElement element = waitToBeInteractable().scrollIntoView().getWebElement();
+        WebElement element = getInteractableElement();
         if (element.isSelected() != select) {
             element.click();
         }

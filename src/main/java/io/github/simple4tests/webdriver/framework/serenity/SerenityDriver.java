@@ -12,25 +12,25 @@ public class SerenityDriver implements DriverSource {
     @Override
     public WebDriver newDriver() {
 
-        if (null == System.getProperty("browser")) return null;
+        if (null == System.getProperty("s4t.browser")) return null;
 
-        if (null != System.getProperty("driverPath") && !System.getProperty("driverPath").isEmpty()) {
+        if (null != System.getProperty("s4t.driverPath") && !System.getProperty("s4t.driverPath").isEmpty()) {
             try {
                 return DriverProvider.get(
-                        System.getProperty("browser"),
-                        Paths.get(System.getProperty("driverPath")),
-                        System.getProperty("optionsAsYamlResource"));
+                        System.getProperty("s4t.browser"),
+                        Paths.get(System.getProperty("s4t.driverPath")),
+                        System.getProperty("s4t.optionsAsYamlResource"));
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
         }
 
-        if (null != System.getProperty("gridUrl") && !System.getProperty("gridUrl").isEmpty()) {
+        if (null != System.getProperty("s4t.gridUrl") && !System.getProperty("s4t.gridUrl").isEmpty()) {
             try {
                 return DriverProvider.get(
-                        System.getProperty("browser"),
-                        new URL(System.getProperty("gridUrl")),
-                        System.getProperty("optionsAsYamlResource"));
+                        System.getProperty("s4t.browser"),
+                        new URL(System.getProperty("s4t.gridUrl")),
+                        System.getProperty("s4t.optionsAsYamlResource"));
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
