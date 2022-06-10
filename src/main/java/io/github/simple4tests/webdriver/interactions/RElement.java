@@ -153,8 +153,8 @@ public class RElement extends Core {
     }
 
     public WebElement getInteractableElement(boolean scrollIntoView) {
-        waitToBeInteractable();
-        if (scrollIntoView) scrollIntoView();
+        if (!scrollIntoView) waitToBeInteractable();
+        else scrollIntoView();
         return getWebElement();
     }
 
@@ -223,7 +223,7 @@ public class RElement extends Core {
 
     public RElement scrollIntoView(String behavior, String block, String inline) {
         if (!isNull(locatorType))
-            JScripts.scrollIntoView(jsExecutor, getInteractableElement(false), behavior, block, inline);
+            JScripts.scrollIntoView(jsExecutor, waitToBeInteractable().getWebElement(), behavior, block, inline);
         return this;
     }
 
