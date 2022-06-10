@@ -27,6 +27,7 @@ package io.github.simple4tests.webdriver.interactions;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class RBrowser extends Core {
@@ -51,6 +52,11 @@ public class RBrowser extends Core {
 
     public RBrowser switchToFrame(By by) {
         wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(by));
+        return this;
+    }
+
+    public RBrowser switchToFrame(WebElement webElement) {
+        wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(webElement));
         return this;
     }
 

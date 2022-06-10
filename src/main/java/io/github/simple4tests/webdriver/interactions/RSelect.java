@@ -112,16 +112,19 @@ public class RSelect extends Core {
         return this;
     }
 
-    public void selectByVisibleText(String visibleText) {
+    public RSelect selectByVisibleText(String visibleText) {
         if (!isNull(select) && !isNull(visibleText))
             waitVisibleTextExists(visibleText).select.selectByVisibleText(visibleText);
+        return this;
     }
 
-    public void selectByValue(String value) {
+    public RSelect selectByValue(String value) {
         if (!isNull(select) && !isNull(value)) waitValueExists(value).select.selectByValue(value);
+        return this;
     }
 
-    public void selectByIndex(int index) {
+    public RSelect selectByIndex(int index) {
         if (!isNull(select) && !isNull(index)) waitIndexExists(index).select.selectByIndex(index);
+        return this;
     }
 }
