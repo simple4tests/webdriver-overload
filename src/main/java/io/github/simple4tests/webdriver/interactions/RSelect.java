@@ -33,32 +33,36 @@ import java.time.Duration;
 
 public class RSelect extends Core {
 
-    private Select select;
+    public Select select;
 
     public RSelect(WebDriver driver) {
         super(driver);
         wait.pollingEvery(Duration.ofMillis(50)).withTimeout(Duration.ofSeconds(15));
     }
 
+    public RSelect locatedByXpath(String xpath) {
+        return locatedBy(new RElement(driver).locatedByXpath(xpath));
+    }
+
+    public RSelect locatedBySelector(String selector) {
+        return locatedBy(new RElement(driver).locatedBySelector(selector));
+    }
+
     public RSelect locatedBy(By by) {
         return locatedBy(new RElement(driver).locatedBy(by));
     }
 
-    public RSelect locatedBy(WebElement element) {
-        return locatedBy(new RElement(driver).locatedBy(element));
+    public RSelect locatedBy(WebElement webElement) {
+        return locatedBy(new RElement(driver).locatedBy(webElement));
     }
 
-    public RSelect locatedBy(RElement element) {
-        this.select = new Select(element.waitToBeInteractable().scrollIntoView().getWebElement());
+    private RSelect locatedBy(RElement element) {
+        this.select = new Select(element.getInteractableElement());
         return this;
     }
 
-    public Select getSelect() {
-        return select;
-    }
-
     private boolean visibleTextExists(String visibleText) {
-        if (isNull(visibleText) || visibleText.isEmpty()) return true;
+        if (isNull(select) || isNull(visibleText) || visibleText.isEmpty()) return false;
         for (WebElement option : select.getOptions())
             if (visibleText.trim().equals(option.getText().trim())) {
                 return true;
@@ -67,7 +71,7 @@ public class RSelect extends Core {
     }
 
     private boolean valueExists(String value) {
-        if (isNull(value) || value.isEmpty()) return true;
+        if (isNull(select) || isNull(value) || value.isEmpty()) return false;
         for (WebElement option : select.getOptions())
             if (value.equals(option.getAttribute("value"))) {
                 return true;
@@ -79,7 +83,7 @@ public class RSelect extends Core {
      *  Index starts at 0
      */
     private boolean indexExists(int index) {
-        if (index < 0) return true;
+        if (isNull(select) || index < 0) return false;
         for (WebElement option : select.getOptions())
             if (String.valueOf(index).equals(option.getAttribute("index"))) {
                 return true;
@@ -88,12 +92,14 @@ public class RSelect extends Core {
     }
 
     private RSelect waitVisibleTextExists(String visibleText) {
-        if (!isNull(visibleText)) wait.ignoreTimeoutException().until(input -> visibleTextExists(visibleText));
+//        if (!isNull(select) && !isNull(visibleText)) wait.ignoreTimeoutException().until(input -> visibleTextExists(visibleText));
+        wait.until(input -> visibleTextExists(visibleText));
         return this;
     }
 
     private RSelect waitValueExists(String value) {
-        if (!isNull(value)) wait.ignoreTimeoutException().until(input -> valueExists(value));
+//        if (!isNull(select) && !isNull(value)) wait.ignoreTimeoutException().until(input -> valueExists(value));
+        wait.until(input -> valueExists(value));
         return this;
     }
 
@@ -101,19 +107,21 @@ public class RSelect extends Core {
       Index starts at 0
      */
     private RSelect waitIndexExists(int index) {
-        if (!isNull(index)) wait.ignoreTimeoutException().until(input -> indexExists(index));
+//        if (!isNull(select) && !isNull(index)) wait.ignoreTimeoutException().until(input -> indexExists(index));
+        wait.until(input -> indexExists(index));
         return this;
     }
 
     public void selectByVisibleText(String visibleText) {
-        waitVisibleTextExists(visibleText).getSelect().selectByVisibleText(visibleText);
+        if (!isNull(select) && !isNull(visibleText))
+            waitVisibleTextExists(visibleText).select.selectByVisibleText(visibleText);
     }
 
     public void selectByValue(String value) {
-        waitValueExists(value).getSelect().selectByValue(value);
+        if (!isNull(select) && !isNull(value)) waitValueExists(value).select.selectByValue(value);
     }
 
     public void selectByIndex(int index) {
-        waitIndexExists(index).getSelect().selectByIndex(index);
+        if (!isNull(select) && !isNull(index)) waitIndexExists(index).select.selectByIndex(index);
     }
 }

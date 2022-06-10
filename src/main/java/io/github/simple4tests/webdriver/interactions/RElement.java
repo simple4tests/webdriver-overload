@@ -128,7 +128,7 @@ public class RElement extends Core {
         return locatedBy(LocatorTypes.WEBELEMENT, webElement);
     }
 
-    public WebElement getWebElement() {
+    private WebElement getWebElement() {
         switch (locatorType) {
             case XPATH:
                 return JScripts.getElementByXpath(jsExecutor, xpath);
@@ -153,8 +153,8 @@ public class RElement extends Core {
     }
 
     public WebElement getInteractableElement(boolean scrollIntoView) {
-        if (!scrollIntoView) waitToBeInteractable();
-        else scrollIntoView();
+        waitToBeInteractable();
+        if (scrollIntoView) scrollIntoView();
         return getWebElement();
     }
 
@@ -204,22 +204,26 @@ public class RElement extends Core {
     public RElement waitToBeInteractable() {
         waitToBePresent();
         waitDocumentToBeComplete();
-        try {
-            getWebElement().isEnabled();
-            wait.until(input -> getWebElement().isEnabled());
-        } catch (WebDriverException ignored) {
+        if (!isNull(locatorType)) {
+            try {
+                getWebElement().isEnabled();
+                wait.until(input -> getWebElement().isEnabled());
+            } catch (WebDriverException ignored) {
+            }
         }
         return this;
     }
 
-    public void setScrollIntoViewOptions(String behavior, String block, String inline) {
+    public RElement setScrollIntoViewOptions(String behavior, String block, String inline) {
         this.scrollBehavior = behavior;
         this.scrollBlock = block;
         this.scrollInline = inline;
+        return this;
     }
 
     public RElement scrollIntoView(String behavior, String block, String inline) {
-        JScripts.scrollIntoView(jsExecutor, getInteractableElement(false), behavior, block, inline);
+        if (!isNull(locatorType))
+            JScripts.scrollIntoView(jsExecutor, getInteractableElement(false), behavior, block, inline);
         return this;
     }
 
@@ -227,34 +231,37 @@ public class RElement extends Core {
         return scrollIntoView(scrollBehavior, scrollBlock, scrollInline);
     }
 
-    public void click() {
-        try {
-            getInteractableElement().click();
-        } catch (WebDriverException e) {
-            JScripts.click(jsExecutor, getInteractableElement());
+    public RElement click() {
+        if (!isNull(locatorType)) {
+            try {
+                getInteractableElement().click();
+            } catch (WebDriverException e) {
+                JScripts.click(jsExecutor, getInteractableElement());
+            }
         }
+        return this;
     }
 
-    public void dblclick() {
-        JScripts.dblclick(jsExecutor, getInteractableElement());
+    public RElement dblclick() {
+        if (!isNull(locatorType)) JScripts.dblclick(jsExecutor, getInteractableElement());
+        return this;
     }
 
-    public void set(String attribute, String value) {
-        if (isNull(attribute) || isNull(value)) {
-            return;
-        }
-        JScripts.set(jsExecutor, getInteractableElement(), attribute, value);
+    public RElement set(String attribute, String value) {
+        if (!isNull(locatorType) && !isNull(attribute) && !isNull(value))
+            JScripts.set(jsExecutor, getInteractableElement(), attribute, value);
+        return this;
     }
 
-    public void set(String attribute, Boolean value) {
-        if (isNull(attribute) || isNull(value)) {
-            return;
-        }
-        JScripts.set(jsExecutor, getInteractableElement(), attribute, value);
+    public RElement set(String attribute, boolean value) {
+        if (!isNull(locatorType) && !isNull(attribute) && !isNull(value))
+            JScripts.set(jsExecutor, getInteractableElement(), attribute, value);
+        return this;
     }
 
-    public void clearAll(boolean clearAll) {
+    public RElement clearAll(boolean clearAll) {
         this.clearAll = this.clearNext = clearAll;
+        return this;
     }
 
     public RElement clearNext(boolean clearNext) {
@@ -267,35 +274,39 @@ public class RElement extends Core {
         return this;
     }
 
-    public void clear() {
-        WebElement element = getInteractableElement();
-        element.sendKeys(Keys.chord(Keys.CONTROL, "a"), Keys.DELETE);
-        element.clear();
+    public RElement clear() {
+        if (!isNull(locatorType)) {
+            WebElement element = getInteractableElement();
+            element.sendKeys(Keys.chord(Keys.CONTROL, "a"), Keys.DELETE);
+            element.clear();
+        }
+        return this;
     }
 
-    public void sendKeys(CharSequence... value) {
-        if (isNull(value)) return;
-        if (clearNext || 0 == value.length) {
-            clearNext = clearAll;
-            clear();
+    public RElement sendKeys(CharSequence... value) {
+        if (!isNull(locatorType) && !isNull(value)) {
+            if (clearNext || 0 == value.length) {
+                clearNext = clearAll;
+                clear();
+            }
+            if (0 < value.length) {
+                getInteractableElement().sendKeys(value);
+            }
         }
-        if (0 < value.length) {
-            getInteractableElement().sendKeys(value);
-        }
+        return this;
     }
 
-    public void upload(String fileAbsolutePath) {
-        if (isNull(fileAbsolutePath) || fileAbsolutePath.isEmpty()) return;
-        getInteractableElement().sendKeys(fileAbsolutePath);
+    public RElement upload(String fileAbsolutePath) {
+        if (!isNull(locatorType) && !isNull(fileAbsolutePath) && !fileAbsolutePath.isEmpty())
+            getInteractableElement().sendKeys(fileAbsolutePath);
+        return this;
     }
 
-    public void setSelected(boolean select) {
-        if (isNull(select)) {
-            return;
+    public RElement setSelected(boolean select) {
+        if (!isNull(locatorType) && !isNull(select)) {
+            WebElement element = getInteractableElement();
+            if (element.isSelected() != select) element.click();
         }
-        WebElement element = getInteractableElement();
-        if (element.isSelected() != select) {
-            element.click();
-        }
+        return this;
     }
 }
