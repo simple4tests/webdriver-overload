@@ -56,12 +56,12 @@ public class RSelect extends Core {
         return locatedBy(new RElement(driver).locatedBy(webElement));
     }
 
-    private RSelect locatedBy(RElement element) {
+    protected RSelect locatedBy(RElement element) {
         this.select = new Select(element.getInteractableElement());
         return this;
     }
 
-    private boolean visibleTextExists(String visibleText) {
+    protected boolean visibleTextExists(String visibleText) {
         if (isNull(select) || isNull(visibleText) || visibleText.isEmpty()) return false;
         for (WebElement option : select.getOptions())
             if (visibleText.trim().equals(option.getText().trim())) {
@@ -70,7 +70,7 @@ public class RSelect extends Core {
         return false;
     }
 
-    private boolean valueExists(String value) {
+    protected boolean valueExists(String value) {
         if (isNull(select) || isNull(value) || value.isEmpty()) return false;
         for (WebElement option : select.getOptions())
             if (value.equals(option.getAttribute("value"))) {
@@ -82,7 +82,7 @@ public class RSelect extends Core {
     /*
      *  Index starts at 0
      */
-    private boolean indexExists(int index) {
+    protected boolean indexExists(int index) {
         if (isNull(select) || index < 0) return false;
         for (WebElement option : select.getOptions())
             if (String.valueOf(index).equals(option.getAttribute("index"))) {
@@ -91,13 +91,13 @@ public class RSelect extends Core {
         return false;
     }
 
-    private RSelect waitVisibleTextExists(String visibleText) {
+    protected RSelect waitVisibleTextExists(String visibleText) {
 //        if (!isNull(select) && !isNull(visibleText)) wait.ignoreTimeoutException().until(input -> visibleTextExists(visibleText));
         wait.until(input -> visibleTextExists(visibleText));
         return this;
     }
 
-    private RSelect waitValueExists(String value) {
+    protected RSelect waitValueExists(String value) {
 //        if (!isNull(select) && !isNull(value)) wait.ignoreTimeoutException().until(input -> valueExists(value));
         wait.until(input -> valueExists(value));
         return this;
@@ -106,7 +106,7 @@ public class RSelect extends Core {
     /*
       Index starts at 0
      */
-    private RSelect waitIndexExists(int index) {
+    protected RSelect waitIndexExists(int index) {
 //        if (!isNull(select) && !isNull(index)) wait.ignoreTimeoutException().until(input -> indexExists(index));
         wait.until(input -> indexExists(index));
         return this;

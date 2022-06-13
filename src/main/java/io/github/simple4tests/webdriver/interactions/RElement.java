@@ -34,25 +34,25 @@ public class RElement extends Core {
     public static final String DEFAULT_SCROLL_BLOCK = "center";
     public static final String DEFAULT_SCROLL_INLINE = "center";
 
-    private String scrollBehavior;
-    private String scrollBlock;
-    private String scrollInline;
+    protected String scrollBehavior;
+    protected String scrollBlock;
+    protected String scrollInline;
 
-    private boolean clearAll;
-    private boolean clearNext;
+    protected boolean clearAll;
+    protected boolean clearNext;
 
-    private LocatorTypes locatorType;
-    private String xpath;
-    private String selector;
-    private By by;
-    private WebElement webElement;
+    protected LocatorTypes locatorType;
+    protected String xpath;
+    protected String selector;
+    protected By by;
+    protected WebElement webElement;
 
     public RElement(WebDriver driver) {
         super(driver);
         init();
     }
 
-    private void init() {
+    protected void init() {
         wait.pollingEvery(Duration.ofMillis(50)).withTimeout(Duration.ofSeconds(15));
 
         scrollBehavior = DEFAULT_SCROLL_BEHAVIOR;
@@ -63,7 +63,7 @@ public class RElement extends Core {
         resetLocator();
     }
 
-    private void resetLocator() {
+    protected void resetLocator() {
         this.locatorType = null;
         this.xpath = null;
         this.selector = null;
@@ -128,7 +128,7 @@ public class RElement extends Core {
         return locatedBy(LocatorTypes.WEBELEMENT, webElement);
     }
 
-    private WebElement getWebElement() {
+    protected WebElement getWebElement() {
         switch (locatorType) {
             case XPATH:
                 return JScripts.getElementByXpath(jsExecutor, xpath);

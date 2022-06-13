@@ -1,5 +1,6 @@
 package io.github.simple4tests.webdriver.interactions;
 
+import io.github.simple4tests.webdriver.framework.DriverProvider;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
@@ -10,6 +11,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
+import java.nio.file.Paths;
 import java.time.Duration;
 
 public class GoogleFirefoxTests {
