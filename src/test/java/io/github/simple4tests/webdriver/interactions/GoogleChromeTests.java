@@ -48,9 +48,10 @@ public class GoogleChromeTests {
     public void jsGoogleTest() {
         RElement element = new RElement(driver);
         driver.navigate().to("http://www.google.fr");
-        element.locatedByXpath(ACCEPT).click();
-        element.locatedByXpath(SEARCH_CRITERIA).sendKeys("toto universal music", Keys.ENTER);
-        element.locatedByXpath(TOTO_UNIVERSAL_MUSIC).click();
-        element.locatedByXpath(TOTO).click();
+        element
+                .locatedByXpath(ACCEPT).click()
+                .locatedByXpath(SEARCH_CRITERIA).sendKeys("toto universal music", Keys.ENTER)
+                .locatedByXpath(TOTO_UNIVERSAL_MUSIC).click()
+                .locatedByXpath(TOTO).click();
     }
 }

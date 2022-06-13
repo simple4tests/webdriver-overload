@@ -27,6 +27,7 @@ package io.github.simple4tests.webdriver.interactions;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class RBrowser extends Core {
@@ -39,35 +40,47 @@ public class RBrowser extends Core {
         return wait.until(ExpectedConditions.alertIsPresent());
     }
 
-    public void switchToDefaultContent() {
+    public RBrowser switchToDefaultContent() {
         driver.switchTo().defaultContent();
+        return this;
     }
 
-    public void switchToParentFrame() {
+    public RBrowser switchToParentFrame() {
         driver.switchTo().parentFrame();
+        return this;
     }
 
-    public void switchToFrame(By by) {
+    public RBrowser switchToFrame(By by) {
         wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(by));
+        return this;
     }
 
-    public void switchToFrame(int index) {
+    public RBrowser switchToFrame(WebElement webElement) {
+        wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(webElement));
+        return this;
+    }
+
+    public RBrowser switchToFrame(int index) {
         wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(index));
+        return this;
     }
 
-    public void switchToFrame(String nameOrId) {
+    public RBrowser switchToFrame(String nameOrId) {
         wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(nameOrId));
+        return this;
     }
 
     /*
       Index starts at 0
      */
-    public void switchToTab(int index) {
+    public RBrowser switchToTab(int index) {
         wait.until(input -> index < driver.getWindowHandles().size());
         driver.switchTo().window(driver.getWindowHandles().toArray()[index].toString());
+        return this;
     }
 
-    public void closeTab() {
+    public RBrowser closeTab() {
         driver.close();
+        return this;
     }
 }
