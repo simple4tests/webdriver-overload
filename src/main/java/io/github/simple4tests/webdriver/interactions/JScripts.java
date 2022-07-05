@@ -87,21 +87,21 @@ public class JScripts {
     }
 
     public static void rightClick(JavascriptExecutor executor, WebElement element) {
-        String rightClickEvt = "" +
+        executor.executeScript(
                 "var el = arguments[0];\n" +
-                "var evt = el.ownerDocument.createEvent('MouseEvents');\n" +
-                "evt.initMouseEvent('auxclick', true, true, window, 1, 0, 0, el.getBoundingClientRect().x, el.getBoundingClientRect().y, false, false, false, false, 2, null);\n" +
-                "el.dispatchEvent(evt);";
-        dispatchEvent(executor, element, rightClickEvt);
+                        "var evt = el.ownerDocument.createEvent('MouseEvents');\n" +
+                        "evt.initMouseEvent('auxclick', true, true, window, 1, 0, 0, el.getBoundingClientRect().x, el.getBoundingClientRect().y, false, false, false, false, 2, null);\n" +
+                        "el.dispatchEvent(evt);",
+                element);
     }
 
     public static void mouseOver(JavascriptExecutor executor, WebElement element) {
-        String rightClickEvt = "" +
+        executor.executeScript(
                 "var el = arguments[0];\n" +
-                "var evt = el.ownerDocument.createEvent('MouseEvents');\n" +
-                "evt.initMouseEvent('mouseover', true, true, window, 0, 0, 0, el.getBoundingClientRect().x, el.getBoundingClientRect().y, false, false, false, false, 0, null);\n" +
-                "el.dispatchEvent(evt);\n";
-        dispatchEvent(executor, element, rightClickEvt);
+                        "var evt = el.ownerDocument.createEvent('MouseEvents');\n" +
+                        "evt.initMouseEvent('mouseover', true, true, window, 0, 0, 0, el.getBoundingClientRect().x, el.getBoundingClientRect().y, false, false, false, false, 0, null);\n" +
+                        "el.dispatchEvent(evt);",
+                element);
     }
 
     public static void dispatchEvent(JavascriptExecutor executor, WebElement element, String event) {
