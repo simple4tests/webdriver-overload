@@ -60,7 +60,7 @@
         <hamcrest.version>2.2</hamcrest.version>
         <groovy.version>3.0.11</groovy.version>
         <snakeyaml.version>1.30</snakeyaml.version>
-        <selenium.version>4.2.1</selenium.version>
+        <selenium.version>4.2.2</selenium.version>
         <serenity.version>3.2.5</serenity.version>
         <junit.version>5.8.2</junit.version>
 
