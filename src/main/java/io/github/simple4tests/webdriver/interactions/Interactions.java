@@ -138,8 +138,18 @@ public class Interactions extends Core {
         return this;
     }
 
-    public Interactions dblclick(By by) {
-        element.locatedBy(by).dblclick();
+    public Interactions dblClick(By by) {
+        element.locatedBy(by).dblClick();
+        return this;
+    }
+
+    public Interactions rightClick(By by) {
+        element.locatedBy(by).rightClick();
+        return this;
+    }
+
+    public Interactions mouseOver(By by) {
+        element.locatedBy(by).mouseOver();
         return this;
     }
 
