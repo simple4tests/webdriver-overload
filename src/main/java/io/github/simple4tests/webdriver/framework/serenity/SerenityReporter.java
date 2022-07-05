@@ -1,6 +1,6 @@
 package io.github.simple4tests.webdriver.framework.serenity;
 
-import io.github.simple4tests.webdriver.framework.Reporter;
+import io.github.simple4tests.webdriver.framework.SystemOutReporter;
 import net.thucydides.core.model.ReportData;
 import net.thucydides.core.model.TestOutcome;
 import net.thucydides.core.model.TestResult;
@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 
-public class SerenityReporter implements Reporter {
+public class SerenityReporter extends SystemOutReporter {
 
     private TestStep getCurrentStep() {
         TestOutcome outcome = StepEventBus.getEventBus().getBaseStepListener().getCurrentTestOutcome();
@@ -23,21 +23,23 @@ public class SerenityReporter implements Reporter {
 
     @Override
     public void reportAction(String action) {
+        super.reportAction(action);
         StepEventBus.getEventBus().stepStarted(ExecutedStepDescription.withTitle(action));
         StepEventBus.getEventBus().stepFinished();
     }
 
     @Override
     public void reportData(String data) {
+        super.reportData(data);
         getCurrentStep().recordReportData(ReportData.withTitle("DATA").andContents(data).asEvidence(false));
     }
 
     // Charset.forName(StandardCharsets.UTF_8.name());
     @Override
     public void reportData(Path path) {
+        super.reportData(path);
         try {
-            getCurrentStep().recordReportData(ReportData
-                    .withTitle("DATA").fromFile(path, StandardCharsets.UTF_8).asEvidence(false));
+            getCurrentStep().recordReportData(ReportData.withTitle("DATA").fromFile(path, StandardCharsets.UTF_8).asEvidence(false));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -45,6 +47,7 @@ public class SerenityReporter implements Reporter {
 
     @Override
     public void reportCheck(String check) {
+        super.reportCheck(check);
         StepEventBus.getEventBus().stepStarted(ExecutedStepDescription.withTitle(check));
         reportScreenshot();
         StepEventBus.getEventBus().stepFinished();
@@ -52,16 +55,17 @@ public class SerenityReporter implements Reporter {
 
     @Override
     public void reportError(String error) {
-        errors.add(error);
+        super.reportError(error);
         getCurrentStep().recordReportData(ReportData.withTitle("ERROR").andContents(error).asEvidence(true));
         getCurrentStep().setResult(TestResult.ERROR);
     }
 
     @Override
     public void reportError(Path path) {
+        super.reportError(path);
         try {
-            getCurrentStep().withReportData(ReportData
-                    .withTitle("ERROR").fromFile(path, StandardCharsets.UTF_8).asEvidence(true));
+            getCurrentStep().recordReportData(ReportData.withTitle("ERROR").fromFile(path, StandardCharsets.UTF_8).asEvidence(true));
+            getCurrentStep().setResult(TestResult.ERROR);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -69,6 +73,7 @@ public class SerenityReporter implements Reporter {
 
     @Override
     public void reportScreenshot() {
+        super.reportScreenshot();
         StepEventBus.getEventBus().takeScreenshot();
     }
 }

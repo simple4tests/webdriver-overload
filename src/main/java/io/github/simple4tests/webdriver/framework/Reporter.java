@@ -3,6 +3,7 @@ package io.github.simple4tests.webdriver.framework;
 import io.github.simple4tests.webdriver.utils.Groovy;
 import org.hamcrest.Matcher;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -35,6 +36,10 @@ public interface Reporter {
             }
             throw new AssertionError(String.format("%d error(s) found", errors.size()));
         }
+    }
+
+    default <T> void assertThat(final String check, final T actual, final T expected) {
+        assertThat(check, actual, Matchers.equalTo(expected));
     }
 
     default <T> void assertThat(final String check, final T actual, final Matcher<? super T> expected) {

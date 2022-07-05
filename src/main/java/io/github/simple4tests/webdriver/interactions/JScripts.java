@@ -81,9 +81,27 @@ public class JScripts {
         dispatchEvent(executor, element, clickEvt);
     }
 
-    public static void dblclick(JavascriptExecutor executor, WebElement element) {
-        String dblclickEvt = "new MouseEvent('dblclick', {bubbles: true, cancelable: true, view: window})";
-        dispatchEvent(executor, element, dblclickEvt);
+    public static void dblClick(JavascriptExecutor executor, WebElement element) {
+        String dblClickEvt = "new MouseEvent('dblclick', {bubbles: true, cancelable: true, view: window})";
+        dispatchEvent(executor, element, dblClickEvt);
+    }
+
+    public static void rightClick(JavascriptExecutor executor, WebElement element) {
+        String rightClickEvt = "" +
+                "var el = arguments[0];\n" +
+                "var evt = el.ownerDocument.createEvent('MouseEvents');\n" +
+                "evt.initMouseEvent('auxclick', true, true, window, 1, 0, 0, el.getBoundingClientRect().x, el.getBoundingClientRect().y, false, false, false, false, 2, null);\n" +
+                "el.dispatchEvent(evt);";
+        dispatchEvent(executor, element, rightClickEvt);
+    }
+
+    public static void mouseOver(JavascriptExecutor executor, WebElement element) {
+        String rightClickEvt = "" +
+                "var el = arguments[0];\n" +
+                "var evt = el.ownerDocument.createEvent('MouseEvents');\n" +
+                "evt.initMouseEvent('mouseover', true, true, window, 0, 0, 0, el.getBoundingClientRect().x, el.getBoundingClientRect().y, false, false, false, false, 0, null);\n" +
+                "el.dispatchEvent(evt);\n";
+        dispatchEvent(executor, element, rightClickEvt);
     }
 
     public static void dispatchEvent(JavascriptExecutor executor, WebElement element, String event) {

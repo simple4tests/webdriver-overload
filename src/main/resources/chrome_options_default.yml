@@ -10,7 +10,7 @@ experimentalOptions:
   download.default_directory: "${user.home}\\Downloads"
   download.prompt_for_download: false
   pdfjs.disabled: true
-  plugins.always_open_pdf_externally: true
+  plugins.always_open_pdf_externally: false
   plugins.plugins_disabled: "Chrome PDF Viewer"
   profile.default_content_settings.popups: 0
   safebrowsing.enabled: true

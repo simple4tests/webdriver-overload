@@ -11,9 +11,12 @@ profile:
   preferences:
     browser.cache.disk.enable: false
     browser.helperApps.neverAsk.saveToDisk: "application/csv,application/json,application/octet-stream,application/pdf,application/vnd.pdf,application/x-compressed,application/x-pdf,application/x-zip-compressed,application/xml,application/zip,image/bmp,image/gif,image/jpeg,image/png,image/tiff,multipart/x-zip,text/csv,text/html,text/plain,text/xml"
+    browser.helperApps.neverAsk.openFile: "application/csv,application/json,application/octet-stream,application/pdf,application/vnd.pdf,application/x-compressed,application/x-pdf,application/x-zip-compressed,application/xml,application/zip,image/bmp,image/gif,image/jpeg,image/png,image/tiff,multipart/x-zip,text/csv,text/html,text/plain,text/xml"
     browser.helperApps.alwaysAsk.force: false
     browser.download.manager.showWhenStarting: false
     browser.download.viewableInternally.enabledTypes: ""
     browser.download.dir: "${user.home}\\Downloads"
     browser.download.folderList: 2
     pdfjs.disabled: true
+    pdfjs.enabledCache.state: false
+    PDFViewerApplication.viewerPrefs.showPreviousViewOnLoad: false

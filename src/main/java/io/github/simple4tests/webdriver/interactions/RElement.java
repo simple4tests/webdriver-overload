@@ -242,9 +242,17 @@ public class RElement extends Core {
         return this;
     }
 
-    public RElement dblclick() {
-        if (!isNull(locatorType)) JScripts.dblclick(jsExecutor, getInteractableElement());
+    public RElement dblClick() {
+        if (!isNull(locatorType)) JScripts.dblClick(jsExecutor, getInteractableElement());
         return this;
+    }
+
+    public void rightClick() {
+        if (!isNull(locatorType)) JScripts.rightClick(jsExecutor, getInteractableElement());
+    }
+
+    public void mouseOver() {
+        if (!isNull(locatorType)) JScripts.mouseOver(jsExecutor, getInteractableElement());
     }
 
     public RElement set(String attribute, String value) {
