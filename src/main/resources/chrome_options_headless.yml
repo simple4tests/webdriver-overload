@@ -6,7 +6,6 @@ arguments:
   - "--headless"
   - "--disable-gpu"
 capabilities:
-  acceptSslCerts: true
   acceptInsecureCerts: true
 experimentalOptions:
   download.default_directory: "${user.home}\\Downloads"

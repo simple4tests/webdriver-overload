@@ -25,11 +25,9 @@ public class SncfFirefoxTests {
 
     @BeforeEach
     public void before() {
-        System.setProperty("webdriver.gecko.driver", "c:/dev_tools/selenium/geckodriver.exe");
+        System.setProperty("webdriver.gecko.driver", "c:/dev/tools/selenium/geckodriver.exe");
         FirefoxOptions firefoxOptions = new FirefoxOptions();
         firefoxOptions.setBinary("C:/Program Files/Mozilla Firefox/firefox.exe");
-        firefoxOptions.setCapability("marionette", true);
-        firefoxOptions.setCapability("unexpectedAlertBehaviour", "ignore");
         driver = new FirefoxDriver(firefoxOptions);
         driver.manage().timeouts().implicitlyWait(Duration.ofMillis(50));
         driver.manage().window().maximize();

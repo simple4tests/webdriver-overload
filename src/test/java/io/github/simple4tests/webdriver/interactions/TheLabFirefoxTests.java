@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
@@ -23,11 +24,9 @@ public class TheLabFirefoxTests {
 
     @BeforeEach
     public void before() {
-        System.setProperty("webdriver.gecko.driver", "c:/dev_tools/selenium/geckodriver.exe");
+        System.setProperty("webdriver.gecko.driver", "c:/dev/tools/selenium/geckodriver.exe");
         FirefoxOptions firefoxOptions = new FirefoxOptions();
         firefoxOptions.setBinary("C:/Program Files/Mozilla Firefox/firefox.exe");
-        firefoxOptions.setCapability("marionette", true);
-        firefoxOptions.setCapability("unexpectedAlertBehaviour", "ignore");
         driver = new FirefoxDriver(firefoxOptions);
         driver.manage().timeouts().implicitlyWait(Duration.ofMillis(50));
         driver.manage().window().maximize();
@@ -49,7 +48,10 @@ public class TheLabFirefoxTests {
         while (0 == element.locatedBy(By.xpath(GAME_OVER)).count()) {
             if (element.locatedBy(By.xpath(KITTENS)).waitToBePresent(true)
                     && element.locatedBy(By.xpath(GAME_OVER)).isAbsent()) {
-                element.locatedBy(By.xpath(KITTENS)).click();
+                try {
+                    element.locatedBy(By.xpath(KITTENS)).click();
+                } catch (WebDriverException ignored) {
+                }
             }
         }
     }
@@ -63,9 +65,12 @@ public class TheLabFirefoxTests {
         element.locatedByXpath(COLLECT_KITTENS).click();
         element.locatedByXpath(STAR_GAME).click();
         while (0 == element.locatedByXpath(GAME_OVER).count()) {
-            if (element.locatedBy(By.xpath(KITTENS)).waitToBePresent(true)
+            if (element.locatedByXpath(KITTENS).waitToBePresent(true)
                     && element.locatedByXpath(GAME_OVER).isAbsent()) {
-                element.locatedByXpath(KITTENS).click();
+                try {
+                    element.locatedByXpath(KITTENS).click();
+                } catch (WebDriverException ignored) {
+                }
             }
         }
     }

@@ -73,7 +73,7 @@ public class SerenityReporter extends SystemOutReporter {
 
     @Override
     public void reportScreenshot() {
-        super.reportScreenshot();
+//        super.reportScreenshot();
         StepEventBus.getEventBus().takeScreenshot();
     }
 }

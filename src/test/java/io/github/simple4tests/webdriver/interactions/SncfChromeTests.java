@@ -24,7 +24,7 @@ public class SncfChromeTests {
 
     @BeforeEach
     public void before() {
-        System.setProperty("webdriver.chrome.driver", "c:/dev_tools/selenium/chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "c:/dev/tools/selenium/chromedriver.exe");
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(Duration.ofMillis(50));
         driver.manage().window().maximize();
@@ -38,28 +38,30 @@ public class SncfChromeTests {
     @Test
     @Tag("WebElement")
     public void weSncfTest() {
-        RElement element = new RElement(driver);
-        driver.navigate().to("http://www.sncf.com/fr");
-        element.locatedBy(By.xpath(REFUSE_ALL)).click();
-        element.locatedBy(By.xpath(DEPARTURE)).sendKeys("Paris");
-        element.locatedBy(By.xpath(DEPARTURE_OPTION_1)).click();
-        element.locatedBy(By.xpath(ARRIVAL)).sendKeys("Lyon");
-        element.locatedBy(By.xpath(ARRIVAL_OPTION_1)).click();
-        element.locatedBy(By.xpath(SEARCH)).click();
-        element.locatedBy(By.xpath(RESULTS)).waitToBePresent();
+        Interactions interactions = new Interactions(driver);
+        interactions.driver.navigate().to("http://www.sncf.com/fr");
+        interactions.element
+                .locatedBy(By.xpath(REFUSE_ALL)).click()
+                .locatedBy(By.xpath(DEPARTURE)).sendKeys("Paris")
+                .locatedBy(By.xpath(DEPARTURE_OPTION_1)).click()
+                .locatedBy(By.xpath(ARRIVAL)).sendKeys("Lyon")
+                .locatedBy(By.xpath(ARRIVAL_OPTION_1)).click()
+                .locatedBy(By.xpath(SEARCH)).click()
+                .locatedBy(By.xpath(RESULTS)).waitToBePresent();
     }
 
     @Test
     @Tag("JS")
     public void jsSncfTest() {
-        RElement element = new RElement(driver);
-        driver.navigate().to("http://www.sncf.com/fr");
-        element.locatedByXpath(REFUSE_ALL).click();
-        element.locatedByXpath(DEPARTURE).sendKeys("Paris");
-        element.locatedByXpath(DEPARTURE_OPTION_1).click();
-        element.locatedByXpath(ARRIVAL).sendKeys("Lyon");
-        element.locatedByXpath(ARRIVAL_OPTION_1).click();
-        element.locatedByXpath(SEARCH).click();
-        element.locatedByXpath(RESULTS).waitToBePresent();
+        Interactions interactions = new Interactions(driver);
+        interactions.driver.navigate().to("http://www.sncf.com/fr");
+        interactions.element
+                .locatedByXpath(REFUSE_ALL).clickEvent()
+                .locatedByXpath(DEPARTURE).sendKeys("Paris")
+                .locatedByXpath(DEPARTURE_OPTION_1).clickEvent()
+                .locatedByXpath(ARRIVAL).sendKeys("Lyon")
+                .locatedByXpath(ARRIVAL_OPTION_1).clickEvent()
+                .locatedByXpath(SEARCH).clickEvent()
+                .locatedByXpath(RESULTS).waitToBePresent();
     }
 }
