@@ -50,19 +50,19 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <project.encoding>UTF-8</project.encoding>
 
-        <nexus-staging-maven-plugin.version>1.6.8</nexus-staging-maven-plugin.version>
-        <maven-gpg-plugin.version>3.0.1</maven-gpg-plugin.version>
-        <maven-javadoc-plugin.version>3.3.1</maven-javadoc-plugin.version>
+        <nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
         <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
-        <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
+        <maven-javadoc-plugin.version>3.4.0</maven-javadoc-plugin.version>
+        <maven-gpg-plugin.version>3.0.1</maven-gpg-plugin.version>
+        <maven-surefire-plugin.version>3.0.0-M7</maven-surefire-plugin.version>
 
         <commons-lang.version>2.6</commons-lang.version>
         <hamcrest.version>2.2</hamcrest.version>
-        <groovy.version>3.0.11</groovy.version>
+        <codehaus-groovy.version>3.0.12</codehaus-groovy.version>
         <snakeyaml.version>1.30</snakeyaml.version>
-        <selenium.version>4.2.2</selenium.version>
-        <serenity.version>3.2.5</serenity.version>
-        <junit.version>5.8.2</junit.version>
+        <selenium.version>4.4.0</selenium.version>
+        <serenity.version>3.3.1</serenity.version>
+        <junit.version>5.9.0</junit.version>
 
         <skipTests>true</skipTests>
     </properties>
@@ -81,7 +81,7 @@
         <dependency>
             <groupId>org.codehaus.groovy</groupId>
             <artifactId>groovy</artifactId>
-            <version>${groovy.version}</version>
+            <version>${codehaus-groovy.version}</version>
         </dependency>
         <dependency>
             <groupId>org.yaml</groupId>
@@ -92,7 +92,6 @@
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
             <version>${selenium.version}</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>net.serenity-bdd</groupId>

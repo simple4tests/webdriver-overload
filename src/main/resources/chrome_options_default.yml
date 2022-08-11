@@ -4,7 +4,6 @@ arguments:
   - "--safebrowsing-disable-download-protection"
   - "--ignore-certificate-errors"
 capabilities:
-  acceptSslCerts: true
   acceptInsecureCerts: true
 experimentalOptions:
   download.default_directory: "${user.home}\\Downloads"

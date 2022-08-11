@@ -1,6 +1,10 @@
 package io.github.simple4tests.webdriver.interactions;
 
-import org.openqa.selenium.*;
+import io.github.simple4tests.webdriver.utils.Sleeper;
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
 public class Interactions extends Core {
@@ -16,6 +20,15 @@ public class Interactions extends Core {
         select = new RSelect(driver);
     }
     
+    /*
+        SLEEPER
+     */
+
+    public Interactions sleep(long millis) {
+        Sleeper.sleep(millis);
+        return this;
+    }
+
     /*
         BROWSER
      */
@@ -54,9 +67,6 @@ public class Interactions extends Core {
         return this;
     }
 
-    /*
-      Index starts at 0
-     */
     public Interactions switchToTab(int index) {
         browser.switchToTab(index);
         return this;
@@ -133,23 +143,53 @@ public class Interactions extends Core {
         return this;
     }
 
-    public Interactions click(By by) {
-        element.locatedBy(by).click();
+    public Interactions clickEvent(By by) {
+        element.locatedBy(by).clickEvent();
         return this;
     }
 
-    public Interactions dblClick(By by) {
-        element.locatedBy(by).dblClick();
+    public Interactions clickEvent(By by, String options) {
+        element.locatedBy(by).clickEvent(options);
         return this;
     }
 
-    public Interactions rightClick(By by) {
-        element.locatedBy(by).rightClick();
+    public Interactions dblclickEvent(By by) {
+        element.locatedBy(by).dblclickEvent();
         return this;
     }
 
-    public Interactions mouseOver(By by) {
-        element.locatedBy(by).mouseOver();
+    public Interactions dblclickEvent(By by, String options) {
+        element.locatedBy(by).dblclickEvent(options);
+        return this;
+    }
+
+    public Interactions auxClickEvent(By by) {
+        element.locatedBy(by).auxclickEvent();
+        return this;
+    }
+
+    public Interactions auxClickEvent(By by, String options) {
+        element.locatedBy(by).auxclickEvent(options);
+        return this;
+    }
+
+    public Interactions contextmenuEvent(By by) {
+        element.locatedBy(by).contextmenuEvent();
+        return this;
+    }
+
+    public Interactions contextmenuEvent(By by, String options) {
+        element.locatedBy(by).contextmenuEvent(options);
+        return this;
+    }
+
+    public Interactions mouseOverEvent(By by) {
+        element.locatedBy(by).mouseOverEvent();
+        return this;
+    }
+
+    public Interactions mouseOverEvent(By by, String options) {
+        element.locatedBy(by).mouseOverEvent(options);
         return this;
     }
 
@@ -160,6 +200,11 @@ public class Interactions extends Core {
 
     public Interactions set(By by, String attribute, boolean value) {
         element.locatedBy(by).set(attribute, value);
+        return this;
+    }
+
+    public Interactions click(By by) {
+        element.locatedBy(by).click();
         return this;
     }
 

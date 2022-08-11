@@ -1,6 +1,5 @@
 package io.github.simple4tests.webdriver.interactions;
 
-import io.github.simple4tests.webdriver.framework.DriverProvider;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
@@ -11,7 +10,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
-import java.nio.file.Paths;
 import java.time.Duration;
 
 public class GoogleFirefoxTests {
@@ -25,11 +23,9 @@ public class GoogleFirefoxTests {
 
     @BeforeEach
     public void before() {
-        System.setProperty("webdriver.gecko.driver", "c:/dev_tools/selenium/geckodriver.exe");
+        System.setProperty("webdriver.gecko.driver", "c:/dev/tools/selenium/geckodriver.exe");
         FirefoxOptions firefoxOptions = new FirefoxOptions();
         firefoxOptions.setBinary("C:/Program Files/Mozilla Firefox/firefox.exe");
-        firefoxOptions.setCapability("marionette", true);
-        firefoxOptions.setCapability("unexpectedAlertBehaviour", "ignore");
         driver = new FirefoxDriver(firefoxOptions);
         driver.manage().timeouts().implicitlyWait(Duration.ofMillis(50));
     }
@@ -48,6 +44,7 @@ public class GoogleFirefoxTests {
         element.locatedBy(By.xpath(SEARCH_CRITERIA)).sendKeys("toto universal music", Keys.ENTER);
         element.locatedBy(By.xpath(TOTO_UNIVERSAL_MUSIC)).click();
         element.locatedBy(By.xpath(TOTO)).click();
+        new RBrowser(driver).switchToTab(1);
     }
 
     @Test
@@ -56,8 +53,10 @@ public class GoogleFirefoxTests {
         RElement element = new RElement(driver);
         driver.navigate().to("http://www.google.fr");
         element.locatedByXpath(ACCEPT).click();
-        element.locatedByXpath(SEARCH_CRITERIA).sendKeys("toto universal music", Keys.ENTER);
+        element.locatedByXpath(SEARCH_CRITERIA).set("value", "toto universal music");
+        element.locatedByXpath(SEARCH_CRITERIA).sendKeys(Keys.ENTER);
         element.locatedByXpath(TOTO_UNIVERSAL_MUSIC).click();
         element.locatedByXpath(TOTO).click();
+        new RBrowser(driver).switchToTab(1);
     }
 }

@@ -153,8 +153,8 @@ public class RElement extends Core {
     }
 
     public WebElement getInteractableElement(boolean scrollIntoView) {
-        if (!scrollIntoView) waitToBeInteractable();
-        else scrollIntoView();
+        if (scrollIntoView) scrollIntoView();
+        else waitToBeInteractable();
         return getWebElement();
     }
 
@@ -202,12 +202,12 @@ public class RElement extends Core {
     }
 
     public RElement waitToBeInteractable() {
-        waitToBePresent();
         waitDocumentToBeComplete();
         if (!isNull(locatorType)) {
             try {
-                getWebElement().isEnabled();
-                wait.until(input -> getWebElement().isEnabled());
+                getElement().isEnabled();
+                wait.until(input -> getElement().isDisplayed());
+                wait.until(input -> getElement().isEnabled());
             } catch (WebDriverException ignored) {
             }
         }
@@ -233,26 +233,63 @@ public class RElement extends Core {
 
     public RElement click() {
         if (!isNull(locatorType)) {
-            try {
-                getInteractableElement().click();
-            } catch (WebDriverException e) {
-                JScripts.click(jsExecutor, getInteractableElement());
-            }
+//            try {
+            getInteractableElement().click();
+//            } catch (WebDriverException e) {
+//                clickEvent();
+//            }
         }
         return this;
     }
 
-    public RElement dblClick() {
-        if (!isNull(locatorType)) JScripts.dblClick(jsExecutor, getInteractableElement());
+    public RElement clickEvent() {
+        if (!isNull(locatorType)) JScripts.click(jsExecutor, getInteractableElement());
         return this;
     }
 
-    public void rightClick() {
-        if (!isNull(locatorType)) JScripts.rightClick(jsExecutor, getInteractableElement());
+    public RElement clickEvent(String options) {
+        if (!isNull(locatorType)) JScripts.click(jsExecutor, getInteractableElement(), options);
+        return this;
     }
 
-    public void mouseOver() {
-        if (!isNull(locatorType)) JScripts.mouseOver(jsExecutor, getInteractableElement());
+    public RElement dblclickEvent() {
+        if (!isNull(locatorType)) JScripts.dblclick(jsExecutor, getInteractableElement());
+        return this;
+    }
+
+    public RElement dblclickEvent(String options) {
+        if (!isNull(locatorType)) JScripts.dblclick(jsExecutor, getInteractableElement(), options);
+        return this;
+    }
+
+    public RElement auxclickEvent() {
+        if (!isNull(locatorType)) JScripts.auxclick(jsExecutor, getInteractableElement());
+        return this;
+    }
+
+    public RElement auxclickEvent(String options) {
+        if (!isNull(locatorType)) JScripts.auxclick(jsExecutor, getInteractableElement(), options);
+        return this;
+    }
+
+    public RElement contextmenuEvent() {
+        if (!isNull(locatorType)) JScripts.contextmenu(jsExecutor, getInteractableElement());
+        return this;
+    }
+
+    public RElement contextmenuEvent(String options) {
+        if (!isNull(locatorType)) JScripts.contextmenu(jsExecutor, getInteractableElement(), options);
+        return this;
+    }
+
+    public RElement mouseOverEvent() {
+        if (!isNull(locatorType)) JScripts.mouseover(jsExecutor, getInteractableElement());
+        return this;
+    }
+
+    public RElement mouseOverEvent(String options) {
+        if (!isNull(locatorType)) JScripts.mouseover(jsExecutor, getInteractableElement(), options);
+        return this;
     }
 
     public RElement set(String attribute, String value) {

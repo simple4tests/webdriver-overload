@@ -18,7 +18,6 @@ public class DummyReporter implements Reporter {
 
     @Override
     public void reportCheck(String check) {
-        reportScreenshot();
     }
 
     @Override

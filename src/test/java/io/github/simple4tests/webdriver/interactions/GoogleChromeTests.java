@@ -22,7 +22,7 @@ public class GoogleChromeTests {
 
     @BeforeEach
     public void before() {
-        System.setProperty("webdriver.chrome.driver", "c:/dev_tools/selenium/chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "c:/dev/tools/selenium/chromedriver.exe");
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(Duration.ofMillis(50));
     }
@@ -35,23 +35,27 @@ public class GoogleChromeTests {
     @Test
     @Tag("WebElement")
     public void weGoogleTest() {
-        RElement element = new RElement(driver);
-        driver.navigate().to("http://www.google.fr");
-        element.locatedBy(By.xpath(ACCEPT)).click();
-        element.locatedBy(By.xpath(SEARCH_CRITERIA)).sendKeys("toto universal music", Keys.ENTER);
-        element.locatedBy(By.xpath(TOTO_UNIVERSAL_MUSIC)).click();
-        element.locatedBy(By.xpath(TOTO)).click();
+        Interactions interactions = new Interactions(driver);
+        interactions.driver.navigate().to("http://www.google.fr");
+        interactions
+                .click(By.xpath(ACCEPT))
+                .sendKeys(By.xpath(SEARCH_CRITERIA), "toto universal music", Keys.ENTER)
+                .click(By.xpath(TOTO_UNIVERSAL_MUSIC))
+                .click(By.xpath(TOTO))
+                .switchToTab(1);
     }
 
     @Test
     @Tag("JS")
     public void jsGoogleTest() {
-        RElement element = new RElement(driver);
-        driver.navigate().to("http://www.google.fr");
-        element
-                .locatedByXpath(ACCEPT).click()
-                .locatedByXpath(SEARCH_CRITERIA).sendKeys("toto universal music", Keys.ENTER)
-                .locatedByXpath(TOTO_UNIVERSAL_MUSIC).click()
-                .locatedByXpath(TOTO).click();
+        Interactions interactions = new Interactions(driver);
+        interactions.driver.navigate().to("http://www.google.fr");
+        interactions.element
+                .locatedByXpath(ACCEPT).clickEvent()
+                .locatedByXpath(SEARCH_CRITERIA).set("value", "toto universal music")
+                .locatedByXpath(SEARCH_CRITERIA).sendKeys(Keys.ENTER)
+                .locatedByXpath(TOTO_UNIVERSAL_MUSIC).clickEvent()
+                .locatedByXpath(TOTO).clickEvent();
+        interactions.browser.switchToTab(1);
     }
 }
