@@ -4,11 +4,11 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 
 import java.time.Duration;
 
@@ -22,7 +22,7 @@ public class GoogleFirefoxTests {
     private WebDriver driver;
 
     @BeforeEach
-    public void before() {
+    public void beforeEach() {
         System.setProperty("webdriver.gecko.driver", "c:/dev/tools/selenium/geckodriver.exe");
         FirefoxOptions firefoxOptions = new FirefoxOptions();
         firefoxOptions.setBinary("C:/Program Files/Mozilla Firefox/firefox.exe");
@@ -31,12 +31,34 @@ public class GoogleFirefoxTests {
     }
 
     @AfterEach
-    public void after() {
+    public void afterEach() {
         driver.quit();
     }
 
     @Test
-    @Tag("WebElement")
+    @Tag("NativeSelenium")
+    public void seleniumGoogleTest() {
+        driver.navigate().to("http://www.google.fr");
+        driver.findElement(By.xpath(ACCEPT)).click();
+        driver.findElement(By.xpath(SEARCH_CRITERIA)).sendKeys("toto universal music", Keys.ENTER);
+        new FluentWait<>(driver)
+                .pollingEvery(Duration.ofMillis(250))
+                .withTimeout(Duration.ofSeconds(10))
+                .ignoring(NoSuchElementException.class)
+                .until(ExpectedConditions.presenceOfElementLocated(By.xpath(TOTO_UNIVERSAL_MUSIC)));
+        driver.findElement(By.xpath(TOTO_UNIVERSAL_MUSIC)).click();
+//        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", driver.findElement(By.xpath(TOTO)));
+        driver.findElement(By.xpath(TOTO)).click();
+        new FluentWait<>(driver)
+                .pollingEvery(Duration.ofMillis(250))
+                .withTimeout(Duration.ofSeconds(10))
+                .ignoring(NoSuchElementException.class)
+                .until(input -> 1 < driver.getWindowHandles().size());
+        driver.switchTo().window(driver.getWindowHandles().toArray()[1].toString());
+    }
+
+    @Test
+    @Tag("InteractionsWebDriver")
     public void weGoogleTest() {
         RElement element = new RElement(driver);
         driver.navigate().to("http://www.google.fr");
@@ -48,7 +70,7 @@ public class GoogleFirefoxTests {
     }
 
     @Test
-    @Tag("JS")
+    @Tag("InteractionsJS")
     public void jsGoogleTest() {
         RElement element = new RElement(driver);
         driver.navigate().to("http://www.google.fr");

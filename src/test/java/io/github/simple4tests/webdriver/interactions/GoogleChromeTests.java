@@ -4,10 +4,9 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.FluentWait;
 
 import java.time.Duration;
 
@@ -21,19 +20,41 @@ public class GoogleChromeTests {
     private WebDriver driver;
 
     @BeforeEach
-    public void before() {
+    public void beforeEach() {
         System.setProperty("webdriver.chrome.driver", "c:/dev/tools/selenium/chromedriver.exe");
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(Duration.ofMillis(50));
     }
 
     @AfterEach
-    public void after() {
+    public void afterEach() {
         driver.quit();
     }
 
     @Test
-    @Tag("WebElement")
+    @Tag("NativeSelenium")
+    public void seleniumGoogleTest() {
+        driver.navigate().to("http://www.google.fr");
+        driver.findElement(By.xpath(ACCEPT)).click();
+        driver.findElement(By.xpath(SEARCH_CRITERIA)).sendKeys("toto universal music", Keys.ENTER);
+//        new FluentWait<>(driver)
+//                .pollingEvery(Duration.ofMillis(250))
+//                .withTimeout(Duration.ofSeconds(10))
+//                .ignoring(NoSuchElementException.class)
+//                .until(ExpectedConditions.presenceOfElementLocated(By.xpath(TOTO_UNIVERSAL_MUSIC)));
+        driver.findElement(By.xpath(TOTO_UNIVERSAL_MUSIC)).click();
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", driver.findElement(By.xpath(TOTO)));
+        driver.findElement(By.xpath(TOTO)).click();
+        new FluentWait<>(driver)
+                .pollingEvery(Duration.ofMillis(250))
+                .withTimeout(Duration.ofSeconds(10))
+                .ignoring(NoSuchElementException.class)
+                .until(input -> 1 < driver.getWindowHandles().size());
+        driver.switchTo().window(driver.getWindowHandles().toArray()[1].toString());
+    }
+
+    @Test
+    @Tag("InteractionsWebDriver")
     public void weGoogleTest() {
         Interactions interactions = new Interactions(driver);
         interactions.driver.navigate().to("http://www.google.fr");
@@ -46,7 +67,7 @@ public class GoogleChromeTests {
     }
 
     @Test
-    @Tag("JS")
+    @Tag("InteractionsJS")
     public void jsGoogleTest() {
         Interactions interactions = new Interactions(driver);
         interactions.driver.navigate().to("http://www.google.fr");

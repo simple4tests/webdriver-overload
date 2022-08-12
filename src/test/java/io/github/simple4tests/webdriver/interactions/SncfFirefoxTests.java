@@ -5,9 +5,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 
 import java.time.Duration;
 
@@ -24,7 +27,7 @@ public class SncfFirefoxTests {
     private WebDriver driver;
 
     @BeforeEach
-    public void before() {
+    public void beforeEach() {
         System.setProperty("webdriver.gecko.driver", "c:/dev/tools/selenium/geckodriver.exe");
         FirefoxOptions firefoxOptions = new FirefoxOptions();
         firefoxOptions.setBinary("C:/Program Files/Mozilla Firefox/firefox.exe");
@@ -34,12 +37,44 @@ public class SncfFirefoxTests {
     }
 
     @AfterEach
-    public void after() {
+    public void afterEach() {
         driver.quit();
     }
 
     @Test
-    @Tag("WebElement")
+    @Tag("NativeSelenium")
+    public void seleniumSncfTest() {
+        driver.navigate().to("http://www.sncf.com/fr");
+        new FluentWait<>(driver)
+                .pollingEvery(Duration.ofMillis(250))
+                .withTimeout(Duration.ofSeconds(10))
+                .ignoring(NoSuchElementException.class)
+                .until(ExpectedConditions.presenceOfElementLocated(By.xpath(REFUSE_ALL)));
+        driver.findElement(By.xpath(REFUSE_ALL)).click();
+        driver.findElement(By.xpath(DEPARTURE)).sendKeys("Paris");
+        new FluentWait<>(driver)
+                .pollingEvery(Duration.ofMillis(250))
+                .withTimeout(Duration.ofSeconds(10))
+                .ignoring(NoSuchElementException.class)
+                .until(ExpectedConditions.presenceOfElementLocated(By.xpath(DEPARTURE_OPTION_1)));
+        driver.findElement(By.xpath(DEPARTURE_OPTION_1)).click();
+        driver.findElement(By.xpath(ARRIVAL)).sendKeys("Lyon");
+        new FluentWait<>(driver)
+                .pollingEvery(Duration.ofMillis(250))
+                .withTimeout(Duration.ofSeconds(10))
+                .ignoring(NoSuchElementException.class)
+                .until(ExpectedConditions.presenceOfElementLocated(By.xpath(ARRIVAL_OPTION_1)));
+        driver.findElement(By.xpath(ARRIVAL_OPTION_1)).click();
+        driver.findElement(By.xpath(SEARCH)).click();
+        new FluentWait<>(driver)
+                .pollingEvery(Duration.ofMillis(250))
+                .withTimeout(Duration.ofSeconds(10))
+                .ignoring(NoSuchElementException.class)
+                .until(ExpectedConditions.presenceOfElementLocated(By.xpath(RESULTS)));
+    }
+
+    @Test
+    @Tag("InteractionsWebDriver")
     public void weSncfTest() {
         RElement element = new RElement(driver);
         driver.navigate().to("http://www.sncf.com/fr");
@@ -53,7 +88,7 @@ public class SncfFirefoxTests {
     }
 
     @Test
-    @Tag("JS")
+    @Tag("InteractionsJS")
     public void jsSncfTest() {
         RElement element = new RElement(driver);
         driver.navigate().to("http://www.sncf.com/fr");
