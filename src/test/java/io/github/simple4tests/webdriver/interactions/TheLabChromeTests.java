@@ -1,17 +1,14 @@
 package io.github.simple4tests.webdriver.interactions;
 
-import io.github.simple4tests.webdriver.utils.TechnicalActions;
+import io.github.simple4tests.webdriver.utils._TechActions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
 
 import java.time.Duration;
 
@@ -43,7 +40,7 @@ public class TheLabChromeTests {
     public void seleniumKittensTest() {
         driver.navigate().to("http://thelab.boozang.com/");
         driver.findElement(By.xpath(MENU_OPEN)).click();
-        TechnicalActions.waitElementToBeVisible(driver, By.xpath(COLLECT_KITTENS));
+        _TechActions.waitElementToBeVisible(driver, By.xpath(COLLECT_KITTENS));
         driver.findElement(By.xpath(COLLECT_KITTENS)).click();
         driver.findElement(By.xpath(STAR_GAME)).click();
         while (0 == driver.findElements(By.xpath(GAME_OVER)).size()) {
@@ -65,16 +62,17 @@ public class TheLabChromeTests {
     @Test
     @Tag("InteractionsWebDriver")
     public void weKittensTest() {
-        RElement element = new RElement(driver);
-        driver.navigate().to("http://thelab.boozang.com/");
-        element.locatedBy(By.xpath(MENU_OPEN)).click();
-        element.locatedBy(By.xpath(COLLECT_KITTENS)).click();
-        element.locatedBy(By.xpath(STAR_GAME)).click();
-        while (0 == element.locatedBy(By.xpath(GAME_OVER)).count()) {
-            if (element.locatedBy(By.xpath(KITTENS)).waitToBePresent(true)
-                    && element.locatedBy(By.xpath(GAME_OVER)).isAbsent()) {
+        Interactions interactions = new Interactions(driver);
+        interactions.driver.navigate().to("http://thelab.boozang.com/");
+        interactions
+                .click(MENU_OPEN)
+                .click(COLLECT_KITTENS)
+                .click(STAR_GAME);
+        while (interactions.isAbsent(GAME_OVER)) {
+            if (interactions.waitToBePresent(KITTENS, true)
+                    && interactions.isAbsent(GAME_OVER)) {
                 try {
-                    element.locatedBy(By.xpath(KITTENS)).click();
+                    interactions.click(KITTENS);
                 } catch (WebDriverException ignored) {
                 }
             }
@@ -84,16 +82,18 @@ public class TheLabChromeTests {
     @Test
     @Tag("InteractionsJS")
     public void jsKittensTest() {
-        RElement element = new RElement(driver);
-        driver.navigate().to("http://thelab.boozang.com/");
-        element.locatedByXpath(MENU_OPEN).click();
-        element.locatedByXpath(COLLECT_KITTENS).click();
-        element.locatedByXpath(STAR_GAME).click();
-        while (0 == element.locatedByXpath(GAME_OVER).count()) {
-            if (element.locatedByXpath(KITTENS).waitToBePresent(true)
-                    && element.locatedByXpath(GAME_OVER).isAbsent()) {
+        Interactions interactions = new Interactions(driver);
+        interactions.convertLocatorTypeToBy(false);
+        interactions.driver.navigate().to("http://thelab.boozang.com/");
+        interactions
+                .click(MENU_OPEN)
+                .click(COLLECT_KITTENS)
+                .click(STAR_GAME);
+        while (interactions.isAbsent(GAME_OVER)) {
+            if (interactions.waitToBePresent(KITTENS, true)
+                    && interactions.isAbsent(GAME_OVER)) {
                 try {
-                    element.locatedByXpath(KITTENS).click();
+                    interactions.click(KITTENS);
                 } catch (WebDriverException ignored) {
                 }
             }

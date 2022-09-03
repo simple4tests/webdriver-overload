@@ -1,17 +1,14 @@
 package io.github.simple4tests.webdriver.interactions;
 
-import io.github.simple4tests.webdriver.utils.TechnicalActions;
+import io.github.simple4tests.webdriver.utils._TechActions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
 
 import java.time.Duration;
 
@@ -46,43 +43,46 @@ public class SncfFirefoxTests {
     @Tag("NativeSelenium")
     public void seleniumSncfTest() {
         driver.navigate().to("http://www.sncf.com/fr");
-        TechnicalActions.waitElementToBePresent(driver, By.xpath(REFUSE_ALL));
+        _TechActions.waitElementToBePresent(driver, By.xpath(REFUSE_ALL));
         driver.findElement(By.xpath(REFUSE_ALL)).click();
         driver.findElement(By.xpath(DEPARTURE)).sendKeys("Paris");
-        TechnicalActions.waitElementToBePresent(driver, By.xpath(DEPARTURE_OPTION_1));
+        _TechActions.waitElementToBePresent(driver, By.xpath(DEPARTURE_OPTION_1));
         driver.findElement(By.xpath(DEPARTURE_OPTION_1)).click();
         driver.findElement(By.xpath(ARRIVAL)).sendKeys("Lyon");
-        TechnicalActions.waitElementToBePresent(driver, By.xpath(ARRIVAL_OPTION_1));
+        _TechActions.waitElementToBePresent(driver, By.xpath(ARRIVAL_OPTION_1));
         driver.findElement(By.xpath(ARRIVAL_OPTION_1)).click();
         driver.findElement(By.xpath(SEARCH)).click();
-        TechnicalActions.waitElementToBePresent(driver, By.xpath(RESULTS));
+        _TechActions.waitElementToBePresent(driver, By.xpath(RESULTS));
     }
 
     @Test
     @Tag("InteractionsWebDriver")
     public void weSncfTest() {
-        RElement element = new RElement(driver);
-        driver.navigate().to("http://www.sncf.com/fr");
-        element.locatedBy(By.xpath(REFUSE_ALL)).click();
-        element.locatedBy(By.xpath(DEPARTURE)).sendKeys("Paris");
-        element.locatedBy(By.xpath(DEPARTURE_OPTION_1)).click();
-        element.locatedBy(By.xpath(ARRIVAL)).sendKeys("Lyon");
-        element.locatedBy(By.xpath(ARRIVAL_OPTION_1)).click();
-        element.locatedBy(By.xpath(SEARCH)).click();
-        element.locatedBy(By.xpath(RESULTS)).waitToBePresent();
+        Interactions interactions = new Interactions(driver);
+        interactions.driver.navigate().to("http://www.sncf.com/fr");
+        interactions.element
+                .at(REFUSE_ALL).click()
+                .at(DEPARTURE).sendKeys("Paris")
+                .at(DEPARTURE_OPTION_1).click()
+                .at(ARRIVAL).sendKeys("Lyon")
+                .at(ARRIVAL_OPTION_1).click()
+                .at(SEARCH).click()
+                .at(RESULTS).waitToBePresent();
     }
 
     @Test
     @Tag("InteractionsJS")
     public void jsSncfTest() {
-        RElement element = new RElement(driver);
-        driver.navigate().to("http://www.sncf.com/fr");
-        element.locatedByXpath(REFUSE_ALL).click();
-        element.locatedByXpath(DEPARTURE).sendKeys("Paris");
-        element.locatedByXpath(DEPARTURE_OPTION_1).click();
-        element.locatedByXpath(ARRIVAL).sendKeys("Lyon");
-        element.locatedByXpath(ARRIVAL_OPTION_1).click();
-        element.locatedByXpath(SEARCH).click();
-        element.locatedByXpath(RESULTS).waitToBePresent();
+        Interactions interactions = new Interactions(driver);
+        interactions.convertLocatorTypeToBy(false);
+        interactions.driver.navigate().to("http://www.sncf.com/fr");
+        interactions.element
+                .at(REFUSE_ALL).clickEvent()
+                .at(DEPARTURE).sendKeys("Paris")
+                .at(DEPARTURE_OPTION_1).clickEvent()
+                .at(ARRIVAL).sendKeys("Lyon")
+                .at(ARRIVAL_OPTION_1).clickEvent()
+                .at(SEARCH).clickEvent()
+                .at(RESULTS).waitToBePresent();
     }
 }

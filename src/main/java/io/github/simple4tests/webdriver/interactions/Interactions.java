@@ -81,50 +81,60 @@ public class Interactions extends Core {
         ELEMENT
      */
 
-    public WebElement getElement(By by) {
-        return element.locatedBy(by).getElement();
-    }
-
-    public WebElement getInteractableElement(By by) {
-        return element.locatedBy(by).getInteractableElement();
-    }
-
-    public WebElement getInteractableElement(By by, boolean scrollIntoView) {
-        return element.locatedBy(by).getInteractableElement(scrollIntoView);
-    }
-
-    public int count(By by) {
-        return element.locatedBy(by).count();
-    }
-
-    public boolean isPresent(By by) {
-        return element.locatedBy(by).isPresent();
-    }
-
-    public boolean isAbsent(By by) {
-        return element.locatedBy(by).isAbsent();
-    }
-
-    public Interactions waitToBePresent(By by) {
-        element.locatedBy(by).waitToBePresent();
+    public Interactions convertLocatorTypeToBy(boolean convertLocatorTypeToBy) {
+        element.convertLocatorToBy(convertLocatorTypeToBy);
         return this;
     }
 
-    public boolean waitToBePresent(By by, boolean ignoreTimeoutException) {
-        return element.locatedBy(by).waitToBePresent(ignoreTimeoutException);
-    }
-
-    public Interactions waitToBeAbsent(By by) {
-        element.locatedBy(by).waitToBeAbsent();
+    public Interactions setDefaultLocatorType(LocatorTypes defaultLocatorType) {
+        element.setDefaultLocatorTypeForString(defaultLocatorType);
         return this;
     }
 
-    public boolean waitToBeAbsent(By by, boolean ignoreTimeoutException) {
-        return element.locatedBy(by).waitToBeAbsent(ignoreTimeoutException);
+    public WebElement getElement(Object locator) {
+        return element.at(locator).getElement();
     }
 
-    public Interactions waitToBeInteractable(By by) {
-        element.locatedBy(by).waitToBeInteractable();
+    public WebElement getInteractableElement(Object locator) {
+        return element.at(locator).getInteractableElement();
+    }
+
+    public WebElement getInteractableElement(Object locator, boolean scrollIntoView) {
+        return element.at(locator).getInteractableElement(scrollIntoView);
+    }
+
+    public int count(Object locator) {
+        return element.at(locator).count();
+    }
+
+    public boolean isPresent(Object locator) {
+        return element.at(locator).isPresent();
+    }
+
+    public boolean isAbsent(Object locator) {
+        return element.at(locator).isAbsent();
+    }
+
+    public Interactions waitToBePresent(Object locator) {
+        element.at(locator).waitToBePresent();
+        return this;
+    }
+
+    public boolean waitToBePresent(Object locator, boolean ignoreTimeoutException) {
+        return element.at(locator).waitToBePresent(ignoreTimeoutException);
+    }
+
+    public Interactions waitToBeAbsent(Object locator) {
+        element.at(locator).waitToBeAbsent();
+        return this;
+    }
+
+    public boolean waitToBeAbsent(Object locator, boolean ignoreTimeoutException) {
+        return element.at(locator).waitToBeAbsent(ignoreTimeoutException);
+    }
+
+    public Interactions waitToBeInteractable(Object locator) {
+        element.at(locator).waitToBeInteractable();
         return this;
     }
 
@@ -133,78 +143,78 @@ public class Interactions extends Core {
         return this;
     }
 
-    public Interactions scrollIntoView(By by, String behavior, String block, String inline) {
-        element.locatedBy(by).scrollIntoView(behavior, block, inline);
+    public Interactions scrollIntoView(Object locator, String behavior, String block, String inline) {
+        element.at(locator).scrollIntoView(behavior, block, inline);
         return this;
     }
 
-    public Interactions scrollIntoView(By by) {
-        element.locatedBy(by).scrollIntoView();
+    public Interactions scrollIntoView(Object locator) {
+        element.at(locator).scrollIntoView();
         return this;
     }
 
-    public Interactions clickEvent(By by) {
-        element.locatedBy(by).clickEvent();
+    public Interactions clickEvent(Object locator) {
+        element.at(locator).clickEvent();
         return this;
     }
 
-    public Interactions clickEvent(By by, String options) {
-        element.locatedBy(by).clickEvent(options);
+    public Interactions clickEvent(Object locator, String options) {
+        element.at(locator).clickEvent(options);
         return this;
     }
 
-    public Interactions dblclickEvent(By by) {
-        element.locatedBy(by).dblclickEvent();
+    public Interactions dblclickEvent(Object locator) {
+        element.at(locator).dblclickEvent();
         return this;
     }
 
-    public Interactions dblclickEvent(By by, String options) {
-        element.locatedBy(by).dblclickEvent(options);
+    public Interactions dblclickEvent(Object locator, String options) {
+        element.at(locator).dblclickEvent(options);
         return this;
     }
 
-    public Interactions auxClickEvent(By by) {
-        element.locatedBy(by).auxclickEvent();
+    public Interactions auxClickEvent(Object locator) {
+        element.at(locator).auxclickEvent();
         return this;
     }
 
-    public Interactions auxClickEvent(By by, String options) {
-        element.locatedBy(by).auxclickEvent(options);
+    public Interactions auxClickEvent(Object locator, String options) {
+        element.at(locator).auxclickEvent(options);
         return this;
     }
 
-    public Interactions contextmenuEvent(By by) {
-        element.locatedBy(by).contextmenuEvent();
+    public Interactions contextmenuEvent(Object locator) {
+        element.at(locator).contextmenuEvent();
         return this;
     }
 
-    public Interactions contextmenuEvent(By by, String options) {
-        element.locatedBy(by).contextmenuEvent(options);
+    public Interactions contextmenuEvent(Object locator, String options) {
+        element.at(locator).contextmenuEvent(options);
         return this;
     }
 
-    public Interactions mouseOverEvent(By by) {
-        element.locatedBy(by).mouseOverEvent();
+    public Interactions mouseOverEvent(Object locator) {
+        element.at(locator).mouseOverEvent();
         return this;
     }
 
-    public Interactions mouseOverEvent(By by, String options) {
-        element.locatedBy(by).mouseOverEvent(options);
+    public Interactions mouseOverEvent(Object locator, String options) {
+        element.at(locator).mouseOverEvent(options);
         return this;
     }
 
-    public Interactions set(By by, String attribute, String value) {
-        element.locatedBy(by).set(attribute, value);
+    public Interactions set(Object locator, String attribute, String value) {
+        element.at(locator).set(attribute, value);
         return this;
     }
 
-    public Interactions set(By by, String attribute, boolean value) {
-        element.locatedBy(by).set(attribute, value);
+    public Interactions set(Object locator, String attribute, boolean value) {
+        element.at(locator).set(attribute, value);
         return this;
     }
 
-    public Interactions click(By by) {
-        element.locatedBy(by).click();
+    public Interactions click(Object locator) {
+        element.at(locator).click();
         return this;
     }
 
@@ -223,23 +233,23 @@ public class Interactions extends Core {
         return this;
     }
 
-    public Interactions clear(By by) {
-        element.locatedBy(by).clear();
+    public Interactions clear(Object locator) {
+        element.at(locator).clear();
         return this;
     }
 
-    public Interactions sendKeys(By by, CharSequence... value) {
-        element.locatedBy(by).sendKeys(value);
+    public Interactions sendKeys(Object locator, CharSequence... value) {
+        element.at(locator).sendKeys(value);
         return this;
     }
 
-    public Interactions upload(By by, String fileAbsolutePath) {
-        element.locatedBy(by).upload(fileAbsolutePath);
+    public Interactions upload(Object locator, String fileAbsolutePath) {
+        element.at(locator).upload(fileAbsolutePath);
         return this;
     }
 
-    public Interactions setSelected(By by, boolean select) {
-        element.locatedBy(by).setSelected(select);
+    public Interactions setSelected(Object locator, boolean select) {
+        element.at(locator).setSelected(select);
         return this;
     }
 
@@ -247,22 +257,22 @@ public class Interactions extends Core {
         SELECT
      */
 
-    public Select getSelect(By by) {
-        return select.locatedBy(by).select;
+    public Select getSelect(Object locator) {
+        return select.at(locator).select;
     }
 
-    public Interactions selectByVisibleText(By by, String visibleText) {
-        select.locatedBy(by).selectByVisibleText(visibleText);
+    public Interactions selectByVisibleText(Object locator, String visibleText) {
+        select.at(locator).selectByVisibleText(visibleText);
         return this;
     }
 
-    public Interactions selectByValue(By by, String value) {
-        select.locatedBy(by).selectByValue(value);
+    public Interactions selectByValue(Object locator, String value) {
+        select.at(locator).selectByValue(value);
         return this;
     }
 
-    public Interactions selectByIndex(By by, int index) {
-        select.locatedBy(by).selectByIndex(index);
+    public Interactions selectByIndex(Object locator, int index) {
+        select.at(locator).selectByIndex(index);
         return this;
     }
 }

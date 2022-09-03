@@ -1,16 +1,13 @@
 package io.github.simple4tests.webdriver.interactions;
 
-import io.github.simple4tests.webdriver.utils.TechnicalActions;
+import io.github.simple4tests.webdriver.utils._TechActions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
 
 import java.time.Duration;
 
@@ -43,16 +40,16 @@ public class SncfChromeTests {
     @Tag("NativeSelenium")
     public void seleniumSncfTest() {
         driver.navigate().to("http://www.sncf.com/fr");
-        TechnicalActions.waitElementToBePresent(driver, By.xpath(REFUSE_ALL));
+        _TechActions.waitElementToBePresent(driver, By.xpath(REFUSE_ALL));
         driver.findElement(By.xpath(REFUSE_ALL)).click();
         driver.findElement(By.xpath(DEPARTURE)).sendKeys("Paris");
-        TechnicalActions.waitElementToBePresent(driver, By.xpath(DEPARTURE_OPTION_1));
+        _TechActions.waitElementToBePresent(driver, By.xpath(DEPARTURE_OPTION_1));
         driver.findElement(By.xpath(DEPARTURE_OPTION_1)).click();
         driver.findElement(By.xpath(ARRIVAL)).sendKeys("Lyon");
-        TechnicalActions.waitElementToBePresent(driver, By.xpath(ARRIVAL_OPTION_1));
+        _TechActions.waitElementToBePresent(driver, By.xpath(ARRIVAL_OPTION_1));
         driver.findElement(By.xpath(ARRIVAL_OPTION_1)).click();
         driver.findElement(By.xpath(SEARCH)).click();
-        TechnicalActions.waitElementToBePresent(driver, By.xpath(RESULTS));
+        _TechActions.waitElementToBePresent(driver, By.xpath(RESULTS));
     }
 
     @Test
@@ -60,28 +57,29 @@ public class SncfChromeTests {
     public void weSncfTest() {
         Interactions interactions = new Interactions(driver);
         interactions.driver.navigate().to("http://www.sncf.com/fr");
-        interactions.element
-                .locatedBy(By.xpath(REFUSE_ALL)).click()
-                .locatedBy(By.xpath(DEPARTURE)).sendKeys("Paris")
-                .locatedBy(By.xpath(DEPARTURE_OPTION_1)).click()
-                .locatedBy(By.xpath(ARRIVAL)).sendKeys("Lyon")
-                .locatedBy(By.xpath(ARRIVAL_OPTION_1)).click()
-                .locatedBy(By.xpath(SEARCH)).click()
-                .locatedBy(By.xpath(RESULTS)).waitToBePresent();
+        interactions
+                .click(REFUSE_ALL)
+                .sendKeys(DEPARTURE, "Paris")
+                .click(DEPARTURE_OPTION_1)
+                .sendKeys(ARRIVAL, "Lyon")
+                .click(ARRIVAL_OPTION_1)
+                .click(SEARCH)
+                .waitToBePresent(RESULTS);
     }
 
     @Test
     @Tag("InteractionsJS")
     public void jsSncfTest() {
         Interactions interactions = new Interactions(driver);
+        interactions.convertLocatorTypeToBy(false);
         interactions.driver.navigate().to("http://www.sncf.com/fr");
-        interactions.element
-                .locatedByXpath(REFUSE_ALL).clickEvent()
-                .locatedByXpath(DEPARTURE).sendKeys("Paris")
-                .locatedByXpath(DEPARTURE_OPTION_1).clickEvent()
-                .locatedByXpath(ARRIVAL).sendKeys("Lyon")
-                .locatedByXpath(ARRIVAL_OPTION_1).clickEvent()
-                .locatedByXpath(SEARCH).clickEvent()
-                .locatedByXpath(RESULTS).waitToBePresent();
+        interactions
+                .clickEvent(REFUSE_ALL)
+                .sendKeys(DEPARTURE, "Paris")
+                .clickEvent(DEPARTURE_OPTION_1)
+                .sendKeys(ARRIVAL, "Lyon")
+                .clickEvent(ARRIVAL_OPTION_1)
+                .clickEvent(SEARCH)
+                .waitToBePresent(RESULTS);
     }
 }

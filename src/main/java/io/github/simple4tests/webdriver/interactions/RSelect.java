@@ -40,23 +40,31 @@ public class RSelect extends Core {
         wait.pollingEvery(Duration.ofMillis(50)).withTimeout(Duration.ofSeconds(15));
     }
 
-    public RSelect locatedByXpath(String xpath) {
-        return locatedBy(new RElement(driver).locatedByXpath(xpath));
+    public RSelect at(Object locator) {
+        return fromRElement(new RElement(driver).at(locator));
     }
 
-    public RSelect locatedBySelector(String selector) {
-        return locatedBy(new RElement(driver).locatedBySelector(selector));
+    @Deprecated
+    public RSelect xpath(String xpath) {
+        return fromRElement(new RElement(driver).xpath(xpath));
     }
 
-    public RSelect locatedBy(By by) {
-        return locatedBy(new RElement(driver).locatedBy(by));
+    @Deprecated
+    public RSelect selector(String selector) {
+        return fromRElement(new RElement(driver).selector(selector));
     }
 
-    public RSelect locatedBy(WebElement webElement) {
-        return locatedBy(new RElement(driver).locatedBy(webElement));
+    @Deprecated
+    public RSelect by(By by) {
+        return fromRElement(new RElement(driver).by(by));
     }
 
-    protected RSelect locatedBy(RElement element) {
+    @Deprecated
+    public RSelect webElement(WebElement webElement) {
+        return fromRElement(new RElement(driver).webElement(webElement));
+    }
+
+    protected RSelect fromRElement(RElement element) {
         this.select = new Select(element.getInteractableElement());
         return this;
     }

@@ -41,6 +41,8 @@ public class RElement extends Core {
     protected boolean clearAll;
     protected boolean clearNext;
 
+    protected boolean convertLocatorToBy;
+    protected LocatorTypes defaultLocatorTypeForString;
     protected LocatorTypes locatorType;
     protected String xpath;
     protected String selector;
@@ -60,51 +62,71 @@ public class RElement extends Core {
         scrollInline = DEFAULT_SCROLL_INLINE;
 
         clearAll(false);
+
+        convertLocatorToBy(true);
+        setDefaultLocatorTypeForString(LocatorTypes.XPATH);
         resetLocator();
     }
 
-    protected void resetLocator() {
+    public RElement convertLocatorToBy(boolean convertLocatorToBy) {
+        this.convertLocatorToBy = convertLocatorToBy;
+        return this;
+    }
+
+    public RElement setDefaultLocatorTypeForString(LocatorTypes defaultLocatorTypeForString) {
+        switch (defaultLocatorTypeForString) {
+            case XPATH:
+            case SELECTOR:
+                this.defaultLocatorTypeForString = defaultLocatorTypeForString;
+                break;
+            default:
+                throw new Error("Apply for <LocatorType> of type XPATH or SELECTOR only");
+        }
+        return this;
+    }
+
+    protected RElement resetLocator() {
         this.locatorType = null;
         this.xpath = null;
         this.selector = null;
         this.by = null;
         this.webElement = null;
+        return this;
     }
 
-    public RElement locatedBy(LocatorTypes locatorType, Object locator) {
-        resetLocator();
+    public RElement at(LocatorTypes locatorType, Object locator) {
         switch (locatorType) {
             case XPATH:
                 if (locator instanceof String) {
-                    this.locatorType = locatorType;
-                    this.xpath = (String) locator;
-                } else {
-                    throw new Error("<Locator> type mismatch <LocatorType>");
-                }
+                    if (convertLocatorToBy) {
+                        at(LocatorTypes.BY, By.xpath((String) locator));
+                    } else {
+                        this.locatorType = locatorType;
+                        xpath = (String) locator;
+                    }
+                } else throw new Error("<Locator> type mismatch <LocatorType>");
                 break;
             case SELECTOR:
                 if (locator instanceof String) {
-                    this.locatorType = locatorType;
-                    this.selector = (String) locator;
-                } else {
-                    throw new Error("<Locator> type mismatch <LocatorType>");
-                }
+                    if (convertLocatorToBy) {
+                        at(LocatorTypes.BY, By.cssSelector((String) locator));
+                    } else {
+                        this.locatorType = locatorType;
+                        selector = (String) locator;
+                    }
+                } else throw new Error("<Locator> type mismatch <LocatorType>");
                 break;
             case BY:
                 if (locator instanceof By) {
                     this.locatorType = locatorType;
-                    this.by = (By) locator;
-                } else {
-                    throw new Error("<Locator> type mismatch <LocatorType>");
-                }
+                    by = (By) locator;
+                } else throw new Error("<Locator> type mismatch <LocatorType>");
                 break;
             case WEBELEMENT:
                 if (locator instanceof WebElement) {
                     this.locatorType = locatorType;
-                    this.webElement = (WebElement) locator;
-                } else {
-                    throw new Error("<Locator> type mismatch <LocatorType>");
-                }
+                    webElement = (WebElement) locator;
+                } else throw new Error("<Locator> type mismatch <LocatorType>");
                 break;
             default:
                 throw new Error("<LocatorType> not defined");
@@ -112,20 +134,31 @@ public class RElement extends Core {
         return this;
     }
 
-    public RElement locatedByXpath(String xpath) {
-        return locatedBy(LocatorTypes.XPATH, xpath);
+    public RElement at(Object locator) {
+        if (locator instanceof String) return at(defaultLocatorTypeForString, locator);
+        if (locator instanceof By) return at(LocatorTypes.BY, locator);
+        if (locator instanceof WebElement) return at(LocatorTypes.WEBELEMENT, locator);
+        throw new Error("<LocatorType> not supported");
     }
 
-    public RElement locatedBySelector(String selector) {
-        return locatedBy(LocatorTypes.SELECTOR, selector);
+    @Deprecated
+    public RElement xpath(String xpath) {
+        return at(LocatorTypes.XPATH, xpath);
     }
 
-    public RElement locatedBy(By by) {
-        return locatedBy(LocatorTypes.BY, by);
+    @Deprecated
+    public RElement selector(String selector) {
+        return at(LocatorTypes.SELECTOR, selector);
     }
 
-    public RElement locatedBy(WebElement webElement) {
-        return locatedBy(LocatorTypes.WEBELEMENT, webElement);
+    @Deprecated
+    public RElement by(By by) {
+        return at(LocatorTypes.BY, by);
+    }
+
+    @Deprecated
+    public RElement webElement(WebElement webElement) {
+        return at(LocatorTypes.WEBELEMENT, webElement);
     }
 
     protected WebElement getWebElement() {
