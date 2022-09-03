@@ -1,10 +1,14 @@
 package io.github.simple4tests.webdriver.interactions;
 
+import io.github.simple4tests.webdriver.utils.TechnicalActions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.FluentWait;
 
@@ -37,13 +41,9 @@ public class GoogleChromeTests {
         driver.navigate().to("http://www.google.fr");
         driver.findElement(By.xpath(ACCEPT)).click();
         driver.findElement(By.xpath(SEARCH_CRITERIA)).sendKeys("toto universal music", Keys.ENTER);
-//        new FluentWait<>(driver)
-//                .pollingEvery(Duration.ofMillis(250))
-//                .withTimeout(Duration.ofSeconds(10))
-//                .ignoring(NoSuchElementException.class)
-//                .until(ExpectedConditions.presenceOfElementLocated(By.xpath(TOTO_UNIVERSAL_MUSIC)));
+        TechnicalActions.waitElementToBePresent(driver, By.xpath(TOTO_UNIVERSAL_MUSIC));
         driver.findElement(By.xpath(TOTO_UNIVERSAL_MUSIC)).click();
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", driver.findElement(By.xpath(TOTO)));
+        TechnicalActions.scrollIntoView(driver, By.xpath(TOTO));
         driver.findElement(By.xpath(TOTO)).click();
         new FluentWait<>(driver)
                 .pollingEvery(Duration.ofMillis(250))

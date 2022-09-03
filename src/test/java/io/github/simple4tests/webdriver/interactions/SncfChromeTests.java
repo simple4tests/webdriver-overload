@@ -1,5 +1,6 @@
 package io.github.simple4tests.webdriver.interactions;
 
+import io.github.simple4tests.webdriver.utils.TechnicalActions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
@@ -42,32 +43,16 @@ public class SncfChromeTests {
     @Tag("NativeSelenium")
     public void seleniumSncfTest() {
         driver.navigate().to("http://www.sncf.com/fr");
-        new FluentWait<>(driver)
-                .pollingEvery(Duration.ofMillis(250))
-                .withTimeout(Duration.ofSeconds(10))
-                .ignoring(NoSuchElementException.class)
-                .until(ExpectedConditions.presenceOfElementLocated(By.xpath(REFUSE_ALL)));
+        TechnicalActions.waitElementToBePresent(driver, By.xpath(REFUSE_ALL));
         driver.findElement(By.xpath(REFUSE_ALL)).click();
         driver.findElement(By.xpath(DEPARTURE)).sendKeys("Paris");
-        new FluentWait<>(driver)
-                .pollingEvery(Duration.ofMillis(250))
-                .withTimeout(Duration.ofSeconds(10))
-                .ignoring(NoSuchElementException.class)
-                .until(ExpectedConditions.presenceOfElementLocated(By.xpath(DEPARTURE_OPTION_1)));
+        TechnicalActions.waitElementToBePresent(driver, By.xpath(DEPARTURE_OPTION_1));
         driver.findElement(By.xpath(DEPARTURE_OPTION_1)).click();
         driver.findElement(By.xpath(ARRIVAL)).sendKeys("Lyon");
-        new FluentWait<>(driver)
-                .pollingEvery(Duration.ofMillis(250))
-                .withTimeout(Duration.ofSeconds(10))
-                .ignoring(NoSuchElementException.class)
-                .until(ExpectedConditions.presenceOfElementLocated(By.xpath(ARRIVAL_OPTION_1)));
+        TechnicalActions.waitElementToBePresent(driver, By.xpath(ARRIVAL_OPTION_1));
         driver.findElement(By.xpath(ARRIVAL_OPTION_1)).click();
         driver.findElement(By.xpath(SEARCH)).click();
-        new FluentWait<>(driver)
-                .pollingEvery(Duration.ofMillis(250))
-                .withTimeout(Duration.ofSeconds(10))
-                .ignoring(NoSuchElementException.class)
-                .until(ExpectedConditions.presenceOfElementLocated(By.xpath(RESULTS)));
+        TechnicalActions.waitElementToBePresent(driver, By.xpath(RESULTS));
     }
 
     @Test
