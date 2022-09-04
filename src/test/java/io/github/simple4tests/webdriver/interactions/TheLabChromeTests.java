@@ -83,7 +83,7 @@ public class TheLabChromeTests {
     @Tag("InteractionsJS")
     public void jsKittensTest() {
         Interactions interactions = new Interactions(driver);
-        interactions.convertLocatorTypeToBy(false);
+        interactions.convertLocatorToBy(false);
         interactions.driver.navigate().to("http://thelab.boozang.com/");
         interactions
                 .click(MENU_OPEN)

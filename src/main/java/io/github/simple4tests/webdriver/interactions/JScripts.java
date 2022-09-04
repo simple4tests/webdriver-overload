@@ -44,13 +44,21 @@ public class JScripts {
         String countNodes = String.format(
                 "document.evaluate(\"%s\", document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null).snapshotLength",
                 xpath);
-        return Integer.parseInt(executor.executeScript(String.format("return %s;", countNodes)).toString());
+        Object o = null;
+        while (null == o) {
+            o = executor.executeScript(String.format("return %s;", countNodes));
+        }
+        return Integer.parseInt(o.toString());
     }
 
     public static int countElementsBySelector(JavascriptExecutor executor, String selector) {
         String countNodes = String.format(
                 "document.querySelectorAll(\"%s\").length",
                 selector);
+        Object o = null;
+        while (null == o) {
+            o = executor.executeScript(String.format("return %s;", countNodes));
+        }
         return Integer.parseInt(executor.executeScript(String.format("return %s;", countNodes)).toString());
     }
 

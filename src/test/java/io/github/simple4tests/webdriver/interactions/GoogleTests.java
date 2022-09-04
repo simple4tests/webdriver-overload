@@ -50,7 +50,7 @@ public class GoogleTests {
         Interactions interactions = new Interactions(driver);
         if (2 == info.getCurrentRepetition() || 4 == info.getCurrentRepetition()) {
             System.out.println("***** convertLocatorTypeToBy = false *****");
-            interactions.convertLocatorTypeToBy(false);
+            interactions.convertLocatorToBy(false);
         }
 
         interactions.driver.navigate().to("http://www.google.fr");
@@ -71,7 +71,7 @@ public class GoogleTests {
         Interactions interactions = new Interactions(driver);
         if (2 == info.getCurrentRepetition() || 4 == info.getCurrentRepetition()) {
             System.out.println("***** convertLocatorTypeToBy = false *****");
-            interactions.convertLocatorTypeToBy(false);
+            interactions.convertLocatorToBy(false);
         }
 
         interactions.driver.navigate().to("http://www.google.fr");

@@ -2,16 +2,13 @@ package io.github.simple4tests.webdriver.interactions;
 
 import io.github.simple4tests.webdriver.utils._TechActions;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.RepetitionInfo;
 import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 
-import java.time.Duration;
-
-public class SncfChromeTests {
+public class SncfTests {
 
     private final String REFUSE_ALL = "//*[@id='CybotCookiebotDialogBodyLevelButtonLevelOptinDeclineAll']";
     private final String DEPARTURE = "//*[@id='departure-place']";
@@ -23,22 +20,17 @@ public class SncfChromeTests {
 
     private WebDriver driver;
 
-    @BeforeEach
-    public void beforeEach() {
-        System.setProperty("webdriver.chrome.driver", "c:/dev/tools/selenium/chromedriver.exe");
-        driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(50));
-        driver.manage().window().maximize();
-    }
-
     @AfterEach
     public void afterEach() {
         driver.quit();
     }
 
-    @Test
-    @Tag("NativeSelenium")
-    public void seleniumSncfTest() {
+    @RepeatedTest(2)
+    @Tag("Selenium")
+    public void selenium_SncfTest(RepetitionInfo info) {
+        if (1 == info.getCurrentRepetition()) driver = _TechActions.initChromeDriver();
+        else driver = _TechActions.initFirefoxDriver();
+
         driver.navigate().to("http://www.sncf.com/fr");
         _TechActions.waitElementToBePresent(driver, By.xpath(REFUSE_ALL));
         driver.findElement(By.xpath(REFUSE_ALL)).click();
@@ -52,10 +44,18 @@ public class SncfChromeTests {
         _TechActions.waitElementToBePresent(driver, By.xpath(RESULTS));
     }
 
-    @Test
-    @Tag("InteractionsWebDriver")
-    public void weSncfTest() {
+    @RepeatedTest(4)
+    @Tag("Interactions")
+    public void interactions_SncfTest(RepetitionInfo info) {
+        if (info.getCurrentRepetition() < 3) driver = _TechActions.initChromeDriver();
+        else driver = _TechActions.initFirefoxDriver();
+
         Interactions interactions = new Interactions(driver);
+        if (2 == info.getCurrentRepetition() || 4 == info.getCurrentRepetition()) {
+            System.out.println("***** convertLocatorTypeToBy = false *****");
+            interactions.convertLocatorToBy(false);
+        }
+
         interactions.driver.navigate().to("http://www.sncf.com/fr");
         interactions
                 .click(REFUSE_ALL)
@@ -67,11 +67,18 @@ public class SncfChromeTests {
                 .waitToBePresent(RESULTS);
     }
 
-    @Test
+    @RepeatedTest(4)
     @Tag("InteractionsJS")
-    public void jsSncfTest() {
+    public void interactionsJS_SncfTest(RepetitionInfo info) {
+        if (info.getCurrentRepetition() < 3) driver = _TechActions.initChromeDriver();
+        else driver = _TechActions.initFirefoxDriver();
+
         Interactions interactions = new Interactions(driver);
-        interactions.convertLocatorTypeToBy(false);
+        if (2 == info.getCurrentRepetition() || 4 == info.getCurrentRepetition()) {
+            System.out.println("***** convertLocatorTypeToBy = false *****");
+            interactions.convertLocatorToBy(false);
+        }
+
         interactions.driver.navigate().to("http://www.sncf.com/fr");
         interactions
                 .clickEvent(REFUSE_ALL)
@@ -80,6 +87,6 @@ public class SncfChromeTests {
                 .sendKeys(ARRIVAL, "Lyon")
                 .clickEvent(ARRIVAL_OPTION_1)
                 .clickEvent(SEARCH)
-                .waitToBePresent(RESULTS);
+                .waitToBeAbsent(RESULTS).waitToBePresent(RESULTS);
     }
 }

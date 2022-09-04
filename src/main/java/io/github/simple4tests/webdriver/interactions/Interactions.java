@@ -81,8 +81,8 @@ public class Interactions extends Core {
         ELEMENT
      */
 
-    public Interactions convertLocatorTypeToBy(boolean convertLocatorTypeToBy) {
-        element.convertLocatorToBy(convertLocatorTypeToBy);
+    public Interactions convertLocatorToBy(boolean convertLocatorToBy) {
+        element.convertLocatorToBy(convertLocatorToBy);
         return this;
     }
 
