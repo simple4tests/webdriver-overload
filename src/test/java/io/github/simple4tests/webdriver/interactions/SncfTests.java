@@ -16,7 +16,7 @@ public class SncfTests {
     private final String ARRIVAL = "//*[@id='arrival-place']";
     private final String ARRIVAL_OPTION_1 = "//*[@id='react-autocomplete-arrival-place-1']";
     private final String SEARCH = "//button[@title='Rechercher un itinéraire']";
-    private final String RESULTS = "//section//ul/li";
+    private final String RESULTS = "//section[@class='itinerary-results-section']//ul/li";
 
     private WebDriver driver;
 
@@ -87,6 +87,6 @@ public class SncfTests {
                 .sendKeys(ARRIVAL, "Lyon")
                 .clickEvent(ARRIVAL_OPTION_1)
                 .clickEvent(SEARCH)
-                .waitToBeAbsent(RESULTS).waitToBePresent(RESULTS);
+                .waitToBePresent(RESULTS);
     }
 }

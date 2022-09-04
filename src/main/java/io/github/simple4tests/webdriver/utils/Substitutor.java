@@ -1,6 +1,6 @@
 package io.github.simple4tests.webdriver.utils;
 
-import org.apache.commons.lang.text.StrSubstitutor;
+import org.apache.commons.text.StringSubstitutor;
 
 import java.nio.file.Paths;
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 public class Substitutor {
 
     public static String replaceSystemProperties(String input) {
-        return StrSubstitutor.replaceSystemProperties(input);
+        return StringSubstitutor.replaceSystemProperties(input);
     }
 
     public static List<String> replaceSystemProperties(List<String> inputs) {

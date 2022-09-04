@@ -2,19 +2,16 @@ package io.github.simple4tests.webdriver.interactions;
 
 import io.github.simple4tests.webdriver.utils._TechActions;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.RepetitionInfo;
 import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
-import org.openqa.selenium.chrome.ChromeDriver;
 
-import java.time.Duration;
+public class TheLabTests {
 
-public class TheLabChromeTests {
-
-    private final String MENU_OPEN = "//button[@aria-label='Menu' and @aria-expanded='false']";
+    private final String MENU_IS_CLOSED = "//button[@aria-label='Menu' and @aria-expanded='false']";
     private final String COLLECT_KITTENS = "//a[.='Collecting kittens']";
     private final String STAR_GAME = "//button[text()='Start Game']";
     private final String GAME_OVER = "//*[text()='Game Over!']";
@@ -22,33 +19,24 @@ public class TheLabChromeTests {
 
     private WebDriver driver;
 
-    @BeforeEach
-    public void beforeEach() {
-        System.setProperty("webdriver.chrome.driver", "c:/dev/tools/selenium/chromedriver.exe");
-        driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(50));
-        driver.manage().window().maximize();
-    }
-
     @AfterEach
     public void afterEach() {
         driver.quit();
     }
 
-    @Test
-    @Tag("NativeSelenium")
-    public void seleniumKittensTest() {
+    @RepeatedTest(2)
+    @Tag("Selenium")
+    public void selenium_KittensTest(RepetitionInfo info) {
+        if (1 == info.getCurrentRepetition()) driver = _TechActions.initChromeDriver();
+        else driver = _TechActions.initFirefoxDriver();
+
         driver.navigate().to("http://thelab.boozang.com/");
-        driver.findElement(By.xpath(MENU_OPEN)).click();
+        driver.findElement(By.xpath(MENU_IS_CLOSED)).click();
         _TechActions.waitElementToBeVisible(driver, By.xpath(COLLECT_KITTENS));
         driver.findElement(By.xpath(COLLECT_KITTENS)).click();
         driver.findElement(By.xpath(STAR_GAME)).click();
         while (0 == driver.findElements(By.xpath(GAME_OVER)).size()) {
-            try {
-                Thread.sleep(50);
-            } catch (Exception e) {
-                System.out.println("Failed to sleep(millis): " + e);
-            }
+            _TechActions.sleep(50);
             if (0 < driver.findElements(By.xpath(KITTENS)).size()
                     && 0 == driver.findElements(By.xpath(GAME_OVER)).size()) {
                 try {
@@ -59,17 +47,26 @@ public class TheLabChromeTests {
         }
     }
 
-    @Test
-    @Tag("InteractionsWebDriver")
-    public void weKittensTest() {
+    @RepeatedTest(4)
+    @Tag("Interactions")
+    public void interactions_KittensTest(RepetitionInfo info) {
+        if (info.getCurrentRepetition() < 3) driver = _TechActions.initChromeDriver();
+        else driver = _TechActions.initFirefoxDriver();
+
         Interactions interactions = new Interactions(driver);
+        if (2 == info.getCurrentRepetition() || 4 == info.getCurrentRepetition()) {
+            System.out.println("***** convertLocatorTypeToBy = false *****");
+            interactions.convertLocatorToBy(false);
+        }
+
         interactions.driver.navigate().to("http://thelab.boozang.com/");
         interactions
-                .click(MENU_OPEN)
+                .click(MENU_IS_CLOSED)
                 .click(COLLECT_KITTENS)
                 .click(STAR_GAME);
         while (interactions.isAbsent(GAME_OVER)) {
-            if (interactions.waitToBePresent(KITTENS, true)
+            interactions.sleep(50);
+            if (interactions.isPresent(KITTENS)
                     && interactions.isAbsent(GAME_OVER)) {
                 try {
                     interactions.click(KITTENS);
@@ -79,18 +76,27 @@ public class TheLabChromeTests {
         }
     }
 
-    @Test
+    @RepeatedTest(4)
     @Tag("InteractionsJS")
-    public void jsKittensTest() {
+    public void interactionsJS_KittensTest(RepetitionInfo info) {
+        if (info.getCurrentRepetition() < 3) driver = _TechActions.initChromeDriver();
+        else driver = _TechActions.initFirefoxDriver();
+
         Interactions interactions = new Interactions(driver);
-        interactions.convertLocatorToBy(false);
+        if (2 == info.getCurrentRepetition() || 4 == info.getCurrentRepetition()) {
+            System.out.println("***** convertLocatorTypeToBy = false *****");
+            interactions.convertLocatorToBy(false);
+        }
+
         interactions.driver.navigate().to("http://thelab.boozang.com/");
         interactions
-                .click(MENU_OPEN)
-                .click(COLLECT_KITTENS)
-                .click(STAR_GAME);
+                .clickEvent(MENU_IS_CLOSED)
+                .clickEvent(COLLECT_KITTENS)
+                .sleep(250)
+                .clickEvent(STAR_GAME);
         while (interactions.isAbsent(GAME_OVER)) {
-            if (interactions.waitToBePresent(KITTENS, true)
+            interactions.sleep(50);
+            if (interactions.isPresent(KITTENS)
                     && interactions.isAbsent(GAME_OVER)) {
                 try {
                     interactions.click(KITTENS);

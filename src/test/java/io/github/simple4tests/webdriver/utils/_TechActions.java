@@ -14,11 +14,20 @@ import java.time.Duration;
 
 public class _TechActions {
 
+    public static void sleep(long millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (Exception e) {
+            System.out.println("Failed to sleep(millis): " + e);
+        }
+    }
+
     public static WebDriver initChromeDriver() {
         System.out.println("***** USING CHROME DRIVER *****");
         System.setProperty("webdriver.chrome.driver", "c:/dev/tools/selenium/chromedriver.exe");
         WebDriver driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(Duration.ofMillis(50));
+        driver.manage().window().maximize();
         return driver;
     }
 
@@ -29,6 +38,7 @@ public class _TechActions {
         firefoxOptions.setBinary("C:/Program Files/Mozilla Firefox/firefox.exe");
         WebDriver driver = new FirefoxDriver(firefoxOptions);
         driver.manage().timeouts().implicitlyWait(Duration.ofMillis(50));
+        driver.manage().window().maximize();
         return driver;
     }
 
@@ -39,7 +49,7 @@ public class _TechActions {
     public static void waitElementToBePresent(WebDriver driver, By by) {
         new FluentWait<>(driver)
                 .pollingEvery(Duration.ofMillis(250))
-                .withTimeout(Duration.ofSeconds(10))
+                .withTimeout(Duration.ofSeconds(30))
                 .ignoring(NoSuchElementException.class)
                 .until(ExpectedConditions.presenceOfElementLocated(by));
     }
@@ -47,7 +57,7 @@ public class _TechActions {
     public static void waitElementToBeVisible(WebDriver driver, By by) {
         new FluentWait<>(driver)
                 .pollingEvery(Duration.ofMillis(250))
-                .withTimeout(Duration.ofSeconds(10))
+                .withTimeout(Duration.ofSeconds(30))
                 .ignoring(NoSuchElementException.class)
                 .until(ExpectedConditions.visibilityOf(driver.findElement(by)));
     }
@@ -55,7 +65,7 @@ public class _TechActions {
     public static void waitTabToBePresent(WebDriver driver, int index) {
         new FluentWait<>(driver)
                 .pollingEvery(Duration.ofMillis(250))
-                .withTimeout(Duration.ofSeconds(10))
+                .withTimeout(Duration.ofSeconds(30))
                 .ignoring(NoSuchElementException.class)
                 .until(input -> index < driver.getWindowHandles().size());
     }

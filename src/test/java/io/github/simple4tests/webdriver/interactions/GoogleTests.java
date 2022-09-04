@@ -9,12 +9,14 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 
+import java.time.Duration;
+
 public class GoogleTests {
 
     private final String ACCEPT = "//*[@id='L2AGLb']";
     private final String SEARCH_CRITERIA = "//input[@name='q']";
     private final String TOTO_UNIVERSAL_MUSIC = "//h3[normalize-space(.)='Toto - Universal Music France']";
-    private final String TOTO = "//a[contains(.,'Toto')]";
+    private final String TOTO_ANNIVERSARY = "//a[contains(.,'Le groupe TOTO fête ses 40 ans sur scène !')]";
 
     private WebDriver driver;
 
@@ -35,8 +37,8 @@ public class GoogleTests {
                 .sendKeys("toto universal music", Keys.ENTER);
         _TechActions.waitElementToBePresent(driver, By.xpath(TOTO_UNIVERSAL_MUSIC));
         driver.findElement(By.xpath(TOTO_UNIVERSAL_MUSIC)).click();
-        _TechActions.scrollIntoView(driver, By.xpath(TOTO));
-        driver.findElement(By.xpath(TOTO)).click();
+        _TechActions.scrollIntoView(driver, By.xpath(TOTO_ANNIVERSARY));
+        driver.findElement(By.xpath(TOTO_ANNIVERSARY)).click();
         _TechActions.waitTabToBePresent(driver, 1);
         driver.switchTo().window(driver.getWindowHandles().toArray()[1].toString());
     }
@@ -48,6 +50,7 @@ public class GoogleTests {
         else driver = _TechActions.initFirefoxDriver();
 
         Interactions interactions = new Interactions(driver);
+        interactions.element.wait.withTimeout(Duration.ofSeconds(30));
         if (2 == info.getCurrentRepetition() || 4 == info.getCurrentRepetition()) {
             System.out.println("***** convertLocatorTypeToBy = false *****");
             interactions.convertLocatorToBy(false);
@@ -58,7 +61,7 @@ public class GoogleTests {
                 .click(ACCEPT)
                 .sendKeys(SEARCH_CRITERIA, "toto universal music", Keys.ENTER)
                 .click(TOTO_UNIVERSAL_MUSIC)
-                .click(TOTO)
+                .click(TOTO_ANNIVERSARY)
                 .switchToTab(1);
     }
 
@@ -69,6 +72,7 @@ public class GoogleTests {
         else driver = _TechActions.initFirefoxDriver();
 
         Interactions interactions = new Interactions(driver);
+        interactions.element.wait.withTimeout(Duration.ofSeconds(30));
         if (2 == info.getCurrentRepetition() || 4 == info.getCurrentRepetition()) {
             System.out.println("***** convertLocatorTypeToBy = false *****");
             interactions.convertLocatorToBy(false);
@@ -80,7 +84,7 @@ public class GoogleTests {
                 .set(SEARCH_CRITERIA, "value", "toto universal music")
                 .sendKeys(SEARCH_CRITERIA, Keys.ENTER)
                 .clickEvent(TOTO_UNIVERSAL_MUSIC)
-                .clickEvent(TOTO)
+                .clickEvent(TOTO_ANNIVERSARY)
                 .switchToTab(1);
     }
 }
