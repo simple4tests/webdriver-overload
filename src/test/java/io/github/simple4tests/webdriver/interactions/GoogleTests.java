@@ -53,7 +53,7 @@ public class GoogleTests {
         interactions.element.wait.withTimeout(Duration.ofSeconds(30));
         if (2 == info.getCurrentRepetition() || 4 == info.getCurrentRepetition()) {
             System.out.println("***** convertLocatorTypeToBy = false *****");
-            interactions.convertLocatorToBy(false);
+            interactions.convertAllLocatorsToBy(false);
         }
 
         interactions.driver.navigate().to("http://www.google.fr");
@@ -75,7 +75,7 @@ public class GoogleTests {
         interactions.element.wait.withTimeout(Duration.ofSeconds(30));
         if (2 == info.getCurrentRepetition() || 4 == info.getCurrentRepetition()) {
             System.out.println("***** convertLocatorTypeToBy = false *****");
-            interactions.convertLocatorToBy(false);
+            interactions.convertAllLocatorsToBy(false);
         }
 
         interactions.driver.navigate().to("http://www.google.fr");

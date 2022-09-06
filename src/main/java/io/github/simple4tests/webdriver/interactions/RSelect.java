@@ -24,7 +24,6 @@ SOFTWARE.
 
 package io.github.simple4tests.webdriver.interactions;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
@@ -42,26 +41,6 @@ public class RSelect extends Core {
 
     public RSelect at(Object locator) {
         return fromRElement(new RElement(driver).at(locator));
-    }
-
-    @Deprecated
-    public RSelect xpath(String xpath) {
-        return fromRElement(new RElement(driver).xpath(xpath));
-    }
-
-    @Deprecated
-    public RSelect selector(String selector) {
-        return fromRElement(new RElement(driver).selector(selector));
-    }
-
-    @Deprecated
-    public RSelect by(By by) {
-        return fromRElement(new RElement(driver).by(by));
-    }
-
-    @Deprecated
-    public RSelect webElement(WebElement webElement) {
-        return fromRElement(new RElement(driver).webElement(webElement));
     }
 
     protected RSelect fromRElement(RElement element) {
@@ -100,13 +79,11 @@ public class RSelect extends Core {
     }
 
     protected RSelect waitVisibleTextExists(String visibleText) {
-//        if (!isNull(select) && !isNull(visibleText)) wait.ignoreTimeoutException().until(input -> visibleTextExists(visibleText));
         wait.until(input -> visibleTextExists(visibleText));
         return this;
     }
 
     protected RSelect waitValueExists(String value) {
-//        if (!isNull(select) && !isNull(value)) wait.ignoreTimeoutException().until(input -> valueExists(value));
         wait.until(input -> valueExists(value));
         return this;
     }
@@ -115,7 +92,6 @@ public class RSelect extends Core {
       Index starts at 0
      */
     protected RSelect waitIndexExists(int index) {
-//        if (!isNull(select) && !isNull(index)) wait.ignoreTimeoutException().until(input -> indexExists(index));
         wait.until(input -> indexExists(index));
         return this;
     }

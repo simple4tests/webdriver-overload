@@ -53,7 +53,7 @@ public class SncfTests {
         Interactions interactions = new Interactions(driver);
         if (2 == info.getCurrentRepetition() || 4 == info.getCurrentRepetition()) {
             System.out.println("***** convertLocatorTypeToBy = false *****");
-            interactions.convertLocatorToBy(false);
+            interactions.convertAllLocatorsToBy(false);
         }
 
         interactions.driver.navigate().to("http://www.sncf.com/fr");
@@ -76,7 +76,7 @@ public class SncfTests {
         Interactions interactions = new Interactions(driver);
         if (2 == info.getCurrentRepetition() || 4 == info.getCurrentRepetition()) {
             System.out.println("***** convertLocatorTypeToBy = false *****");
-            interactions.convertLocatorToBy(false);
+            interactions.convertAllLocatorsToBy(false);
         }
 
         interactions.driver.navigate().to("http://www.sncf.com/fr");

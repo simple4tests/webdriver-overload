@@ -24,13 +24,18 @@ SOFTWARE.
 
 package io.github.simple4tests.webdriver.interactions;
 
+import io.github.simple4tests.webdriver.utils.Sleeper;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 
 public class JScripts {
 
     public static String getDocumentState(JavascriptExecutor executor) {
-        return executor.executeScript("return document.readyState").toString();
+        Object o = null;
+        while (null == o) {
+            o = executor.executeScript("return document.readyState");
+        }
+        return o.toString();
     }
 
     public static void scrollIntoView(JavascriptExecutor executor, WebElement element, String behavior, String block, String inline) {
@@ -66,15 +71,39 @@ public class JScripts {
         String getNode = String.format(
                 "document.evaluate(\"%s\", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue",
                 xpath);
-        return (WebElement) executor.executeScript(String.format("return %s;", getNode));
+        Object o = null;
+        while (null == o) {
+            o = executor.executeScript(String.format("return %s;", getNode));
+        }
+        return (WebElement) o;
     }
 
-    public static WebElement getElementBySelector(JavascriptExecutor executor, String css) {
+    public static WebElement getElementBySelector(JavascriptExecutor executor, String selector) {
         String getNode = String.format(
                 "document.querySelector(\"%s\")",
-                css);
-        return (WebElement) executor.executeScript(String.format("return %s;", getNode));
+                selector);
+        Object o = null;
+        while (null == o) {
+            o = executor.executeScript(String.format("return %s;", getNode));
+        }
+        return (WebElement) o;
     }
+
+//    public static boolean isEventPresentOnXpath(JavascriptExecutor executor, String xpath, String eventType) {
+//        String isEventPresentOnXpath = String.format(
+//                "document.evaluate(\"%s\", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue['%s']",
+//                xpath,
+//                eventType);
+//        return null != executor.executeScript(String.format("return %s;", isEventPresentOnXpath));
+//    }
+
+//    public static boolean isEventPresentOnSelector(JavascriptExecutor executor, String selector, String eventType) {
+//        String isEventPresentOnSelector = String.format(
+//                "document.querySelector(\"%s\")['%s']",
+//                selector,
+//                eventType);
+//        return null != executor.executeScript(String.format("return %s;", isEventPresentOnSelector));
+//    }
 
     public static void set(JavascriptExecutor executor, WebElement element, String attribute, String value) {
         executor.executeScript(String.format("arguments[0].%s='%s';", attribute, value), element);
@@ -82,6 +111,10 @@ public class JScripts {
 
     public static void set(JavascriptExecutor executor, WebElement element, String attribute, Boolean value) {
         executor.executeScript(String.format("arguments[0].%s='%b';", attribute, value), element);
+    }
+
+    public static Object get(JavascriptExecutor executor, WebElement element, String attribute) {
+        return executor.executeScript(String.format("return arguments[0].%s;", attribute), element);
     }
 
     public static void click(JavascriptExecutor executor, WebElement element) {
@@ -130,11 +163,30 @@ public class JScripts {
         dispatchEvent(executor, element, "MouseEvent", "mouseover", options);
     }
 
-    public static void dispatchEvent(JavascriptExecutor executor, WebElement element, String eventName, String type, String options) {
+//    public static boolean isEventPresentOnElement(JavascriptExecutor executor, WebElement element, String eventType) {
+//        return null != executor.executeScript(String.format("return arguments[0]['on%s'];", eventType), element);
+//    }
+
+//    public static boolean waitEventToBePresentOnElement(JavascriptExecutor executor, WebElement element, String eventType) {
+////        return Wait.until(
+////                input -> isEventPresentOnElement(executor, element, eventType),
+////                (WebDriver) executor,
+////                Duration.ofMillis(50),
+////                Duration.ofSeconds(1),
+////                Wait.DEFAULT_IGNORED_EXCEPTIONS);
+//        for (int retry = 0; retry < 20; retry++) {
+//            if (isEventPresentOnElement(executor, element, eventType)) return true;
+//            Sleeper.sleep(50);
+//        }
+//        return isEventPresentOnElement(executor, element, eventType);
+//    }
+
+    public static void dispatchEvent(JavascriptExecutor executor, WebElement element, String eventName, String eventType, String options) {
+//        waitEventToBePresentOnElement(executor, element, eventType);
         if (null == options || options.isEmpty())
-            dispatchEvent(executor, element, String.format("new %s('%s')", eventName, type));
+            dispatchEvent(executor, element, String.format("new %s('%s')", eventName, eventType));
         else
-            dispatchEvent(executor, element, String.format("new %s('%s', %s)", eventName, type, options));
+            dispatchEvent(executor, element, String.format("new %s('%s', %s)", eventName, eventType, options));
     }
 
     public static void dispatchEvent(JavascriptExecutor executor, WebElement element, String event) {

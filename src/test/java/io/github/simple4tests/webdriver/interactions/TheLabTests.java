@@ -13,7 +13,7 @@ public class TheLabTests {
 
     private final String MENU_IS_CLOSED = "//button[@aria-label='Menu' and @aria-expanded='false']";
     private final String COLLECT_KITTENS = "//a[.='Collecting kittens']";
-    private final String STAR_GAME = "//button[text()='Start Game']";
+    private final String START_GAME = "//button[text()='Start Game']";
     private final String GAME_OVER = "//*[text()='Game Over!']";
     private final String KITTENS = "//img[@alt='Cat']";
 
@@ -34,7 +34,7 @@ public class TheLabTests {
         driver.findElement(By.xpath(MENU_IS_CLOSED)).click();
         _TechActions.waitElementToBeVisible(driver, By.xpath(COLLECT_KITTENS));
         driver.findElement(By.xpath(COLLECT_KITTENS)).click();
-        driver.findElement(By.xpath(STAR_GAME)).click();
+        driver.findElement(By.xpath(START_GAME)).click();
         while (0 == driver.findElements(By.xpath(GAME_OVER)).size()) {
             _TechActions.sleep(50);
             if (0 < driver.findElements(By.xpath(KITTENS)).size()
@@ -56,14 +56,14 @@ public class TheLabTests {
         Interactions interactions = new Interactions(driver);
         if (2 == info.getCurrentRepetition() || 4 == info.getCurrentRepetition()) {
             System.out.println("***** convertLocatorTypeToBy = false *****");
-            interactions.convertLocatorToBy(false);
+            interactions.convertAllLocatorsToBy(false);
         }
 
         interactions.driver.navigate().to("http://thelab.boozang.com/");
         interactions
                 .click(MENU_IS_CLOSED)
                 .click(COLLECT_KITTENS)
-                .click(STAR_GAME);
+                .click(START_GAME);
         while (interactions.isAbsent(GAME_OVER)) {
             interactions.sleep(50);
             if (interactions.isPresent(KITTENS)
@@ -85,15 +85,14 @@ public class TheLabTests {
         Interactions interactions = new Interactions(driver);
         if (2 == info.getCurrentRepetition() || 4 == info.getCurrentRepetition()) {
             System.out.println("***** convertLocatorTypeToBy = false *****");
-            interactions.convertLocatorToBy(false);
+            interactions.convertAllLocatorsToBy(false);
         }
 
         interactions.driver.navigate().to("http://thelab.boozang.com/");
         interactions
                 .clickEvent(MENU_IS_CLOSED)
-                .clickEvent(COLLECT_KITTENS)
-                .sleep(250)
-                .clickEvent(STAR_GAME);
+                .clickEvent(COLLECT_KITTENS).sleep(100)
+                .clickEvent(START_GAME);
         while (interactions.isAbsent(GAME_OVER)) {
             interactions.sleep(50);
             if (interactions.isPresent(KITTENS)

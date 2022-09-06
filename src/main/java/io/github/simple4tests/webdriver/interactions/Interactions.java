@@ -81,26 +81,9 @@ public class Interactions extends Core {
         ELEMENT
      */
 
-    public Interactions convertLocatorToBy(boolean convertLocatorToBy) {
-        element.convertLocatorToBy(convertLocatorToBy);
+    public Interactions convertAllLocatorsToBy(boolean convertAllLocatorsToBy) {
+        element.convertAllLocatorsToBy(convertAllLocatorsToBy);
         return this;
-    }
-
-    public Interactions setDefaultLocatorType(LocatorTypes defaultLocatorType) {
-        element.setDefaultLocatorTypeForString(defaultLocatorType);
-        return this;
-    }
-
-    public WebElement getElement(Object locator) {
-        return element.at(locator).getElement();
-    }
-
-    public WebElement getInteractableElement(Object locator) {
-        return element.at(locator).getInteractableElement();
-    }
-
-    public WebElement getInteractableElement(Object locator, boolean scrollIntoView) {
-        return element.at(locator).getInteractableElement(scrollIntoView);
     }
 
     public int count(Object locator) {
@@ -115,13 +98,17 @@ public class Interactions extends Core {
         return element.at(locator).isAbsent();
     }
 
+    public boolean waitToBePresent(Object locator, boolean ignoreTimeoutException) {
+        return element.at(locator).waitToBePresent(ignoreTimeoutException);
+    }
+
     public Interactions waitToBePresent(Object locator) {
         element.at(locator).waitToBePresent();
         return this;
     }
 
-    public boolean waitToBePresent(Object locator, boolean ignoreTimeoutException) {
-        return element.at(locator).waitToBePresent(ignoreTimeoutException);
+    public boolean waitToBeAbsent(Object locator, boolean ignoreTimeoutException) {
+        return element.at(locator).waitToBeAbsent(ignoreTimeoutException);
     }
 
     public Interactions waitToBeAbsent(Object locator) {
@@ -129,8 +116,8 @@ public class Interactions extends Core {
         return this;
     }
 
-    public boolean waitToBeAbsent(Object locator, boolean ignoreTimeoutException) {
-        return element.at(locator).waitToBeAbsent(ignoreTimeoutException);
+    public WebElement getElement(Object locator) {
+        return element.at(locator).getElement();
     }
 
     public Interactions waitToBeInteractable(Object locator) {
@@ -151,6 +138,14 @@ public class Interactions extends Core {
     public Interactions scrollIntoView(Object locator) {
         element.at(locator).scrollIntoView();
         return this;
+    }
+
+    public WebElement getInteractableElement(Object locator, boolean scrollIntoView) {
+        return element.at(locator).getInteractableElement(scrollIntoView);
+    }
+
+    public WebElement getInteractableElement(Object locator) {
+        return element.at(locator).getInteractableElement();
     }
 
     public Interactions clickEvent(Object locator) {
@@ -211,6 +206,10 @@ public class Interactions extends Core {
     public Interactions set(Object locator, String attribute, boolean value) {
         element.at(locator).set(attribute, value);
         return this;
+    }
+
+    public Object get(Object locator, String attribute) {
+        return element.at(locator).get(attribute);
     }
 
     public Interactions click(Object locator) {
