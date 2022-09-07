@@ -25,7 +25,6 @@ SOFTWARE.
 package io.github.simple4tests.webdriver.interactions;
 
 import org.openqa.selenium.*;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.time.Duration;
 
@@ -68,7 +67,9 @@ public class RElement extends Core {
     }
 
     protected LocatorTypes getLocatorType(String locator) {
-        if (locator.startsWith("./") || locator.startsWith("/")) return LocatorTypes.XPATH;
+        if (locator.replace("(", "").startsWith("./")
+                || locator.replace("(", "").startsWith("/"))
+            return LocatorTypes.XPATH;
         return LocatorTypes.SELECTOR;
     }
 

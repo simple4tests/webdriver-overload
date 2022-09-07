@@ -24,18 +24,21 @@ SOFTWARE.
 
 package io.github.simple4tests.webdriver.interactions;
 
-import io.github.simple4tests.webdriver.utils.Sleeper;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 
 public class JScripts {
 
-    public static String getDocumentState(JavascriptExecutor executor) {
+    public static Object exec(JavascriptExecutor executor, String script, Object... args) {
         Object o = null;
         while (null == o) {
-            o = executor.executeScript("return document.readyState");
+            o = executor.executeScript(script, args);
         }
-        return o.toString();
+        return o;
+    }
+
+    public static String getDocumentState(JavascriptExecutor executor) {
+        return exec(executor, "return document.readyState;").toString();
     }
 
     public static void scrollIntoView(JavascriptExecutor executor, WebElement element, String behavior, String block, String inline) {
@@ -49,44 +52,28 @@ public class JScripts {
         String countNodes = String.format(
                 "document.evaluate(\"%s\", document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null).snapshotLength",
                 xpath);
-        Object o = null;
-        while (null == o) {
-            o = executor.executeScript(String.format("return %s;", countNodes));
-        }
-        return Integer.parseInt(o.toString());
+        return Integer.parseInt(exec(executor, String.format("return %s;", countNodes)).toString());
     }
 
     public static int countElementsBySelector(JavascriptExecutor executor, String selector) {
         String countNodes = String.format(
                 "document.querySelectorAll(\"%s\").length",
                 selector);
-        Object o = null;
-        while (null == o) {
-            o = executor.executeScript(String.format("return %s;", countNodes));
-        }
-        return Integer.parseInt(executor.executeScript(String.format("return %s;", countNodes)).toString());
+        return Integer.parseInt(exec(executor, String.format("return %s;", countNodes)).toString());
     }
 
     public static WebElement getElementByXpath(JavascriptExecutor executor, String xpath) {
         String getNode = String.format(
                 "document.evaluate(\"%s\", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue",
                 xpath);
-        Object o = null;
-        while (null == o) {
-            o = executor.executeScript(String.format("return %s;", getNode));
-        }
-        return (WebElement) o;
+        return (WebElement) exec(executor, String.format("return %s;", getNode));
     }
 
     public static WebElement getElementBySelector(JavascriptExecutor executor, String selector) {
         String getNode = String.format(
                 "document.querySelector(\"%s\")",
                 selector);
-        Object o = null;
-        while (null == o) {
-            o = executor.executeScript(String.format("return %s;", getNode));
-        }
-        return (WebElement) o;
+        return (WebElement) exec(executor, String.format("return %s;", getNode));
     }
 
 //    public static boolean isEventPresentOnXpath(JavascriptExecutor executor, String xpath, String eventType) {
@@ -106,15 +93,18 @@ public class JScripts {
 //    }
 
     public static void set(JavascriptExecutor executor, WebElement element, String attribute, String value) {
-        executor.executeScript(String.format("arguments[0].%s='%s';", attribute, value), element);
+//        executor.executeScript(String.format("arguments[0].%s='%s';", attribute, value), element);
+        exec(executor, String.format("return arguments[0].%s='%s';", attribute, value), element);
     }
 
     public static void set(JavascriptExecutor executor, WebElement element, String attribute, Boolean value) {
-        executor.executeScript(String.format("arguments[0].%s='%b';", attribute, value), element);
+//        executor.executeScript(String.format("arguments[0].%s='%b';", attribute, value), element);
+        exec(executor, String.format("return arguments[0].%s='%b';", attribute, value), element);
     }
 
     public static Object get(JavascriptExecutor executor, WebElement element, String attribute) {
-        return executor.executeScript(String.format("return arguments[0].%s;", attribute), element);
+//        return executor.executeScript(String.format("return arguments[0].%s;", attribute), element);
+        return exec(executor, String.format("return arguments[0].%s;", attribute), element);
     }
 
     public static void click(JavascriptExecutor executor, WebElement element) {
@@ -190,6 +180,6 @@ public class JScripts {
     }
 
     public static void dispatchEvent(JavascriptExecutor executor, WebElement element, String event) {
-        executor.executeScript(String.format("arguments[0].dispatchEvent(%s);", event), element);
+        exec(executor, String.format("return arguments[0].dispatchEvent(%s);", event), element);
     }
 }
