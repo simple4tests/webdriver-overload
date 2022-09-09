@@ -24,7 +24,6 @@ SOFTWARE.
 
 package io.github.simple4tests.webdriver.interactions;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
@@ -40,23 +39,11 @@ public class RSelect extends Core {
         wait.pollingEvery(Duration.ofMillis(50)).withTimeout(Duration.ofSeconds(15));
     }
 
-    public RSelect locatedByXpath(String xpath) {
-        return locatedBy(new RElement(driver).locatedByXpath(xpath));
+    public RSelect at(Object locator) {
+        return fromRElement(new RElement(driver).at(locator));
     }
 
-    public RSelect locatedBySelector(String selector) {
-        return locatedBy(new RElement(driver).locatedBySelector(selector));
-    }
-
-    public RSelect locatedBy(By by) {
-        return locatedBy(new RElement(driver).locatedBy(by));
-    }
-
-    public RSelect locatedBy(WebElement webElement) {
-        return locatedBy(new RElement(driver).locatedBy(webElement));
-    }
-
-    protected RSelect locatedBy(RElement element) {
+    protected RSelect fromRElement(RElement element) {
         this.select = new Select(element.getInteractableElement());
         return this;
     }
@@ -92,13 +79,11 @@ public class RSelect extends Core {
     }
 
     protected RSelect waitVisibleTextExists(String visibleText) {
-//        if (!isNull(select) && !isNull(visibleText)) wait.ignoreTimeoutException().until(input -> visibleTextExists(visibleText));
         wait.until(input -> visibleTextExists(visibleText));
         return this;
     }
 
     protected RSelect waitValueExists(String value) {
-//        if (!isNull(select) && !isNull(value)) wait.ignoreTimeoutException().until(input -> valueExists(value));
         wait.until(input -> valueExists(value));
         return this;
     }
@@ -107,7 +92,6 @@ public class RSelect extends Core {
       Index starts at 0
      */
     protected RSelect waitIndexExists(int index) {
-//        if (!isNull(select) && !isNull(index)) wait.ignoreTimeoutException().until(input -> indexExists(index));
         wait.until(input -> indexExists(index));
         return this;
     }

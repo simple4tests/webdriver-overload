@@ -41,6 +41,7 @@ public class RElement extends Core {
     protected boolean clearAll;
     protected boolean clearNext;
 
+    protected boolean convertAllLocatorsToBy;
     protected LocatorTypes locatorType;
     protected String xpath;
     protected String selector;
@@ -60,51 +61,65 @@ public class RElement extends Core {
         scrollInline = DEFAULT_SCROLL_INLINE;
 
         clearAll(false);
+
         resetLocator();
+        convertAllLocatorsToBy(true);
     }
 
-    protected void resetLocator() {
+    protected LocatorTypes getLocatorType(String locator) {
+        if (locator.replace("(", "").startsWith("./")
+                || locator.replace("(", "").startsWith("/"))
+            return LocatorTypes.XPATH;
+        return LocatorTypes.SELECTOR;
+    }
+
+    protected RElement resetLocator() {
         this.locatorType = null;
         this.xpath = null;
         this.selector = null;
         this.by = null;
         this.webElement = null;
+        return this;
     }
 
-    public RElement locatedBy(LocatorTypes locatorType, Object locator) {
-        resetLocator();
+    public RElement convertAllLocatorsToBy(boolean convertAllLocatorsToBy) {
+        this.convertAllLocatorsToBy = convertAllLocatorsToBy;
+        return this;
+    }
+
+    public RElement at(LocatorTypes locatorType, Object locator) {
         switch (locatorType) {
             case XPATH:
                 if (locator instanceof String) {
-                    this.locatorType = locatorType;
-                    this.xpath = (String) locator;
-                } else {
-                    throw new Error("<Locator> type mismatch <LocatorType>");
-                }
+                    if (convertAllLocatorsToBy) {
+                        at(LocatorTypes.BY, By.xpath((String) locator));
+                    } else {
+                        this.locatorType = locatorType;
+                        xpath = (String) locator;
+                    }
+                } else throw new Error("<Locator> type mismatch <LocatorType>");
                 break;
             case SELECTOR:
                 if (locator instanceof String) {
-                    this.locatorType = locatorType;
-                    this.selector = (String) locator;
-                } else {
-                    throw new Error("<Locator> type mismatch <LocatorType>");
-                }
+                    if (convertAllLocatorsToBy) {
+                        at(LocatorTypes.BY, By.cssSelector((String) locator));
+                    } else {
+                        this.locatorType = locatorType;
+                        selector = (String) locator;
+                    }
+                } else throw new Error("<Locator> type mismatch <LocatorType>");
                 break;
             case BY:
                 if (locator instanceof By) {
                     this.locatorType = locatorType;
-                    this.by = (By) locator;
-                } else {
-                    throw new Error("<Locator> type mismatch <LocatorType>");
-                }
+                    by = (By) locator;
+                } else throw new Error("<Locator> type mismatch <LocatorType>");
                 break;
             case WEBELEMENT:
                 if (locator instanceof WebElement) {
                     this.locatorType = locatorType;
-                    this.webElement = (WebElement) locator;
-                } else {
-                    throw new Error("<Locator> type mismatch <LocatorType>");
-                }
+                    webElement = (WebElement) locator;
+                } else throw new Error("<Locator> type mismatch <LocatorType>");
                 break;
             default:
                 throw new Error("<LocatorType> not defined");
@@ -112,20 +127,11 @@ public class RElement extends Core {
         return this;
     }
 
-    public RElement locatedByXpath(String xpath) {
-        return locatedBy(LocatorTypes.XPATH, xpath);
-    }
-
-    public RElement locatedBySelector(String selector) {
-        return locatedBy(LocatorTypes.SELECTOR, selector);
-    }
-
-    public RElement locatedBy(By by) {
-        return locatedBy(LocatorTypes.BY, by);
-    }
-
-    public RElement locatedBy(WebElement webElement) {
-        return locatedBy(LocatorTypes.WEBELEMENT, webElement);
+    public RElement at(Object locator) {
+        if (locator instanceof String) return at(getLocatorType((String) locator), locator);
+        if (locator instanceof By) return at(LocatorTypes.BY, locator);
+        if (locator instanceof WebElement) return at(LocatorTypes.WEBELEMENT, locator);
+        throw new Error("<LocatorType> not supported");
     }
 
     protected WebElement getWebElement() {
@@ -141,21 +147,6 @@ public class RElement extends Core {
             default:
                 return null;
         }
-    }
-
-    public WebElement getElement() {
-        waitToBePresent();
-        return getWebElement();
-    }
-
-    public WebElement getInteractableElement() {
-        return getInteractableElement(true);
-    }
-
-    public WebElement getInteractableElement(boolean scrollIntoView) {
-        if (scrollIntoView) scrollIntoView();
-        else waitToBeInteractable();
-        return getWebElement();
     }
 
     public int count() {
@@ -181,18 +172,13 @@ public class RElement extends Core {
         return 0 == count();
     }
 
-    public RElement waitToBePresent() {
-        waitToBePresent(false);
-        return this;
-    }
-
     public boolean waitToBePresent(boolean ignoreTimeoutException) {
         if (ignoreTimeoutException) wait.ignoreTimeoutException();
         return wait.until(input -> isPresent());
     }
 
-    public RElement waitToBeAbsent() {
-        waitToBeAbsent(false);
+    public RElement waitToBePresent() {
+        waitToBePresent(false);
         return this;
     }
 
@@ -201,13 +187,23 @@ public class RElement extends Core {
         return wait.until(input -> isAbsent());
     }
 
+    public RElement waitToBeAbsent() {
+        waitToBeAbsent(false);
+        return this;
+    }
+
+    public WebElement getElement() {
+        waitToBePresent();
+        return getWebElement();
+    }
+
     public RElement waitToBeInteractable() {
         waitDocumentToBeComplete();
         if (!isNull(locatorType)) {
             try {
-                getElement().isEnabled();
-                wait.until(input -> getElement().isDisplayed());
-                wait.until(input -> getElement().isEnabled());
+                waitToBePresent();
+                wait.until(input -> getWebElement().isDisplayed());
+                wait.until(input -> getWebElement().isEnabled());
             } catch (WebDriverException ignored) {
             }
         }
@@ -231,15 +227,14 @@ public class RElement extends Core {
         return scrollIntoView(scrollBehavior, scrollBlock, scrollInline);
     }
 
-    public RElement click() {
-        if (!isNull(locatorType)) {
-//            try {
-            getInteractableElement().click();
-//            } catch (WebDriverException e) {
-//                clickEvent();
-//            }
-        }
-        return this;
+    public WebElement getInteractableElement(boolean scrollIntoView) {
+        if (scrollIntoView) scrollIntoView();
+        else waitToBeInteractable();
+        return getWebElement();
+    }
+
+    public WebElement getInteractableElement() {
+        return getInteractableElement(true);
     }
 
     public RElement clickEvent() {
@@ -301,6 +296,17 @@ public class RElement extends Core {
     public RElement set(String attribute, boolean value) {
         if (!isNull(locatorType) && !isNull(attribute) && !isNull(value))
             JScripts.set(jsExecutor, getInteractableElement(), attribute, value);
+        return this;
+    }
+
+    public Object get(String attribute) {
+        if (!isNull(locatorType) && !isNull(attribute))
+            return JScripts.get(jsExecutor, getInteractableElement(), attribute);
+        return null;
+    }
+
+    public RElement click() {
+        if (!isNull(locatorType)) getInteractableElement().click();
         return this;
     }
 
