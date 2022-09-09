@@ -91,7 +91,7 @@ public class TheLabTests {
         interactions.driver.navigate().to("http://thelab.boozang.com/");
         interactions
                 .clickEvent(MENU_IS_CLOSED)
-                .clickEvent(COLLECT_KITTENS).sleep(100)
+                .clickEvent(COLLECT_KITTENS).sleep(250)
                 .clickEvent(START_GAME);
         while (interactions.isAbsent(GAME_OVER)) {
             interactions.sleep(50);
