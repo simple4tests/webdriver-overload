@@ -61,6 +61,7 @@
         <codehaus-groovy.version>3.0.12</codehaus-groovy.version>
         <snakeyaml.version>1.30</snakeyaml.version>
         <selenium.version>4.4.0</selenium.version>
+        <cucumber.version>7.4.1</cucumber.version>
         <serenity.version>3.3.2</serenity.version>
         <junit.version>5.9.0</junit.version>
 
@@ -92,6 +93,13 @@
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
             <version>${selenium.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-java8</artifactId>
+            <version>${cucumber.version}</version>
+            <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>net.serenity-bdd</groupId>
