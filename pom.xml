@@ -56,7 +56,7 @@
         <maven-gpg-plugin.version>3.0.1</maven-gpg-plugin.version>
         <maven-surefire-plugin.version>3.0.0-M7</maven-surefire-plugin.version>
 
-        <commons-lang3.version>3.12.0</commons-lang3.version>
+        <commons-lang3.version>1.9</commons-lang3.version>
         <hamcrest.version>2.2</hamcrest.version>
         <codehaus-groovy.version>3.0.12</codehaus-groovy.version>
         <snakeyaml.version>1.30</snakeyaml.version>
@@ -70,7 +70,7 @@
     <dependencies>
         <dependency>
             <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
+            <artifactId>commons-text</artifactId>
             <version>${commons-lang3.version}</version>
         </dependency>
         <dependency>
