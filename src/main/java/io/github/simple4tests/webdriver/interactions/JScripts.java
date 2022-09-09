@@ -93,17 +93,14 @@ public class JScripts {
 //    }
 
     public static void set(JavascriptExecutor executor, WebElement element, String attribute, String value) {
-//        executor.executeScript(String.format("arguments[0].%s='%s';", attribute, value), element);
         exec(executor, String.format("return arguments[0].%s='%s';", attribute, value), element);
     }
 
     public static void set(JavascriptExecutor executor, WebElement element, String attribute, Boolean value) {
-//        executor.executeScript(String.format("arguments[0].%s='%b';", attribute, value), element);
         exec(executor, String.format("return arguments[0].%s='%b';", attribute, value), element);
     }
 
     public static Object get(JavascriptExecutor executor, WebElement element, String attribute) {
-//        return executor.executeScript(String.format("return arguments[0].%s;", attribute), element);
         return exec(executor, String.format("return arguments[0].%s;", attribute), element);
     }
 

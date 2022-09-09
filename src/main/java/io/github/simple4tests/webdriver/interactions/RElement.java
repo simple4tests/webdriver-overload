@@ -306,7 +306,6 @@ public class RElement extends Core {
     }
 
     public RElement click() {
-//        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("")));
         if (!isNull(locatorType)) getInteractableElement().click();
         return this;
     }

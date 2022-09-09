@@ -14,14 +14,6 @@ import java.time.Duration;
 
 public class _TechActions {
 
-    public static void sleep(long millis) {
-        try {
-            Thread.sleep(millis);
-        } catch (Exception e) {
-            System.out.println("Failed to sleep(millis): " + e);
-        }
-    }
-
     public static WebDriver initChromeDriver() {
         System.out.println("***** USING CHROME DRIVER *****");
         System.setProperty("webdriver.chrome.driver", "c:/dev/tools/selenium/chromedriver.exe");
@@ -40,6 +32,14 @@ public class _TechActions {
         driver.manage().timeouts().implicitlyWait(Duration.ofMillis(50));
         driver.manage().window().maximize();
         return driver;
+    }
+
+    public static void sleep(long millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (Exception e) {
+            System.out.println("Failed to sleep(millis): " + e);
+        }
     }
 
     public static void scrollIntoView(WebDriver driver, By by) {
