@@ -1,6 +1,6 @@
 package io.github.simple4tests.webdriver.framework;
 
-import io.cucumber.java8.Scenario;
+import io.cucumber.java.Scenario;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.openqa.selenium.OutputType;
@@ -11,7 +11,7 @@ import java.nio.file.Path;
 
 @NoArgsConstructor
 @AllArgsConstructor
-public class CucumberJava8Reporter extends SystemOutReporter {
+public class CucumberJavaReporter extends SystemOutReporter {
 
     public Scenario scenario;
     public WebDriver driver;

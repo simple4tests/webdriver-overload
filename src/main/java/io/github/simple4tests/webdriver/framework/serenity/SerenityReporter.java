@@ -1,6 +1,6 @@
 package io.github.simple4tests.webdriver.framework.serenity;
 
-import io.github.simple4tests.webdriver.framework.CucumberJava8Reporter;
+import io.github.simple4tests.webdriver.framework.SystemOutReporter;
 import net.thucydides.core.model.ReportData;
 import net.thucydides.core.model.TestOutcome;
 import net.thucydides.core.model.TestResult;
@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 
-public class SerenityReporter extends CucumberJava8Reporter {
+public class SerenityReporter extends SystemOutReporter {
 
     private TestStep getCurrentStep() {
         TestOutcome outcome = StepEventBus.getEventBus().getBaseStepListener().getCurrentTestOutcome();
@@ -73,7 +73,6 @@ public class SerenityReporter extends CucumberJava8Reporter {
 
     @Override
     public void reportScreenshot() {
-//        super.reportScreenshot();
         StepEventBus.getEventBus().takeScreenshot();
     }
 }
