@@ -5,7 +5,7 @@
 
     <groupId>io.github.simple4tests</groupId>
     <artifactId>webdriver-overload</artifactId>
-    <version>2.0.4</version>
+    <version>2.0.5</version>
     <packaging>jar</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
@@ -56,12 +56,12 @@
         <maven-gpg-plugin.version>3.0.1</maven-gpg-plugin.version>
         <maven-surefire-plugin.version>3.0.0-M7</maven-surefire-plugin.version>
 
-        <commons-lang.version>2.6</commons-lang.version>
+        <commons-lang3.version>3.12.0</commons-lang3.version>
         <hamcrest.version>2.2</hamcrest.version>
         <codehaus-groovy.version>3.0.12</codehaus-groovy.version>
         <snakeyaml.version>1.30</snakeyaml.version>
         <selenium.version>4.4.0</selenium.version>
-        <serenity.version>3.3.1</serenity.version>
+        <serenity.version>3.3.2</serenity.version>
         <junit.version>5.9.0</junit.version>
 
         <skipTests>true</skipTests>
@@ -69,9 +69,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>commons-lang</groupId>
-            <artifactId>commons-lang</artifactId>
-            <version>${commons-lang.version}</version>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${commons-lang3.version}</version>
         </dependency>
         <dependency>
             <groupId>org.hamcrest</groupId>
