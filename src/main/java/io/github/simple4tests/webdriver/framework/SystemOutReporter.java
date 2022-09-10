@@ -10,21 +10,25 @@ public class SystemOutReporter extends DummyReporter {
 
     @Override
     public void reportAction(String action) {
+        super.reportAction(action);
         printResult("action : ".concat(action));
     }
 
     @Override
     public void reportData(String data) {
+        super.reportData(data);
         printResult(String.format("data : \n%s", data));
     }
 
     @Override
     public void reportData(Path path) {
+        super.reportData(path);
         printResult(String.format("data : \n%s", path.toAbsolutePath()));
     }
 
     @Override
     public void reportCheck(String check) {
+        super.reportCheck(check);
         printResult("check : ".concat(check));
         reportScreenshot();
     }
@@ -43,5 +47,6 @@ public class SystemOutReporter extends DummyReporter {
 
     @Override
     public void reportScreenshot() {
+        super.reportScreenshot();
     }
 }
