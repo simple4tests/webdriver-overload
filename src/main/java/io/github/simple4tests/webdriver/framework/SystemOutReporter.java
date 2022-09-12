@@ -2,7 +2,7 @@ package io.github.simple4tests.webdriver.framework;
 
 import java.nio.file.Path;
 
-public class SystemOutReporter extends DummyReporter {
+public class SystemOutReporter implements Reporter {
 
     private void printResult(String description) {
         System.out.println(description);
@@ -10,35 +10,34 @@ public class SystemOutReporter extends DummyReporter {
 
     @Override
     public void reportAction(String action) {
-        printResult("Test action : ".concat(action));
+        printResult("action : ".concat(action));
     }
 
     @Override
     public void reportData(String data) {
-        printResult(String.format("Test data : \n%s", data));
+        printResult(String.format("data : \n%s", data));
     }
 
     @Override
     public void reportData(Path path) {
-        printResult(String.format("Test data : \n%s", path.toAbsolutePath()));
+        printResult(String.format("data : \n%s", path.toAbsolutePath()));
     }
 
     @Override
     public void reportCheck(String check) {
-        printResult("Test check : ".concat(check));
-        reportScreenshot();
+        printResult("check : ".concat(check));
     }
 
     @Override
     public void reportError(String error) {
-        super.reportError(error);
-        printResult(String.format("Test error : %s", error));
+        errors.add(error);
+        printResult(String.format("error : %s", error));
     }
 
     @Override
     public void reportError(Path path) {
-        super.reportError(path);
-        printResult(String.format("Test error : %s", path.toAbsolutePath()));
+        errors.add(path.toAbsolutePath().toString());
+        printResult(String.format("error : %s", path.toAbsolutePath()));
     }
 
     @Override

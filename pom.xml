@@ -5,7 +5,7 @@
 
     <groupId>io.github.simple4tests</groupId>
     <artifactId>webdriver-overload</artifactId>
-    <version>2.0.5</version>
+    <version>2.0.6-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
@@ -56,12 +56,13 @@
         <maven-gpg-plugin.version>3.0.1</maven-gpg-plugin.version>
         <maven-surefire-plugin.version>3.0.0-M7</maven-surefire-plugin.version>
 
-        <commons-lang3.version>3.12.0</commons-lang3.version>
+        <commons-text.version>1.9</commons-text.version>
         <hamcrest.version>2.2</hamcrest.version>
         <codehaus-groovy.version>3.0.12</codehaus-groovy.version>
-        <snakeyaml.version>1.30</snakeyaml.version>
+        <snakeyaml.version>1.31</snakeyaml.version>
         <selenium.version>4.4.0</selenium.version>
-        <serenity.version>3.3.2</serenity.version>
+        <cucumber.version>7.7.0</cucumber.version>
+        <serenity.version>3.3.4</serenity.version>
         <junit.version>5.9.0</junit.version>
 
         <skipTests>true</skipTests>
@@ -70,8 +71,8 @@
     <dependencies>
         <dependency>
             <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>${commons-lang3.version}</version>
+            <artifactId>commons-text</artifactId>
+            <version>${commons-text.version}</version>
         </dependency>
         <dependency>
             <groupId>org.hamcrest</groupId>
@@ -92,6 +93,20 @@
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
             <version>${selenium.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-java</artifactId>
+            <version>${cucumber.version}</version>
+            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-java8</artifactId>
+            <version>${cucumber.version}</version>
+            <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>net.serenity-bdd</groupId>
