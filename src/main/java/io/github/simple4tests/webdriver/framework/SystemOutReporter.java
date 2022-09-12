@@ -2,7 +2,7 @@ package io.github.simple4tests.webdriver.framework;
 
 import java.nio.file.Path;
 
-public class SystemOutReporter extends DummyReporter {
+public class SystemOutReporter implements Reporter {
 
     private void printResult(String description) {
         System.out.println(description);
@@ -10,43 +10,38 @@ public class SystemOutReporter extends DummyReporter {
 
     @Override
     public void reportAction(String action) {
-        super.reportAction(action);
         printResult("action : ".concat(action));
     }
 
     @Override
     public void reportData(String data) {
-        super.reportData(data);
         printResult(String.format("data : \n%s", data));
     }
 
     @Override
     public void reportData(Path path) {
-        super.reportData(path);
         printResult(String.format("data : \n%s", path.toAbsolutePath()));
     }
 
     @Override
     public void reportCheck(String check) {
-        super.reportCheck(check);
         printResult("check : ".concat(check));
         reportScreenshot();
     }
 
     @Override
     public void reportError(String error) {
-        super.reportError(error);
+        errors.add(error);
         printResult(String.format("error : %s", error));
     }
 
     @Override
     public void reportError(Path path) {
-        super.reportError(path);
+        errors.add(path.toAbsolutePath().toString());
         printResult(String.format("error : %s", path.toAbsolutePath()));
     }
 
     @Override
     public void reportScreenshot() {
-        super.reportScreenshot();
     }
 }
