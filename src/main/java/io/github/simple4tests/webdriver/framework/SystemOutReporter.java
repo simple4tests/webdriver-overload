@@ -26,7 +26,6 @@ public class SystemOutReporter implements Reporter {
     @Override
     public void reportCheck(String check) {
         printResult("check : ".concat(check));
-        reportScreenshot();
     }
 
     @Override
