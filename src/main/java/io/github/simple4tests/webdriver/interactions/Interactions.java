@@ -168,12 +168,12 @@ public class Interactions extends Core {
         return this;
     }
 
-    public Interactions auxClickEvent(Object locator) {
+    public Interactions auxclickEvent(Object locator) {
         element.at(locator).auxclickEvent();
         return this;
     }
 
-    public Interactions auxClickEvent(Object locator, String options) {
+    public Interactions auxclickEvent(Object locator, String options) {
         element.at(locator).auxclickEvent(options);
         return this;
     }
@@ -188,13 +188,13 @@ public class Interactions extends Core {
         return this;
     }
 
-    public Interactions mouseOverEvent(Object locator) {
-        element.at(locator).mouseOverEvent();
+    public Interactions mouseoverEvent(Object locator) {
+        element.at(locator).mouseoverEvent();
         return this;
     }
 
-    public Interactions mouseOverEvent(Object locator, String options) {
-        element.at(locator).mouseOverEvent(options);
+    public Interactions mouseoverEvent(Object locator, String options) {
+        element.at(locator).mouseoverEvent(options);
         return this;
     }
 

@@ -277,12 +277,12 @@ public class RElement extends Core {
         return this;
     }
 
-    public RElement mouseOverEvent() {
+    public RElement mouseoverEvent() {
         if (!isNull(locatorType)) JScripts.mouseover(jsExecutor, getInteractableElement());
         return this;
     }
 
-    public RElement mouseOverEvent(String options) {
+    public RElement mouseoverEvent(String options) {
         if (!isNull(locatorType)) JScripts.mouseover(jsExecutor, getInteractableElement(), options);
         return this;
     }
