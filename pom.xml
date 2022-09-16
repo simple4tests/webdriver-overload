@@ -58,7 +58,7 @@
 
         <commons-text.version>1.9</commons-text.version>
         <hamcrest.version>2.2</hamcrest.version>
-        <codehaus-groovy.version>3.0.12</codehaus-groovy.version>
+        <apache-groovy.version>4.0.1</apache-groovy.version>
         <snakeyaml.version>1.31</snakeyaml.version>
         <selenium.version>4.4.0</selenium.version>
         <cucumber.version>7.7.0</cucumber.version>
@@ -75,14 +75,14 @@
             <version>${commons-text.version}</version>
         </dependency>
         <dependency>
+            <groupId>org.apache.groovy</groupId>
+            <artifactId>groovy</artifactId>
+            <version>${apache-groovy.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest</artifactId>
             <version>${hamcrest.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.codehaus.groovy</groupId>
-            <artifactId>groovy</artifactId>
-            <version>${codehaus-groovy.version}</version>
         </dependency>
         <dependency>
             <groupId>org.yaml</groupId>

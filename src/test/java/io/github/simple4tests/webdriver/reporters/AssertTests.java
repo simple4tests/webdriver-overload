@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-public class CheckTests {
+public class AssertTests {
 
     @Data
     @AllArgsConstructor
