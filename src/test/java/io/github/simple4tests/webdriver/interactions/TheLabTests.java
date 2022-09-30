@@ -85,14 +85,12 @@ public class TheLabTests {
                 driver = _TechActions.initChromeDriver();
                 interactions = new Interactions(driver);
                 break;
-//                return;
             case 2:
                 driver = _TechActions.initChromeDriver();
                 interactions = new Interactions(driver);
                 System.out.println("***** convertLocatorTypeToBy = false *****");
                 interactions.convertAllLocatorsToBy(false);
                 break;
-//                return;
             case 3:
                 driver = _TechActions.initFirefoxDriver();
                 interactions = new Interactions(driver);
