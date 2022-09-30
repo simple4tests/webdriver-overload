@@ -1,6 +1,5 @@
 package io.github.simple4tests.webdriver.interactions;
 
-import io.github.simple4tests.webdriver.utils.Sleeper;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -21,15 +20,6 @@ public class Interactions extends Core {
     }
     
     /*
-        SLEEPER
-     */
-
-    public Interactions sleep(long millis) {
-        Sleeper.sleep(millis);
-        return this;
-    }
-
-    /*
         BROWSER
      */
 
@@ -37,53 +27,56 @@ public class Interactions extends Core {
         return browser.getAlert();
     }
 
-    public Interactions switchToDefaultContent() {
+    public void switchToDefaultContent() {
         browser.switchToDefaultContent();
-        return this;
     }
 
-    public Interactions switchToParentFrame() {
+    public void switchToParentFrame() {
         browser.switchToParentFrame();
-        return this;
     }
 
-    public Interactions switchToFrame(By by) {
+    public void switchToFrame(By by) {
         browser.switchToFrame(by);
-        return this;
     }
 
-    public Interactions switchToFrame(WebElement webElement) {
+    public void switchToFrame(WebElement webElement) {
         browser.switchToFrame(webElement);
-        return this;
     }
 
-    public Interactions switchToFrame(int index) {
+    public void switchToFrame(int index) {
         browser.switchToFrame(index);
-        return this;
     }
 
-    public Interactions switchToFrame(String nameOrId) {
+    public void switchToFrame(String nameOrId) {
         browser.switchToFrame(nameOrId);
-        return this;
     }
 
-    public Interactions switchToTab(int index) {
+    public void switchToTab(int index) {
         browser.switchToTab(index);
-        return this;
     }
 
-    public Interactions closeTab() {
+    public void closeTab() {
         browser.closeTab();
-        return this;
     }
 
     /*
         ELEMENT
      */
 
-    public Interactions convertAllLocatorsToBy(boolean convertAllLocatorsToBy) {
+    public void setAutoScroll(boolean autoScroll) {
+        element.setAutoScroll(autoScroll);
+    }
+
+    public void setImplicitWaits(long waitInBetweenInMillis) {
+        element.setImplicitWaits(waitInBetweenInMillis);
+    }
+
+    public void setImplicitWaits(long waitBeforeInMillis, long waitAfterInMillis) {
+        element.setImplicitWaits(waitBeforeInMillis, waitAfterInMillis);
+    }
+
+    public void convertAllLocatorsToBy(boolean convertAllLocatorsToBy) {
         element.convertAllLocatorsToBy(convertAllLocatorsToBy);
-        return this;
     }
 
     public int count(Object locator) {
@@ -125,9 +118,8 @@ public class Interactions extends Core {
         return this;
     }
 
-    public Interactions setScrollIntoViewOptions(String behavior, String block, String inline) {
+    public void setScrollIntoViewOptions(String behavior, String block, String inline) {
         element.setScrollIntoViewOptions(behavior, block, inline);
-        return this;
     }
 
     public Interactions scrollIntoView(Object locator, String behavior, String block, String inline) {
@@ -168,12 +160,12 @@ public class Interactions extends Core {
         return this;
     }
 
-    public Interactions auxClickEvent(Object locator) {
+    public Interactions auxclickEvent(Object locator) {
         element.at(locator).auxclickEvent();
         return this;
     }
 
-    public Interactions auxClickEvent(Object locator, String options) {
+    public Interactions auxclickEvent(Object locator, String options) {
         element.at(locator).auxclickEvent(options);
         return this;
     }
@@ -188,13 +180,13 @@ public class Interactions extends Core {
         return this;
     }
 
-    public Interactions mouseOverEvent(Object locator) {
-        element.at(locator).mouseOverEvent();
+    public Interactions mouseoverEvent(Object locator) {
+        element.at(locator).mouseoverEvent();
         return this;
     }
 
-    public Interactions mouseOverEvent(Object locator, String options) {
-        element.at(locator).mouseOverEvent(options);
+    public Interactions mouseoverEvent(Object locator, String options) {
+        element.at(locator).mouseoverEvent(options);
         return this;
     }
 

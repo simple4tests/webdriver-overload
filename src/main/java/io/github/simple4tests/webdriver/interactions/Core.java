@@ -25,6 +25,7 @@ SOFTWARE.
 package io.github.simple4tests.webdriver.interactions;
 
 import com.google.common.collect.ImmutableList;
+import io.github.simple4tests.webdriver.utils.Sleeper;
 import org.openqa.selenium.*;
 
 import java.time.Duration;
@@ -33,7 +34,7 @@ import java.util.Collection;
 public class Core {
 
     public static final Duration DEFAULT_INTERVAL = Duration.ofMillis(50);
-    public static final Duration DEFAULT_TIMEOUT = Duration.ofSeconds(15);
+    public static final Duration DEFAULT_TIMEOUT = Duration.ofSeconds(20);
     public static final Collection<Class<? extends Throwable>> DEFAULT_IGNORED_EXCEPTIONS = ImmutableList.of(
             NoSuchElementException.class,
             StaleElementReferenceException.class,
@@ -76,18 +77,20 @@ public class Core {
         return null == o;
     }
 
+    public void sleep(long millis) {
+        Sleeper.sleep(millis);
+    }
+
     public boolean isDocumentComplete() {
         return JScripts.getDocumentState(jsExecutor).equals("complete");
     }
 
-    public Core waitDocumentToBeComplete() {
+    public void waitDocumentToBeComplete() {
         waitDocumentToBeComplete(false);
-        return this;
     }
 
     public boolean waitDocumentToBeComplete(boolean ignoreTimeoutException) {
-        if (ignoreTimeoutException)
-            wait.ignoreTimeoutException();
+        if (ignoreTimeoutException) wait.ignoreTimeoutException();
         return wait.until(input -> isDocumentComplete());
     }
 }

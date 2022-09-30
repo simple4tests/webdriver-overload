@@ -5,7 +5,7 @@
 
     <groupId>io.github.simple4tests</groupId>
     <artifactId>webdriver-overload</artifactId>
-    <version>2.0.6</version>
+    <version>2.0.7-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
@@ -58,11 +58,13 @@
 
         <commons-text.version>1.9</commons-text.version>
         <hamcrest.version>2.2</hamcrest.version>
-        <codehaus-groovy.version>3.0.12</codehaus-groovy.version>
+        <apache-groovy.version>4.0.1</apache-groovy.version>
         <snakeyaml.version>1.31</snakeyaml.version>
         <selenium.version>4.4.0</selenium.version>
         <cucumber.version>7.7.0</cucumber.version>
         <serenity.version>3.3.4</serenity.version>
+
+        <slf4j.version>2.0.0</slf4j.version>
         <junit.version>5.9.0</junit.version>
 
         <skipTests>true</skipTests>
@@ -75,14 +77,14 @@
             <version>${commons-text.version}</version>
         </dependency>
         <dependency>
+            <groupId>org.apache.groovy</groupId>
+            <artifactId>groovy</artifactId>
+            <version>${apache-groovy.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest</artifactId>
             <version>${hamcrest.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.codehaus.groovy</groupId>
-            <artifactId>groovy</artifactId>
-            <version>${codehaus-groovy.version}</version>
         </dependency>
         <dependency>
             <groupId>org.yaml</groupId>
@@ -114,6 +116,18 @@
             <version>${serenity.version}</version>
             <scope>provided</scope>
             <optional>true</optional>
+        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.slf4j</groupId>-->
+<!--            <artifactId>slf4j-api</artifactId>-->
+<!--            <version>${slf4j.version}</version>-->
+<!--            <scope>test</scope>-->
+<!--        </dependency>-->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>${slf4j.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>

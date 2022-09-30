@@ -35,15 +35,16 @@ import java.util.function.Function;
 
 public class Wait {
 
-    public static final Duration DEFAULT_INTERVAL = Duration.ofMillis(250);
-    public static final Duration DEFAULT_TIMEOUT = Duration.ofSeconds(30);
+    public static final Duration DEFAULT_INTERVAL = Duration.ofMillis(50);
+    public static final Duration DEFAULT_TIMEOUT = Duration.ofSeconds(20);
     public static final Collection<Class<? extends Throwable>> DEFAULT_IGNORED_EXCEPTIONS = ImmutableList.of();
 
     private final WebDriver driver;
-    private Duration interval;
-    private Duration timeout;
-    private Collection<Class<? extends Throwable>> ignoredExceptions;
     private boolean ignoreTimeoutException;
+
+    public Duration interval;
+    public Duration timeout;
+    public Collection<Class<? extends Throwable>> ignoredExceptions;
 
     public Wait(WebDriver driver) {
         this(driver, DEFAULT_INTERVAL, DEFAULT_TIMEOUT, DEFAULT_IGNORED_EXCEPTIONS);

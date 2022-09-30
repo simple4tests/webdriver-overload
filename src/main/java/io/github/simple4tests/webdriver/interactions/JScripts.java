@@ -24,6 +24,7 @@ SOFTWARE.
 
 package io.github.simple4tests.webdriver.interactions;
 
+import io.github.simple4tests.webdriver.utils.Sleeper;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 
@@ -31,8 +32,14 @@ public class JScripts {
 
     public static Object exec(JavascriptExecutor executor, String script, Object... args) {
         Object o = null;
-        while (null == o) {
-            o = executor.executeScript(script, args);
+        int maxRetries = 20;
+        while (null == o && 0 < maxRetries) {
+            maxRetries--;
+            Sleeper.sleep(50);
+            try {
+                o = executor.executeScript(script, args);
+            } catch (Exception ignored) {
+            }
         }
         return o;
     }

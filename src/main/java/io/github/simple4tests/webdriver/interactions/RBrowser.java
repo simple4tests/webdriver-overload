@@ -40,47 +40,39 @@ public class RBrowser extends Core {
         return wait.until(ExpectedConditions.alertIsPresent());
     }
 
-    public RBrowser switchToDefaultContent() {
+    public void switchToDefaultContent() {
         driver.switchTo().defaultContent();
-        return this;
     }
 
-    public RBrowser switchToParentFrame() {
+    public void switchToParentFrame() {
         driver.switchTo().parentFrame();
-        return this;
     }
 
-    public RBrowser switchToFrame(By by) {
+    public void switchToFrame(By by) {
         wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(by));
-        return this;
     }
 
-    public RBrowser switchToFrame(WebElement webElement) {
+    public void switchToFrame(WebElement webElement) {
         wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(webElement));
-        return this;
     }
 
-    public RBrowser switchToFrame(int index) {
+    public void switchToFrame(int index) {
         wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(index));
-        return this;
     }
 
-    public RBrowser switchToFrame(String nameOrId) {
+    public void switchToFrame(String nameOrId) {
         wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(nameOrId));
-        return this;
     }
 
     /*
       Index starts at 0
      */
-    public RBrowser switchToTab(int index) {
+    public void switchToTab(int index) {
         wait.until(input -> index < driver.getWindowHandles().size());
         driver.switchTo().window(driver.getWindowHandles().toArray()[index].toString());
-        return this;
     }
 
-    public RBrowser closeTab() {
+    public void closeTab() {
         driver.close();
-        return this;
     }
 }

@@ -40,6 +40,12 @@ public class CucumberJavaReporter extends SystemOutReporter {
     }
 
     @Override
+    public void reportAction(String action, String data) {
+        super.reportAction(action, data);
+        scenario.attach(data, "text/plain", "action & data : ".concat(action));
+    }
+
+    @Override
     public void reportCheck(String check) {
         super.reportCheck(check);
         scenario.attach("", "text/plain", "check : ".concat(check));
