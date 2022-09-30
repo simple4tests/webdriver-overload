@@ -7,7 +7,6 @@ import org.junit.jupiter.api.RepetitionInfo;
 import org.junit.jupiter.api.Tag;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebDriverException;
 
 public class TheLabTests {
 
@@ -41,7 +40,7 @@ public class TheLabTests {
                     && 0 == driver.findElements(By.xpath(GAME_OVER)).size()) {
                 try {
                     driver.findElement(By.xpath(KITTENS)).click();
-                } catch (WebDriverException ignored) {
+                } catch (Exception ignored) {
                 }
             }
         }
@@ -58,6 +57,7 @@ public class TheLabTests {
             System.out.println("***** convertLocatorTypeToBy = false *****");
             interactions.convertAllLocatorsToBy(false);
         }
+        interactions.setAutoScroll(false);
 
         interactions.driver.navigate().to("http://thelab.boozang.com/");
         interactions
@@ -70,7 +70,7 @@ public class TheLabTests {
                     && interactions.isAbsent(GAME_OVER)) {
                 try {
                     interactions.click(KITTENS);
-                } catch (WebDriverException ignored) {
+                } catch (Exception ignored) {
                 }
             }
         }
@@ -79,27 +79,50 @@ public class TheLabTests {
     @RepeatedTest(4)
     @Tag("InteractionsJS")
     public void interactionsJS_KittensTest(RepetitionInfo info) {
-        if (info.getCurrentRepetition() < 3) driver = _TechActions.initChromeDriver();
-        else driver = _TechActions.initFirefoxDriver();
-
-        Interactions interactions = new Interactions(driver);
-        if (2 == info.getCurrentRepetition() || 4 == info.getCurrentRepetition()) {
-            System.out.println("***** convertLocatorTypeToBy = false *****");
-            interactions.convertAllLocatorsToBy(false);
+        Interactions interactions;
+        switch (info.getCurrentRepetition()) {
+            case 1:
+                driver = _TechActions.initChromeDriver();
+                interactions = new Interactions(driver);
+                break;
+//                return;
+            case 2:
+                driver = _TechActions.initChromeDriver();
+                interactions = new Interactions(driver);
+                System.out.println("***** convertLocatorTypeToBy = false *****");
+                interactions.convertAllLocatorsToBy(false);
+                break;
+//                return;
+            case 3:
+                driver = _TechActions.initFirefoxDriver();
+                interactions = new Interactions(driver);
+                interactions.setImplicitWaits(25, 50);
+                break;
+            case 4:
+                driver = _TechActions.initFirefoxDriver();
+                interactions = new Interactions(driver);
+                System.out.println("***** convertLocatorTypeToBy = false *****");
+                interactions.setImplicitWaits(25, 50);
+                interactions.convertAllLocatorsToBy(false);
+                break;
+            default:
+                return;
         }
+        interactions.setAutoScroll(false);
 
         interactions.driver.navigate().to("http://thelab.boozang.com/");
         interactions
                 .clickEvent(MENU_IS_CLOSED)
-                .clickEvent(COLLECT_KITTENS).sleep(250)
+                .clickEvent(COLLECT_KITTENS)
                 .clickEvent(START_GAME);
+        interactions.setImplicitWaits(0);
         while (interactions.isAbsent(GAME_OVER)) {
             interactions.sleep(50);
             if (interactions.isPresent(KITTENS)
                     && interactions.isAbsent(GAME_OVER)) {
                 try {
-                    interactions.click(KITTENS);
-                } catch (WebDriverException ignored) {
+                    interactions.clickEvent(KITTENS);
+                } catch (Exception ignored) {
                 }
             }
         }

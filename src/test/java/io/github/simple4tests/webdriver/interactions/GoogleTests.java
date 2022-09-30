@@ -9,8 +9,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 
-import java.time.Duration;
-
 public class GoogleTests {
 
     private final String ACCEPT = "//*[@id='L2AGLb']";
@@ -50,7 +48,6 @@ public class GoogleTests {
         else driver = _TechActions.initFirefoxDriver();
 
         Interactions interactions = new Interactions(driver);
-        interactions.element.wait.withTimeout(Duration.ofSeconds(30));
         if (2 == info.getCurrentRepetition() || 4 == info.getCurrentRepetition()) {
             System.out.println("***** convertLocatorTypeToBy = false *****");
             interactions.convertAllLocatorsToBy(false);
@@ -72,7 +69,6 @@ public class GoogleTests {
         else driver = _TechActions.initFirefoxDriver();
 
         Interactions interactions = new Interactions(driver);
-        interactions.element.wait.withTimeout(Duration.ofSeconds(30));
         if (2 == info.getCurrentRepetition() || 4 == info.getCurrentRepetition()) {
             System.out.println("***** convertLocatorTypeToBy = false *****");
             interactions.convertAllLocatorsToBy(false);

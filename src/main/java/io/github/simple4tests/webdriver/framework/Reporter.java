@@ -80,6 +80,8 @@ public interface Reporter {
 
     void reportData(Path path);
 
+    void reportAction(String action, String data);
+
     void reportCheck(String check);
 
     void reportError(String error);

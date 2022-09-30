@@ -46,6 +46,12 @@ public class SerenityReporter extends SystemOutReporter {
     }
 
     @Override
+    public void reportAction(String action, String data) {
+        reportAction(action);
+        reportData(data);
+    }
+
+    @Override
     public void reportCheck(String check) {
         super.reportCheck(check);
         StepEventBus.getEventBus().stepStarted(ExecutedStepDescription.withTitle(check));

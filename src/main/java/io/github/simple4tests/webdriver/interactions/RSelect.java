@@ -28,15 +28,12 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
-import java.time.Duration;
-
 public class RSelect extends Core {
 
     public Select select;
 
     public RSelect(WebDriver driver) {
         super(driver);
-        wait.pollingEvery(Duration.ofMillis(50)).withTimeout(Duration.ofSeconds(15));
     }
 
     public RSelect at(Object locator) {
@@ -51,18 +48,14 @@ public class RSelect extends Core {
     protected boolean visibleTextExists(String visibleText) {
         if (isNull(select) || isNull(visibleText) || visibleText.isEmpty()) return false;
         for (WebElement option : select.getOptions())
-            if (visibleText.trim().equals(option.getText().trim())) {
-                return true;
-            }
+            if (visibleText.trim().equals(option.getText().trim())) return true;
         return false;
     }
 
     protected boolean valueExists(String value) {
         if (isNull(select) || isNull(value) || value.isEmpty()) return false;
         for (WebElement option : select.getOptions())
-            if (value.equals(option.getAttribute("value"))) {
-                return true;
-            }
+            if (value.equals(option.getAttribute("value"))) return true;
         return false;
     }
 
@@ -72,9 +65,7 @@ public class RSelect extends Core {
     protected boolean indexExists(int index) {
         if (isNull(select) || index < 0) return false;
         for (WebElement option : select.getOptions())
-            if (String.valueOf(index).equals(option.getAttribute("index"))) {
-                return true;
-            }
+            if (String.valueOf(index).equals(option.getAttribute("index"))) return true;
         return false;
     }
 
@@ -96,19 +87,18 @@ public class RSelect extends Core {
         return this;
     }
 
-    public RSelect selectByVisibleText(String visibleText) {
+    public void selectByVisibleText(String visibleText) {
         if (!isNull(select) && !isNull(visibleText))
             waitVisibleTextExists(visibleText).select.selectByVisibleText(visibleText);
-        return this;
     }
 
-    public RSelect selectByValue(String value) {
-        if (!isNull(select) && !isNull(value)) waitValueExists(value).select.selectByValue(value);
-        return this;
+    public void selectByValue(String value) {
+        if (!isNull(select) && !isNull(value))
+            waitValueExists(value).select.selectByValue(value);
     }
 
-    public RSelect selectByIndex(int index) {
-        if (!isNull(select) && !isNull(index)) waitIndexExists(index).select.selectByIndex(index);
-        return this;
+    public void selectByIndex(int index) {
+        if (!isNull(select) && !isNull(index))
+            waitIndexExists(index).select.selectByIndex(index);
     }
 }

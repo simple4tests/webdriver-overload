@@ -63,6 +63,8 @@
         <selenium.version>4.4.0</selenium.version>
         <cucumber.version>7.7.0</cucumber.version>
         <serenity.version>3.3.4</serenity.version>
+
+        <slf4j.version>2.0.0</slf4j.version>
         <junit.version>5.9.0</junit.version>
 
         <skipTests>true</skipTests>
@@ -114,6 +116,18 @@
             <version>${serenity.version}</version>
             <scope>provided</scope>
             <optional>true</optional>
+        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.slf4j</groupId>-->
+<!--            <artifactId>slf4j-api</artifactId>-->
+<!--            <version>${slf4j.version}</version>-->
+<!--            <scope>test</scope>-->
+<!--        </dependency>-->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>${slf4j.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>

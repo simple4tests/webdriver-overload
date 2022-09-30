@@ -48,24 +48,24 @@ public class _TechActions {
 
     public static void waitElementToBePresent(WebDriver driver, By by) {
         new FluentWait<>(driver)
-                .pollingEvery(Duration.ofMillis(250))
-                .withTimeout(Duration.ofSeconds(30))
+                .pollingEvery(Duration.ofMillis(50))
+                .withTimeout(Duration.ofSeconds(20))
                 .ignoring(NoSuchElementException.class)
                 .until(ExpectedConditions.presenceOfElementLocated(by));
     }
 
     public static void waitElementToBeVisible(WebDriver driver, By by) {
         new FluentWait<>(driver)
-                .pollingEvery(Duration.ofMillis(250))
-                .withTimeout(Duration.ofSeconds(30))
+                .pollingEvery(Duration.ofMillis(50))
+                .withTimeout(Duration.ofSeconds(20))
                 .ignoring(NoSuchElementException.class)
                 .until(ExpectedConditions.visibilityOf(driver.findElement(by)));
     }
 
     public static void waitTabToBePresent(WebDriver driver, int index) {
         new FluentWait<>(driver)
-                .pollingEvery(Duration.ofMillis(250))
-                .withTimeout(Duration.ofSeconds(30))
+                .pollingEvery(Duration.ofMillis(50))
+                .withTimeout(Duration.ofSeconds(20))
                 .ignoring(NoSuchElementException.class)
                 .until(input -> index < driver.getWindowHandles().size());
     }

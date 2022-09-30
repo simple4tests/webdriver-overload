@@ -12,10 +12,10 @@ public class Groovy {
 
     private static final ThreadLocal<GroovyShell> localGroovyShell = new ThreadLocal<>();
 
+    private static List<String> currentImports;
+
     public static final List<String> IMPORT_EMPTY = List.of();
     public static final List<String> IMPORT_HAMCREST_MATCHERS = List.of("org.hamcrest.MatcherAssert", "org.hamcrest.Matchers");
-
-    private static List<String> currentImports;
 
     private static void resetShell() {
         localGroovyShell.set(null);

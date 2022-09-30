@@ -19,6 +19,12 @@ public class SystemOutReporter implements Reporter {
     }
 
     @Override
+    public void reportAction(String action, String data) {
+        reportAction(action);
+        reportData(data);
+    }
+
+    @Override
     public void reportData(Path path) {
         printResult(String.format("data : \n%s", path.toAbsolutePath()));
     }
