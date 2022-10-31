@@ -85,12 +85,12 @@ public class Core {
         return JScripts.getDocumentState(jsExecutor).equals("complete");
     }
 
-    public void waitDocumentToBeComplete() {
-        waitDocumentToBeComplete(false);
-    }
-
     public boolean waitDocumentToBeComplete(boolean ignoreTimeoutException) {
         if (ignoreTimeoutException) wait.ignoreTimeoutException();
         return wait.until(input -> isDocumentComplete());
+    }
+
+    public void waitDocumentToBeComplete() {
+        waitDocumentToBeComplete(false);
     }
 }

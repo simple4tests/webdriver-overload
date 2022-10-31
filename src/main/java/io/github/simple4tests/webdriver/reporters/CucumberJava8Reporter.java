@@ -1,4 +1,4 @@
-package io.github.simple4tests.webdriver.framework;
+package io.github.simple4tests.webdriver.reporters;
 
 import io.cucumber.java8.Scenario;
 import lombok.AllArgsConstructor;

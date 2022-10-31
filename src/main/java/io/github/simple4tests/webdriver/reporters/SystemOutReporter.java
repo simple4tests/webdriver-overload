@@ -1,4 +1,4 @@
-package io.github.simple4tests.webdriver.framework;
+package io.github.simple4tests.webdriver.reporters;
 
 import java.nio.file.Path;
 

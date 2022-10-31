@@ -1,7 +1,5 @@
-package io.github.simple4tests.webdriver.framework;
+package io.github.simple4tests.webdriver.providers;
 
-import io.github.simple4tests.webdriver.options.ChromeOptionsProvider;
-import io.github.simple4tests.webdriver.options.FirefoxOptionsProvider;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -10,7 +8,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import java.net.URL;
 import java.nio.file.Path;
 
-public class DriverProvider {
+public class WebDriverProvider {
 
     public static WebDriver get(String browser, Path driverPath, String optionsAsYamlResource) {
         if (null == browser || null == driverPath) return null;

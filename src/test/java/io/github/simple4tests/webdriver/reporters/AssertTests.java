@@ -1,6 +1,5 @@
 package io.github.simple4tests.webdriver.reporters;
 
-import io.github.simple4tests.webdriver.framework.SystemOutReporter;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.assertj.core.api.Assertions;
