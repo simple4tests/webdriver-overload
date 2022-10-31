@@ -1,6 +1,5 @@
 package io.github.simple4tests.webdriver.interactions;
 
-import io.github.simple4tests.webdriver.utils._TechActions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.RepetitionInfo;
@@ -94,13 +93,13 @@ public class TheLabTests {
             case 3:
                 driver = _TechActions.initFirefoxDriver();
                 interactions = new Interactions(driver);
-                interactions.setImplicitWaits(25, 50);
+                interactions.setImplicitWaits(50, 25);
                 break;
             case 4:
                 driver = _TechActions.initFirefoxDriver();
                 interactions = new Interactions(driver);
                 System.out.println("***** convertLocatorTypeToBy = false *****");
-                interactions.setImplicitWaits(25, 50);
+                interactions.setImplicitWaits(50, 25);
                 interactions.convertAllLocatorsToBy(false);
                 break;
             default:

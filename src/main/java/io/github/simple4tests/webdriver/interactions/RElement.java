@@ -24,6 +24,8 @@ SOFTWARE.
 
 package io.github.simple4tests.webdriver.interactions;
 
+import io.github.simple4tests.webdriver.interactions.enums.LocatorTypes;
+import io.github.simple4tests.webdriver.interactions.enums.Mode;
 import org.openqa.selenium.*;
 
 public class RElement extends Core {
@@ -41,11 +43,12 @@ public class RElement extends Core {
     private boolean clearAll;
     private boolean clearNext;
 
+    public Mode mode;
     public boolean convertAllLocatorsToBy;
     public boolean autoScroll;
 
-    public long waitBeforeInMillis;
-    public long waitAfterInMillis;
+    public long implicitWaitBeforeChecksInMillis;
+    public long implicitWaitAfterChecksInMillis;
 
     public String scrollBehavior;
     public String scrollBlock;
@@ -58,6 +61,7 @@ public class RElement extends Core {
 
     protected void init() {
         resetLocator();
+        setMode(Mode.SAFE);
         convertAllLocatorsToBy(true);
         setAutoScroll(true);
         setImplicitWaits(0);
@@ -78,6 +82,10 @@ public class RElement extends Core {
         this.selector = null;
         this.by = null;
         this.webElement = null;
+    }
+
+    public void setMode(Mode mode) {
+        this.mode = mode;
     }
 
     public void convertAllLocatorsToBy(boolean convertAllLocatorsToBy) {
@@ -135,15 +143,15 @@ public class RElement extends Core {
         this.autoScroll = autoScroll;
     }
 
-    public void setImplicitWaits(long waitInBetweenInMillis) {
+    public void setImplicitWaits(long totalImplicitWaitInMillis) {
         setImplicitWaits(
-                Long.divideUnsigned(waitInBetweenInMillis, 2),
-                Long.divideUnsigned(waitInBetweenInMillis, 2));
+                Long.divideUnsigned(totalImplicitWaitInMillis, 2),
+                Long.divideUnsigned(totalImplicitWaitInMillis, 2));
     }
 
-    public void setImplicitWaits(long waitBeforeInMillis, long waitAfterInMillis) {
-        this.waitBeforeInMillis = waitBeforeInMillis;
-        this.waitAfterInMillis = waitAfterInMillis;
+    public void setImplicitWaits(long implicitWaitBeforeChecksInMillis, long implicitWaitAfterChecksInMillis) {
+        this.implicitWaitBeforeChecksInMillis = implicitWaitBeforeChecksInMillis;
+        this.implicitWaitAfterChecksInMillis = implicitWaitAfterChecksInMillis;
     }
 
     protected WebElement getWebElement() {
@@ -209,20 +217,21 @@ public class RElement extends Core {
     }
 
     public RElement waitToBeInteractable() {
-        sleep(waitAfterInMillis);
-        waitDocumentToBeComplete();
-        if (!isNull(locatorType)) {
-            WebElement element = getElement();
-            try {
-                wait.until(input -> element.isDisplayed());
-            } catch (WebDriverException ignored) {
-            }
-            try {
-                wait.until(input -> element.isEnabled());
-            } catch (WebDriverException ignored) {
+        sleep(implicitWaitBeforeChecksInMillis);
+        if (!mode.equals(Mode.INSANE)) {
+            if (!isNull(locatorType)) {
+                waitToBePresent();
+                if (!mode.equals(Mode.LUCKY)) {
+                    waitDocumentToBeComplete(true);
+                    try {
+                        wait.ignoreTimeoutException().until(input -> getElement().isDisplayed());
+                        wait.ignoreTimeoutException().until(input -> getElement().isEnabled());
+                    } catch (WebDriverException ignored) {
+                    }
+                }
             }
         }
-        sleep(waitBeforeInMillis);
+        sleep(implicitWaitAfterChecksInMillis);
         return this;
     }
 
@@ -353,7 +362,12 @@ public class RElement extends Core {
     }
 
     public void upload(String fileAbsolutePath) {
-        clearNext(false).sendKeys(fileAbsolutePath);
+        if (!isNull(locatorType) && !isNull(fileAbsolutePath) && 0 < fileAbsolutePath.length()) {
+            Mode currentMode = mode;
+            setMode(Mode.LUCKY);
+            getInteractableElement().sendKeys(fileAbsolutePath);
+            setMode(currentMode);
+        }
     }
 
     public void setSelected(boolean select) {

@@ -1,4 +1,4 @@
-package io.github.simple4tests.webdriver.utils;
+package io.github.simple4tests.webdriver.interactions;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -43,7 +43,9 @@ public class _TechActions {
     }
 
     public static void scrollIntoView(WebDriver driver, By by) {
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", driver.findElement(by));
+        ((JavascriptExecutor) driver).executeScript(
+                "arguments[0].scrollIntoView({behavior: 'auto', block: 'center', inline: 'center'});",
+                driver.findElement(by));
     }
 
     public static void waitElementToBePresent(WebDriver driver, By by) {

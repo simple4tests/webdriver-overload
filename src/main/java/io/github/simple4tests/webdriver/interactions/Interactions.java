@@ -1,5 +1,6 @@
 package io.github.simple4tests.webdriver.interactions;
 
+import io.github.simple4tests.webdriver.interactions.enums.Mode;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -63,16 +64,20 @@ public class Interactions extends Core {
         ELEMENT
      */
 
+    public void setMode(Mode mode) {
+        element.setMode(mode);
+    }
+
     public void setAutoScroll(boolean autoScroll) {
         element.setAutoScroll(autoScroll);
     }
 
-    public void setImplicitWaits(long waitInBetweenInMillis) {
-        element.setImplicitWaits(waitInBetweenInMillis);
+    public void setImplicitWaits(long totalImplicitWaitInMillis) {
+        element.setImplicitWaits(totalImplicitWaitInMillis);
     }
 
-    public void setImplicitWaits(long waitBeforeInMillis, long waitAfterInMillis) {
-        element.setImplicitWaits(waitBeforeInMillis, waitAfterInMillis);
+    public void setImplicitWaits(long implicitWaitBeforeChecksInMillis, long implicitWaitAfterChecksInMillis) {
+        element.setImplicitWaits(implicitWaitBeforeChecksInMillis, implicitWaitAfterChecksInMillis);
     }
 
     public void convertAllLocatorsToBy(boolean convertAllLocatorsToBy) {

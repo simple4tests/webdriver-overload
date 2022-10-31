@@ -1,4 +1,4 @@
-package io.github.simple4tests.webdriver.framework;
+package io.github.simple4tests.webdriver.reporters;
 
 import io.github.simple4tests.webdriver.utils.Groovy;
 import org.hamcrest.Matcher;
@@ -23,17 +23,15 @@ public interface Reporter {
 
     default String getErrorsSummary() {
         if (hasErrors()) {
-            return String.format("ERROR(S) SUMMARY\n%s\n", String.join("\n", errors));
+            return String.join("\n", errors);
         }
-        return "ERROR(S) SUMMARY\n*** CONGRATULATIONS! NO ERRORS FOUND ***\n";
+        return "NO ERRORS FOUND, CONGRATULATIONS!";
     }
 
     default void throwAssertionErrorIfAny(boolean reportErrorsSummary) {
         if (hasErrors()) {
-            if (reportErrorsSummary) {
-                reportAction("Report error(s) summary");
-                reportData(getErrorsSummary());
-            }
+            if (reportErrorsSummary)
+                reportAction("Report error(s) summary", getErrorsSummary());
             throw new AssertionError(String.format("%d error(s) found", errors.size()));
         }
     }

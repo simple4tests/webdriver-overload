@@ -1,6 +1,5 @@
-package io.github.simple4tests.webdriver.framework.serenity;
+package io.github.simple4tests.webdriver.providers;
 
-import io.github.simple4tests.webdriver.framework.DriverProvider;
 import net.thucydides.core.webdriver.DriverSource;
 import org.openqa.selenium.WebDriver;
 
@@ -16,7 +15,7 @@ public class SerenityDriver implements DriverSource {
 
         if (null != System.getProperty("s4t.driverPath") && !System.getProperty("s4t.driverPath").isEmpty()) {
             try {
-                return DriverProvider.get(
+                return WebDriverProvider.get(
                         System.getProperty("s4t.browser"),
                         Paths.get(System.getProperty("s4t.driverPath")),
                         System.getProperty("s4t.optionsAsYamlResource"));
@@ -27,7 +26,7 @@ public class SerenityDriver implements DriverSource {
 
         if (null != System.getProperty("s4t.gridUrl") && !System.getProperty("s4t.gridUrl").isEmpty()) {
             try {
-                return DriverProvider.get(
+                return WebDriverProvider.get(
                         System.getProperty("s4t.browser"),
                         new URL(System.getProperty("s4t.gridUrl")),
                         System.getProperty("s4t.optionsAsYamlResource"));
