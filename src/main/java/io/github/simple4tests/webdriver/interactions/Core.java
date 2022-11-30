@@ -62,14 +62,9 @@ public class Core {
     }
 
     protected boolean isNull(CharSequence... value) {
-        if (null == value) {
-            return true;
-        }
-        for (CharSequence cs : value) {
-            if (null == cs) {
-                return true;
-            }
-        }
+        if (null == value) return true;
+        for (CharSequence cs : value)
+            if (null == cs) return true;
         return false;
     }
 

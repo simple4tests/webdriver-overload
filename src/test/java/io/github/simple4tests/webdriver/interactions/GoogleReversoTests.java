@@ -72,7 +72,7 @@ public class GoogleReversoTests {
                 .switchToTab(1);
     }
 
-    @RepeatedTest(1)
+    @RepeatedTest(4)
     @Tag("InteractionsJS")
     public void interactionsJS_GoogleReversoTest(RepetitionInfo info) {
         if (info.getCurrentRepetition() < 3) driver = _TechActions.initChromeDriver();
