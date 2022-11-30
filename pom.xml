@@ -60,11 +60,11 @@
         <groovy.version>4.0.6</groovy.version>
         <hamcrest.version>2.2</hamcrest.version>
         <snakeyaml.version>1.33</snakeyaml.version>
-        <selenium.version>4.5.3</selenium.version>
+        <selenium.version>4.6.0</selenium.version>
         <cucumber.version>7.8.1</cucumber.version>
-        <serenity.version>3.3.8</serenity.version>
+        <serenity.version>3.4.3</serenity.version>
 
-        <slf4j.version>2.0.3</slf4j.version>
+        <slf4j.version>2.0.5</slf4j.version>
         <junit.version>5.9.1</junit.version>
 
         <skipTests>true</skipTests>

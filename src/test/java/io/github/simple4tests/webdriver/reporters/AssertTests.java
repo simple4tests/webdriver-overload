@@ -24,23 +24,39 @@ public class AssertTests {
         reporter.clearErrors();
 
         reporter.reportAction("My first action");
+        reporter.reportAction("My second action with data", "This is my data for second action");
 
-        Assertions.assertThat("One STRING").isEqualToIgnoringCase("One String");
-        reporter.assertThat("Vérifier l'égalité à la case près d’une chaîne de caractères A",
-                "One STRING",
-                Matchers.equalToIgnoringCase("One String"));
-        reporter.groovyAssertThat("Vérifier l'égalité à la case près d’une chaîne de caractères B",
-                "One STRING",
-                "equalToIgnoringCase('One String')");
-        reporter.groovyAssert("Vérifier l'égalité à la case près d’une chaîne de caractères C",
-                "'One STRING'.equalsIgnoreCase('One String')");
+        Assertions.assertThat("A STRING")
+                .isEqualToIgnoringCase("A string")
+                .as("Check a string equals to another string ignoring case");
+        reporter.assertThat("Check a string equals to another string ignoring case",
+                "A STRING",
+                Matchers.equalToIgnoringCase("A string"));
+        reporter.groovyAssertThat("Check a string equals to another string ignoring case",
+                "A STRING",
+                "equalToIgnoringCase('A string')");
+        reporter.groovyAssert("Check a string equals to another string ignoring case",
+                "'A STRING'.equalsIgnoreCase('A string')");
+
+        Assertions.assertThat("One STRING or TWO")
+                .contains("STRING or")
+                .as("Check a string contains another string");
+        reporter.assertThat("Check a string contains another string",
+                "One STRING or TWO",
+                Matchers.containsString("STRING or"));
+        reporter.groovyAssertThat("Check a string contains another string",
+                "One STRING or TWO",
+                "containsString('STRING or')");
+        reporter.groovyAssert("Check a string contains another string",
+                "'One STRING or TWO'.contains('STRING or')");
 
         Assertions.assertThat("The Lord of the Rings")
                 .isNotNull()
                 .startsWith("The")
                 .contains("Lord")
-                .endsWith("Rings");
-        reporter.assertThat("Vérifier plusieurs critères sur une chaine de caractères A",
+                .endsWith("Rings")
+                .as("Check multiples things in a string");
+        reporter.assertThat("Check multiples things in a string",
                 "The Lord of the Rings",
                 Matchers.allOf(
                         Matchers.notNullValue(),
@@ -48,28 +64,20 @@ public class AssertTests {
                         Matchers.containsString("Lord"),
                         Matchers.endsWith("Rings")));
 
-        Assertions.assertThat("One STRING or TWO").contains("STRING or");
-        reporter.assertThat("Vérifier le contenu d’une chaîne de caractères A",
-                "One STRING or TWO",
-                Matchers.containsString("STRING or"));
-        reporter.groovyAssertThat("Vérifier le contenu d’une chaîne de caractères B",
-                "One STRING or TWO",
-                "containsString('STRING or')");
-        reporter.groovyAssert("Vérifier le contenu d’une chaîne de caractères C",
-                "'One STRING or TWO'.contains('STRING or')");
-
-        Assertions.assertThat(1).isEqualTo(1);
-        reporter.assertThat("Vérifier un entier A",
+        Assertions.assertThat(1).isEqualTo(1).as("Check value of an integer");
+        reporter.assertThat("Check value of an integer",
                 1,
                 Matchers.equalTo(1));
-        reporter.groovyAssertThat("Vérifier un entier B",
+        reporter.groovyAssertThat("Check value of an integer",
                 "1",
                 "equalTo('1')");
-        reporter.groovyAssert("Vérifier un entier C",
+        reporter.groovyAssert("Check value of an integer",
                 "1.equals(1)");
 
-        Assertions.assertThat(List.of("toto", "titi", "tata")).containsExactlyInAnyOrder("toto", "tata", "titi");
-        reporter.assertThat("Vérifier le contenu d’une liste A",
+        Assertions.assertThat(List.of("toto", "titi", "tata"))
+                .containsExactlyInAnyOrder("toto", "tata", "titi")
+                .as("Check containt of a list");
+        reporter.assertThat("Check containt of a list",
                 List.of("toto", "titi", "tata"),
                 Matchers.containsInAnyOrder("toto", "tata", "titi"));
 
