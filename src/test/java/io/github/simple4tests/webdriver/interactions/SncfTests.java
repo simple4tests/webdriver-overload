@@ -26,7 +26,7 @@ public class SncfTests {
 
     @RepeatedTest(2)
     @Tag("Selenium")
-    public void selenium_SncfTest(RepetitionInfo info) {
+    public void seleisnium_SncfTest(RepetitionInfo info) {
         if (1 == info.getCurrentRepetition()) driver = _TechActions.initChromeDriver();
         else driver = _TechActions.initFirefoxDriver();
 

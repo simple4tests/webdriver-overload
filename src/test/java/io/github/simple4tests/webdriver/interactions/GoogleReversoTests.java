@@ -10,8 +10,9 @@ import org.openqa.selenium.WebDriver;
 
 public class GoogleReversoTests {
 
-    private final String ACCEPT = "//*[@id='L2AGLb']";
-    private final String SEARCH_CRITERIA = "//input[@name='q']";
+    private final String GOOGLE_ACCEPT = "//*[@id='L2AGLb']";
+    private final String GOOGLE_SEARCH_CRITERIA = "//*[@name='q']";
+    private final String GOOGLE_PROPOSALS_CRITERIA = "//*[@id='Alh6id']//li";
     private final String REVERSO_ACCEPT = "//button[@id='didomi-notice-agree-button']";
     private final String REVERSO_LINK = "//h3[normalize-space(.)='Reverso | Traduction gratuite, dictionnaire']";
     private final String REVERSO_CONJUGAISON = "//h3[normalize-space(.)='Conjugaison']";
@@ -30,9 +31,14 @@ public class GoogleReversoTests {
         else driver = _TechActions.initFirefoxDriver();
 
         driver.navigate().to("http://www.google.fr");
-        driver.findElement(By.xpath(ACCEPT)).click();
-        driver.findElement(By.xpath(SEARCH_CRITERIA))
-                .sendKeys("reverso", Keys.ENTER);
+        driver.findElement(By.xpath(GOOGLE_ACCEPT)).click();
+//        driver.findElement(By.xpath(SEARCH_CRITERIA)).sendKeys("reverso", Keys.ENTER);
+        driver.findElement(By.xpath(GOOGLE_SEARCH_CRITERIA)).sendKeys("reverso");
+        driver.findElement(By.xpath(GOOGLE_SEARCH_CRITERIA)).click();
+        _TechActions.waitElementToBePresent(
+                driver,
+                By.xpath(GOOGLE_PROPOSALS_CRITERIA));
+        driver.findElement(By.xpath(GOOGLE_SEARCH_CRITERIA)).sendKeys(Keys.ENTER);
         _TechActions.waitElementToBePresent(
                 driver,
                 By.xpath(REVERSO_LINK));
@@ -64,8 +70,12 @@ public class GoogleReversoTests {
 
         interactions.driver.navigate().to("http://www.google.fr");
         interactions
-                .click(ACCEPT)
-                .sendKeys(SEARCH_CRITERIA, "reverso", Keys.ENTER)
+                .click(GOOGLE_ACCEPT)
+//                .sendKeys(SEARCH_CRITERIA, "reverso", Keys.ENTER)
+                .sendKeys(GOOGLE_SEARCH_CRITERIA, "reverso")
+//                .click(GOOGLE_SEARCH_CRITERIA)
+//                .waitToBePresent(GOOGLE_PROPOSALS_CRITERIA)
+                .sendKeys(GOOGLE_SEARCH_CRITERIA, Keys.ESCAPE, Keys.ENTER)
                 .click(REVERSO_LINK)
                 .click(REVERSO_ACCEPT)
                 .click(REVERSO_CONJUGAISON)
@@ -86,9 +96,11 @@ public class GoogleReversoTests {
 
         interactions.driver.navigate().to("http://www.google.fr");
         interactions
-                .clickEvent(ACCEPT)
-                .set(SEARCH_CRITERIA, "value", "reverso")
-                .sendKeys(SEARCH_CRITERIA, Keys.ENTER)
+                .clickEvent(GOOGLE_ACCEPT)
+                .set(GOOGLE_SEARCH_CRITERIA, "value", "reverso")
+//                .click(GOOGLE_SEARCH_CRITERIA)
+//                .waitToBePresent(GOOGLE_PROPOSALS_CRITERIA)
+                .sendKeys(GOOGLE_SEARCH_CRITERIA, Keys.ENTER)
                 .clickEvent(REVERSO_LINK)
                 .clickEvent(REVERSO_ACCEPT)
                 .clickEvent(REVERSO_CONJUGAISON)
