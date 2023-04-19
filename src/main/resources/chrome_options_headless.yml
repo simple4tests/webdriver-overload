@@ -5,6 +5,7 @@ arguments:
   - "--ignore-certificate-errors"
   - "--headless"
   - "--disable-gpu"
+  - "--remote-allow-origins=*"
 capabilities:
   acceptInsecureCerts: true
 experimentalOptions:

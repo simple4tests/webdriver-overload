@@ -3,6 +3,7 @@ arguments:
   - "--disable-dev-shm-usage"
   - "--safebrowsing-disable-download-protection"
   - "--ignore-certificate-errors"
+  - "--remote-allow-origins=*"
 capabilities:
   acceptInsecureCerts: true
 experimentalOptions:

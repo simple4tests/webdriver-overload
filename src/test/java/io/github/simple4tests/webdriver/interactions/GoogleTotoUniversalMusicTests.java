@@ -11,7 +11,7 @@ import org.openqa.selenium.WebDriver;
 public class GoogleTotoUniversalMusicTests {
 
     private final String ACCEPT = "//*[@id='L2AGLb']";
-    private final String SEARCH_CRITERIA = "//input[@name='q']";
+    private final String SEARCH_CRITERIA = "//*[@name='q']";
     private final String TOTO_UNIVERSAL_MUSIC = "//h3[normalize-space(.)='Toto - Universal Music France']";
     private final String TOTO_ANNIVERSARY = "//a[contains(.,'Le groupe TOTO fête ses 40 ans sur scène !')]";
 
