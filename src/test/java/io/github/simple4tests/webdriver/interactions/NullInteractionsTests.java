@@ -22,7 +22,7 @@ public class NullInteractionsTests {
         driver = _TechActions.initChromeDriver();
 
         Interactions interactions = new Interactions(driver);
-        if (2 == info.getCurrentRepetition() || 4 == info.getCurrentRepetition()) {
+        if (2 == info.getCurrentRepetition()) {
             System.out.println("***** convertLocatorTypeToBy = false *****");
             interactions.convertAllLocatorsToBy(false);
         }
@@ -42,7 +42,7 @@ public class NullInteractionsTests {
         driver = _TechActions.initChromeDriver();
 
         Interactions interactions = new Interactions(driver);
-        if (2 == info.getCurrentRepetition() || 4 == info.getCurrentRepetition()) {
+        if (2 == info.getCurrentRepetition()) {
             System.out.println("***** convertLocatorTypeToBy = false *****");
             interactions.convertAllLocatorsToBy(false);
         }

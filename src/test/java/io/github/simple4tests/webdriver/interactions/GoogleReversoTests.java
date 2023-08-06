@@ -14,7 +14,7 @@ public class GoogleReversoTests {
     private final String GOOGLE_SEARCH_CRITERIA = "//*[@name='q']";
     private final String GOOGLE_PROPOSALS_CRITERIA = "//*[@id='Alh6id']//li";
     private final String REVERSO_ACCEPT = "//button[@id='didomi-notice-agree-button']";
-    private final String REVERSO_LINK = "//h3[normalize-space(.)='Reverso | Traduction gratuite, dictionnaire']";
+    private final String REVERSO_LINK = "//h3[normalize-space(.)='Traduction gratuite, dictionnaire - Reverso']";
     private final String REVERSO_CONJUGAISON = "//h3[normalize-space(.)='Conjugaison']";
 
     private WebDriver driver;
@@ -32,7 +32,6 @@ public class GoogleReversoTests {
 
         driver.navigate().to("http://www.google.fr");
         driver.findElement(By.xpath(GOOGLE_ACCEPT)).click();
-//        driver.findElement(By.xpath(SEARCH_CRITERIA)).sendKeys("reverso", Keys.ENTER);
         driver.findElement(By.xpath(GOOGLE_SEARCH_CRITERIA)).sendKeys("reverso");
         driver.findElement(By.xpath(GOOGLE_SEARCH_CRITERIA)).click();
         _TechActions.waitElementToBePresent(
@@ -71,10 +70,9 @@ public class GoogleReversoTests {
         interactions.driver.navigate().to("http://www.google.fr");
         interactions
                 .click(GOOGLE_ACCEPT)
-//                .sendKeys(SEARCH_CRITERIA, "reverso", Keys.ENTER)
                 .sendKeys(GOOGLE_SEARCH_CRITERIA, "reverso")
-//                .click(GOOGLE_SEARCH_CRITERIA)
-//                .waitToBePresent(GOOGLE_PROPOSALS_CRITERIA)
+                .click(GOOGLE_SEARCH_CRITERIA)
+                .waitToBePresent(GOOGLE_PROPOSALS_CRITERIA)
                 .sendKeys(GOOGLE_SEARCH_CRITERIA, Keys.ESCAPE, Keys.ENTER)
                 .click(REVERSO_LINK)
                 .click(REVERSO_ACCEPT)
@@ -98,8 +96,8 @@ public class GoogleReversoTests {
         interactions
                 .clickEvent(GOOGLE_ACCEPT)
                 .set(GOOGLE_SEARCH_CRITERIA, "value", "reverso")
-//                .click(GOOGLE_SEARCH_CRITERIA)
-//                .waitToBePresent(GOOGLE_PROPOSALS_CRITERIA)
+                .click(GOOGLE_SEARCH_CRITERIA)
+                .waitToBePresent(GOOGLE_PROPOSALS_CRITERIA)
                 .sendKeys(GOOGLE_SEARCH_CRITERIA, Keys.ENTER)
                 .clickEvent(REVERSO_LINK)
                 .clickEvent(REVERSO_ACCEPT)
