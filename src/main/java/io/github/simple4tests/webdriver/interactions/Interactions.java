@@ -9,12 +9,14 @@ import org.openqa.selenium.support.ui.Select;
 
 public class Interactions extends Core {
 
+    public RActions actions;
     public RBrowser browser;
     public RElement element;
     public RSelect select;
 
     public Interactions(WebDriver driver) {
         super(driver);
+        actions = new RActions(driver);
         browser = new RBrowser(driver);
         element = new RElement(driver);
         select = new RSelect(driver);

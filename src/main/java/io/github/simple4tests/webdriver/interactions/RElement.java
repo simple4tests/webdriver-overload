@@ -365,7 +365,7 @@ public class RElement extends Core {
     }
 
     public void upload(String fileAbsolutePath) {
-        if (!isNull(locatorType) && !isNull(fileAbsolutePath) && 0 < fileAbsolutePath.length()) {
+        if (!isNull(locatorType) && !isNull(fileAbsolutePath) && !fileAbsolutePath.isEmpty()) {
             Mode currentMode = mode;
             setMode(Mode.LUCKY);
             getInteractableElement().sendKeys(fileAbsolutePath);
