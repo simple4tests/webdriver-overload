@@ -123,90 +123,12 @@ public class Interactions extends Core {
         return this;
     }
 
-    public void setScrollIntoViewOptions(String behavior, String block, String inline) {
-        element.setScrollIntoViewOptions(behavior, block, inline);
-    }
-
-    public Interactions scrollIntoView(Object locator, String behavior, String block, String inline) {
-        element.at(locator).scrollIntoView(behavior, block, inline);
-        return this;
-    }
-
-    public Interactions scrollIntoView(Object locator) {
-        element.at(locator).scrollIntoView();
-        return this;
-    }
-
     public WebElement getInteractableElement(Object locator, boolean scrollIntoView) {
         return element.at(locator).getInteractableElement(scrollIntoView);
     }
 
     public WebElement getInteractableElement(Object locator) {
         return element.at(locator).getInteractableElement();
-    }
-
-    public Interactions clickEvent(Object locator) {
-        element.at(locator).clickEvent();
-        return this;
-    }
-
-    public Interactions clickEvent(Object locator, String options) {
-        element.at(locator).clickEvent(options);
-        return this;
-    }
-
-    public Interactions dblclickEvent(Object locator) {
-        element.at(locator).dblclickEvent();
-        return this;
-    }
-
-    public Interactions dblclickEvent(Object locator, String options) {
-        element.at(locator).dblclickEvent(options);
-        return this;
-    }
-
-    public Interactions auxclickEvent(Object locator) {
-        element.at(locator).auxclickEvent();
-        return this;
-    }
-
-    public Interactions auxclickEvent(Object locator, String options) {
-        element.at(locator).auxclickEvent(options);
-        return this;
-    }
-
-    public Interactions contextmenuEvent(Object locator) {
-        element.at(locator).contextmenuEvent();
-        return this;
-    }
-
-    public Interactions contextmenuEvent(Object locator, String options) {
-        element.at(locator).contextmenuEvent(options);
-        return this;
-    }
-
-    public Interactions mouseoverEvent(Object locator) {
-        element.at(locator).mouseoverEvent();
-        return this;
-    }
-
-    public Interactions mouseoverEvent(Object locator, String options) {
-        element.at(locator).mouseoverEvent(options);
-        return this;
-    }
-
-    public Interactions set(Object locator, String attribute, String value) {
-        element.at(locator).set(attribute, value);
-        return this;
-    }
-
-    public Interactions set(Object locator, String attribute, boolean value) {
-        element.at(locator).set(attribute, value);
-        return this;
-    }
-
-    public Object get(Object locator, String attribute) {
-        return element.at(locator).get(attribute);
     }
 
     public Interactions click(Object locator) {
@@ -246,6 +168,163 @@ public class Interactions extends Core {
 
     public Interactions setSelected(Object locator, boolean select) {
         element.at(locator).setSelected(select);
+        return this;
+    }
+
+    /*
+        ELEMENT.JS
+     */
+
+    public void setScrollIntoViewOptions(String behavior, String block, String inline) {
+//        element.setScrollIntoViewOptions(behavior, block, inline);
+        element.js.setScrollIntoViewOptions(behavior, block, inline);
+    }
+
+    public Interactions scrollIntoView(Object locator, String behavior, String block, String inline) {
+//        element.at(locator).scrollIntoView(behavior, block, inline);
+        element.js.scrollIntoView(locator, behavior, block, inline);
+        return this;
+    }
+
+    public Interactions scrollIntoView(Object locator) {
+//        element.at(locator).scrollIntoView();
+        element.js.scrollIntoView(locator);
+        return this;
+    }
+
+    public Interactions clickEvent(Object locator) {
+//        element.at(locator).clickEvent();
+        element.js.clickEvent(locator);
+        return this;
+    }
+
+    public Interactions clickEvent(Object locator, String options) {
+//        element.at(locator).clickEvent(options);
+        element.js.clickEvent(locator, options);
+        return this;
+    }
+
+    public Interactions dblclickEvent(Object locator) {
+//        element.at(locator).dblclickEvent();
+        element.js.dblclickEvent(locator);
+        return this;
+    }
+
+    public Interactions dblclickEvent(Object locator, String options) {
+//        element.at(locator).dblclickEvent(options);
+        element.js.dblclickEvent(locator, options);
+        return this;
+    }
+
+    public Interactions auxclickEvent(Object locator) {
+//        element.at(locator).auxclickEvent();
+        element.js.auxclickEvent(locator);
+        return this;
+    }
+
+    public Interactions auxclickEvent(Object locator, String options) {
+//        element.at(locator).auxclickEvent(options);
+        element.js.auxclickEvent(locator, options);
+        return this;
+    }
+
+    public Interactions contextmenuEvent(Object locator) {
+//        element.at(locator).contextmenuEvent();
+        element.js.contextmenuEvent(locator);
+        return this;
+    }
+
+    public Interactions contextmenuEvent(Object locator, String options) {
+//        element.at(locator).contextmenuEvent(options);
+        element.js.contextmenuEvent(locator, options);
+        return this;
+    }
+
+    public Interactions mouseoverEvent(Object locator) {
+//        element.at(locator).mouseoverEvent();
+        element.js.mouseoverEvent(locator);
+        return this;
+    }
+
+    public Interactions mouseoverEvent(Object locator, String options) {
+//        element.at(locator).mouseoverEvent(options);
+        element.js.mouseoverEvent(locator, options);
+        return this;
+    }
+
+    public Interactions set(Object locator, String attribute, String value) {
+//        element.at(locator).set(attribute, value);
+        element.js.set(locator, attribute, value);
+        return this;
+    }
+
+    public Interactions set(Object locator, String attribute, boolean value) {
+//        element.at(locator).set(attribute, value);
+        element.js.set(locator, attribute, value);
+        return this;
+    }
+
+    public Object get(Object locator, String attribute) {
+//        return element.at(locator).get(attribute);
+        return element.js.get(locator, attribute);
+    }
+
+    /*
+        ELEMENT.ACTIONS
+     */
+
+    public Interactions scrollToElement(Object locator) {
+        element.actions.scrollToElement(locator);
+        return this;
+    }
+
+    public Interactions keyDown(Object locator, CharSequence key) {
+        element.actions.keyDown(locator, key);
+        return this;
+    }
+
+    public Interactions keyUp(Object locator, CharSequence key) {
+        element.actions.keyUp(locator, key);
+        return this;
+    }
+
+    public Interactions actionsSendKeys(Object locator, CharSequence... keys) {
+        element.actions.sendKeys(locator, keys);
+        return this;
+    }
+
+    public Interactions clickAndHold(Object locator) {
+        element.actions.clickAndHold(locator);
+        return this;
+    }
+
+    public Interactions release(Object locator) {
+        element.actions.release(locator);
+        return this;
+    }
+
+    public Interactions actionsClick(Object locator) {
+        element.actions.click(locator);
+        return this;
+    }
+
+    public Interactions doubleClick(Object locator) {
+        element.actions.doubleClick(locator);
+        return this;
+    }
+
+    public Interactions contextClick(Object locator) {
+        element.actions.contextClick(locator);
+        return this;
+    }
+
+    public Interactions moveToElement(Object locator) {
+        element.actions.moveToElement(locator);
+        return this;
+    }
+
+    public Interactions dragAndDrop(Object sourceLocator, Object targetLocator) {
+        element.actions.dragAndDrop(sourceLocator, targetLocator);
         return this;
     }
 

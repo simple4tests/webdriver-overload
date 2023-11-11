@@ -1,14 +1,21 @@
 # simple4tests
 
-The goal of simple4tests is to provide methodology and simple tools to support developers and testers while building
-maintainable and reliable automated tests.
+The goal of simple4tests is to provide simple tools and methodology to support developers and testers while building
+reliable and maintainable automated tests.
 
-# simple4tests.webdriver-overload
+# webdriver-overload
 
-The simple4tests.webdriver-overload package includes required functions to apply simple4tests best practices for test
-automation
+The webdriver-overload package includes required functions to apply simple4tests best practices for test
+automation.
 
-### Examples of implementation
+It is build on top of Selenium WebDriver and integrates with different framework like Cucumber and Serenity-BDD.
+
+## Versions
+
+v2.x : To be used with Serenity-BDD 3.x
+v3.x : To be used with Serenity-BDD 4.x
+
+## Examples of implementation
 
 For full examples based on cucumber and including the 'simple4tests.webdriver-overload' package,
 checkout [ohrm-tests](https://github.com/simple4tests/ohrm-tests) on GitHub
