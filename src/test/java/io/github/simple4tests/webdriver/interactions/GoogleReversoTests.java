@@ -109,4 +109,29 @@ public class GoogleReversoTests {
                 .clickEvent(REVERSO_CONJUGAISON)
                 .switchToTab(1);
     }
+
+    @RepeatedTest(4)
+    @Tag("InteractionsActions")
+    public void interactionsActions_GoogleReversoTest(RepetitionInfo info) {
+        if (info.getCurrentRepetition() < 3) driver = _TechActions.initChromeDriver();
+        else driver = _TechActions.initFirefoxDriver();
+
+        Interactions interactions = new Interactions(driver);
+        if (2 == info.getCurrentRepetition() || 4 == info.getCurrentRepetition()) {
+            System.out.println("***** convertLocatorTypeToBy = false *****");
+            interactions.convertAllLocatorsToBy(false);
+        }
+
+        interactions.driver.navigate().to("http://www.google.fr");
+        interactions
+                .actionsClick(GOOGLE_ACCEPT)
+                .actionsSendKeys(GOOGLE_SEARCH_CRITERIA, "reverso")
+                .actionsClick(GOOGLE_SEARCH_CRITERIA)
+                .waitToBePresent(GOOGLE_PROPOSALS_CRITERIA)
+                .actionsSendKeys(GOOGLE_SEARCH_CRITERIA, Keys.ENTER)
+                .actionsClick(REVERSO_LINK)
+                .actionsClick(REVERSO_ACCEPT)
+                .clickEvent(REVERSO_CONJUGAISON)
+                .switchToTab(1);
+    }
 }

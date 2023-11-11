@@ -63,7 +63,7 @@
         <snakeyaml.version>2.2</snakeyaml.version>
         <selenium.version>4.15.0</selenium.version>
         <cucumber.version>7.14.0</cucumber.version>
-        <serenity.version>4.0.19</serenity.version>
+        <serenity.version>4.0.21</serenity.version>
 
         <slf4j.version>2.0.9</slf4j.version>
         <junit.version>5.10.1</junit.version>

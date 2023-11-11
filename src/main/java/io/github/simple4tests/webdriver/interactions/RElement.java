@@ -30,9 +30,9 @@ import org.openqa.selenium.*;
 
 public class RElement extends Core {
 
-    public static final String DEFAULT_SCROLL_BEHAVIOR = "auto";
-    public static final String DEFAULT_SCROLL_BLOCK = "center";
-    public static final String DEFAULT_SCROLL_INLINE = "center";
+//    public static final String DEFAULT_SCROLL_BEHAVIOR = "auto";
+//    public static final String DEFAULT_SCROLL_BLOCK = "center";
+//    public static final String DEFAULT_SCROLL_INLINE = "center";
 
     private LocatorTypes locatorType;
     private String xpath;
@@ -50,12 +50,17 @@ public class RElement extends Core {
     public long implicitWaitBeforeChecksInMillis;
     public long implicitWaitAfterChecksInMillis;
 
-    public String scrollBehavior;
-    public String scrollBlock;
-    public String scrollInline;
+//    public String scrollBehavior;
+//    public String scrollBlock;
+//    public String scrollInline;
+
+    public RActions actions;
+    public RJSActions js;
 
     public RElement(WebDriver driver) {
         super(driver);
+        actions = new RActions(this);
+        js = new RJSActions(this);
         init();
     }
 
@@ -65,7 +70,7 @@ public class RElement extends Core {
         convertAllLocatorsToBy(true);
         setAutoScroll(true);
         setImplicitWaits(0);
-        setScrollIntoViewOptions(DEFAULT_SCROLL_BEHAVIOR, DEFAULT_SCROLL_BLOCK, DEFAULT_SCROLL_INLINE);
+//        setScrollIntoViewOptions(DEFAULT_SCROLL_BEHAVIOR, DEFAULT_SCROLL_BLOCK, DEFAULT_SCROLL_INLINE);
         clearAll(false);
     }
 
@@ -238,96 +243,20 @@ public class RElement extends Core {
         return this;
     }
 
-    public void setScrollIntoViewOptions(String behavior, String block, String inline) {
-        this.scrollBehavior = behavior;
-        this.scrollBlock = block;
-        this.scrollInline = inline;
-    }
-
-    public RElement scrollIntoView(String behavior, String block, String inline) {
-        if (!isNull(locatorType))
-            JScripts.scrollIntoView(jsExecutor, waitToBeInteractable().getWebElement(), behavior, block, inline);
-        return this;
-    }
-
-    public RElement scrollIntoView() {
-        return scrollIntoView(scrollBehavior, scrollBlock, scrollInline);
-    }
-
     public WebElement getInteractableElement(boolean scrollIntoView) {
-        if (scrollIntoView) scrollIntoView();
-        else waitToBeInteractable();
+//        if (scrollIntoView) scrollIntoView();
+//        else waitToBeInteractable();
+//        return getWebElement();
+        waitToBeInteractable();
+        if (scrollIntoView) {
+            js.scrollIntoView(getWebElement());
+            waitToBeInteractable();
+        }
         return getWebElement();
     }
 
     public WebElement getInteractableElement() {
         return getInteractableElement(autoScroll);
-    }
-
-    public void clickEvent() {
-        if (!isNull(locatorType))
-            JScripts.click(jsExecutor, getInteractableElement());
-    }
-
-    public void clickEvent(String options) {
-        if (!isNull(locatorType))
-            JScripts.click(jsExecutor, getInteractableElement(), options);
-    }
-
-    public void dblclickEvent() {
-        if (!isNull(locatorType))
-            JScripts.dblclick(jsExecutor, getInteractableElement());
-    }
-
-    public void dblclickEvent(String options) {
-        if (!isNull(locatorType))
-            JScripts.dblclick(jsExecutor, getInteractableElement(), options);
-    }
-
-    public void auxclickEvent() {
-        if (!isNull(locatorType))
-            JScripts.auxclick(jsExecutor, getInteractableElement());
-    }
-
-    public void auxclickEvent(String options) {
-        if (!isNull(locatorType))
-            JScripts.auxclick(jsExecutor, getInteractableElement(), options);
-    }
-
-    public void contextmenuEvent() {
-        if (!isNull(locatorType))
-            JScripts.contextmenu(jsExecutor, getInteractableElement());
-    }
-
-    public void contextmenuEvent(String options) {
-        if (!isNull(locatorType))
-            JScripts.contextmenu(jsExecutor, getInteractableElement(), options);
-    }
-
-    public void mouseoverEvent() {
-        if (!isNull(locatorType))
-            JScripts.mouseover(jsExecutor, getInteractableElement());
-    }
-
-    public void mouseoverEvent(String options) {
-        if (!isNull(locatorType))
-            JScripts.mouseover(jsExecutor, getInteractableElement(), options);
-    }
-
-    public void set(String attribute, String value) {
-        if (!isNull(locatorType) && !isNull(attribute) && !isNull(value))
-            JScripts.set(jsExecutor, getInteractableElement(), attribute, value);
-    }
-
-    public void set(String attribute, boolean value) {
-        if (!isNull(locatorType) && !isNull(attribute) && !isNull(value))
-            JScripts.set(jsExecutor, getInteractableElement(), attribute, value);
-    }
-
-    public Object get(String attribute) {
-        if (!isNull(locatorType) && !isNull(attribute))
-            return JScripts.get(jsExecutor, getInteractableElement(), attribute);
-        return null;
     }
 
     public void click() {
@@ -378,5 +307,120 @@ public class RElement extends Core {
             WebElement element = getInteractableElement();
             if (element.isSelected() != select) element.click();
         }
+    }
+
+    @Deprecated
+    public void setScrollIntoViewOptions(String behavior, String block, String inline) {
+//        this.scrollBehavior = behavior;
+//        this.scrollBlock = block;
+//        this.scrollInline = inline;
+        js.setScrollIntoViewOptions(behavior, block, inline);
+    }
+
+    @Deprecated
+    public RElement scrollIntoView(String behavior, String block, String inline) {
+//        if (!isNull(locatorType))
+//            JScripts.scrollIntoView(jsExecutor, waitToBeInteractable().getWebElement(), behavior, block, inline);
+        js.scrollIntoView(getWebElement(), behavior, block, inline);
+        return this;
+    }
+
+    @Deprecated
+    public RElement scrollIntoView() {
+//        return scrollIntoView(scrollBehavior, scrollBlock, scrollInline);
+        js.scrollIntoView(getWebElement());
+        return this;
+    }
+
+    @Deprecated
+    public void clickEvent() {
+        if (!isNull(locatorType))
+//            JScripts.click(jsExecutor, getInteractableElement());
+            js.clickEvent(getWebElement());
+    }
+
+    @Deprecated
+    public void clickEvent(String options) {
+        if (!isNull(locatorType))
+//            JScripts.click(jsExecutor, getInteractableElement(), options);
+            js.clickEvent(getWebElement(), options);
+    }
+
+    @Deprecated
+    public void dblclickEvent() {
+        if (!isNull(locatorType))
+//            JScripts.dblclick(jsExecutor, getInteractableElement());
+            js.dblclickEvent(getWebElement());
+    }
+
+    @Deprecated
+    public void dblclickEvent(String options) {
+        if (!isNull(locatorType))
+//            JScripts.dblclick(jsExecutor, getInteractableElement(), options);
+            js.dblclickEvent(getWebElement(), options);
+    }
+
+    @Deprecated
+    public void auxclickEvent() {
+        if (!isNull(locatorType))
+//            JScripts.auxclick(jsExecutor, getInteractableElement());
+            js.auxclickEvent(getWebElement());
+    }
+
+    @Deprecated
+    public void auxclickEvent(String options) {
+        if (!isNull(locatorType))
+//            JScripts.auxclick(jsExecutor, getInteractableElement(), options);
+            js.auxclickEvent(getWebElement(), options);
+    }
+
+    @Deprecated
+    public void contextmenuEvent() {
+        if (!isNull(locatorType))
+//            JScripts.contextmenu(jsExecutor, getInteractableElement());
+            js.contextmenuEvent(getWebElement());
+    }
+
+    @Deprecated
+    public void contextmenuEvent(String options) {
+        if (!isNull(locatorType))
+//            JScripts.contextmenu(jsExecutor, getInteractableElement(), options);
+            js.contextmenuEvent(getWebElement(), options);
+    }
+
+    @Deprecated
+    public void mouseoverEvent() {
+        if (!isNull(locatorType))
+//            JScripts.mouseover(jsExecutor, getInteractableElement());
+            js.mouseoverEvent(getWebElement());
+    }
+
+    @Deprecated
+    public void mouseoverEvent(String options) {
+        if (!isNull(locatorType))
+//            JScripts.mouseover(jsExecutor, getInteractableElement(), options);
+            js.mouseoverEvent(getWebElement(), options);
+    }
+
+    @Deprecated
+    public void set(String attribute, String value) {
+        if (!isNull(locatorType) && !isNull(attribute) && !isNull(value))
+//            JScripts.set(jsExecutor, getInteractableElement(), attribute, value);
+            js.set(getWebElement(), attribute, value);
+    }
+
+    @Deprecated
+    public void set(String attribute, boolean value) {
+        if (!isNull(locatorType) && !isNull(attribute))
+//            JScripts.set(jsExecutor, getInteractableElement(), attribute, value);
+            js.set(getWebElement(), attribute, value);
+    }
+
+    @Deprecated
+    public Object get(String attribute) {
+        if (!isNull(locatorType) && !isNull(attribute))
+//            return JScripts.get(jsExecutor, getInteractableElement(), attribute);
+            return js.get(getWebElement(), attribute);
+        return null;
     }
 }

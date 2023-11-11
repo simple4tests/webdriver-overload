@@ -11,6 +11,7 @@ automation.
 It is build on top of Selenium WebDriver and integrates with different framework like Cucumber and Serenity-BDD.
 
 ## Versions
+
 v2.x : To be used with Serenity-BDD 3.x
 v3.x : To be used with Serenity-BDD 4.x
 
