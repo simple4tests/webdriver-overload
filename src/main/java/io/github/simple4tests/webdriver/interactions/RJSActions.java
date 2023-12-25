@@ -140,7 +140,7 @@ public class RJSActions {
         if (null != locator && null != attribute)
             return JScripts.get(
                     element.jsExecutor,
-                    element.at(locator).getInteractableElement(),
+                    element.at(locator).getElement(),
                     attribute);
         return null;
     }

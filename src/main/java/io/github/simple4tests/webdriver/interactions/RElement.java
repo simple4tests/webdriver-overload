@@ -30,10 +30,6 @@ import org.openqa.selenium.*;
 
 public class RElement extends Core {
 
-//    public static final String DEFAULT_SCROLL_BEHAVIOR = "auto";
-//    public static final String DEFAULT_SCROLL_BLOCK = "center";
-//    public static final String DEFAULT_SCROLL_INLINE = "center";
-
     private LocatorTypes locatorType;
     private String xpath;
     private String selector;
@@ -49,10 +45,6 @@ public class RElement extends Core {
 
     public long implicitWaitBeforeChecksInMillis;
     public long implicitWaitAfterChecksInMillis;
-
-//    public String scrollBehavior;
-//    public String scrollBlock;
-//    public String scrollInline;
 
     public RActions actions;
     public RJSActions js;
@@ -70,7 +62,6 @@ public class RElement extends Core {
         convertAllLocatorsToBy(true);
         setAutoScroll(true);
         setImplicitWaits(0);
-//        setScrollIntoViewOptions(DEFAULT_SCROLL_BEHAVIOR, DEFAULT_SCROLL_BLOCK, DEFAULT_SCROLL_INLINE);
         clearAll(false);
     }
 
