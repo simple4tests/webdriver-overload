@@ -11,7 +11,7 @@ import java.nio.file.Path;
 
 @NoArgsConstructor
 @AllArgsConstructor
-public class CucumberJavaReporter extends SystemOutReporter {
+public class CucumberJavaReporter implements Reporter {
 
     public Scenario scenario;
     public WebDriver driver;
@@ -22,45 +22,32 @@ public class CucumberJavaReporter extends SystemOutReporter {
     }
 
     @Override
-    public void reportAction(String action) {
-        super.reportAction(action);
+    public void startAction(String action) {
         scenario.attach("", "text/plain", "action : ".concat(action));
     }
 
     @Override
+    public void endAction() {}
+
+    @Override
     public void reportData(String data) {
-        super.reportData(data);
         scenario.attach("", "text/plain", "data : ".concat(data));
     }
 
     @Override
     public void reportData(Path path) {
-        super.reportData(path);
         scenario.attach("", "text/plain", "data : ".concat(path.toAbsolutePath().toString()));
     }
 
     @Override
-    public void reportAction(String action, String data) {
-        super.reportAction(action, data);
-        scenario.attach(data, "text/plain", "action & data : ".concat(action));
-    }
-
-    @Override
-    public void reportCheck(String check) {
-        super.reportCheck(check);
-        scenario.attach("", "text/plain", "check : ".concat(check));
-        reportScreenshot();
-    }
-
-    @Override
     public void reportError(String error) {
-        super.reportError(error);
+        addError(error);
         scenario.attach("", "text/plain", "error : ".concat(error));
     }
 
     @Override
     public void reportError(Path path) {
-        super.reportError(path);
+        addError(path.toAbsolutePath().toString());
         scenario.attach("", "text/plain", "error : ".concat(path.toAbsolutePath().toString()));
     }
 

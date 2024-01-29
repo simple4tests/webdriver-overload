@@ -10,6 +10,8 @@ import java.util.List;
 
 public class AssertTests {
 
+    SystemOutReporter reporter = new SystemOutReporter();
+
     @Data
     @AllArgsConstructor
     public static class Country {
@@ -20,7 +22,6 @@ public class AssertTests {
     @Test
     public void checkTest() {
 
-        SystemOutReporter reporter = new SystemOutReporter();
         reporter.clearErrors();
 
         reporter.reportAction("My first action");

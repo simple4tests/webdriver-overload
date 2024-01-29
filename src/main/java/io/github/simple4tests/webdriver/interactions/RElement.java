@@ -302,23 +302,17 @@ public class RElement extends Core {
 
     @Deprecated
     public void setScrollIntoViewOptions(String behavior, String block, String inline) {
-//        this.scrollBehavior = behavior;
-//        this.scrollBlock = block;
-//        this.scrollInline = inline;
         js.setScrollIntoViewOptions(behavior, block, inline);
     }
 
     @Deprecated
     public RElement scrollIntoView(String behavior, String block, String inline) {
-//        if (!isNull(locatorType))
-//            JScripts.scrollIntoView(jsExecutor, waitToBeInteractable().getWebElement(), behavior, block, inline);
         js.scrollIntoView(getWebElement(), behavior, block, inline);
         return this;
     }
 
     @Deprecated
     public RElement scrollIntoView() {
-//        return scrollIntoView(scrollBehavior, scrollBlock, scrollInline);
         js.scrollIntoView(getWebElement());
         return this;
     }
@@ -326,91 +320,78 @@ public class RElement extends Core {
     @Deprecated
     public void clickEvent() {
         if (!isNull(locatorType))
-//            JScripts.click(jsExecutor, getInteractableElement());
             js.clickEvent(getWebElement());
     }
 
     @Deprecated
     public void clickEvent(String options) {
         if (!isNull(locatorType))
-//            JScripts.click(jsExecutor, getInteractableElement(), options);
             js.clickEvent(getWebElement(), options);
     }
 
     @Deprecated
     public void dblclickEvent() {
         if (!isNull(locatorType))
-//            JScripts.dblclick(jsExecutor, getInteractableElement());
             js.dblclickEvent(getWebElement());
     }
 
     @Deprecated
     public void dblclickEvent(String options) {
         if (!isNull(locatorType))
-//            JScripts.dblclick(jsExecutor, getInteractableElement(), options);
             js.dblclickEvent(getWebElement(), options);
     }
 
     @Deprecated
     public void auxclickEvent() {
         if (!isNull(locatorType))
-//            JScripts.auxclick(jsExecutor, getInteractableElement());
             js.auxclickEvent(getWebElement());
     }
 
     @Deprecated
     public void auxclickEvent(String options) {
         if (!isNull(locatorType))
-//            JScripts.auxclick(jsExecutor, getInteractableElement(), options);
             js.auxclickEvent(getWebElement(), options);
     }
 
     @Deprecated
     public void contextmenuEvent() {
         if (!isNull(locatorType))
-//            JScripts.contextmenu(jsExecutor, getInteractableElement());
             js.contextmenuEvent(getWebElement());
     }
 
     @Deprecated
     public void contextmenuEvent(String options) {
         if (!isNull(locatorType))
-//            JScripts.contextmenu(jsExecutor, getInteractableElement(), options);
             js.contextmenuEvent(getWebElement(), options);
     }
 
     @Deprecated
     public void mouseoverEvent() {
         if (!isNull(locatorType))
-//            JScripts.mouseover(jsExecutor, getInteractableElement());
             js.mouseoverEvent(getWebElement());
     }
 
     @Deprecated
     public void mouseoverEvent(String options) {
         if (!isNull(locatorType))
-//            JScripts.mouseover(jsExecutor, getInteractableElement(), options);
             js.mouseoverEvent(getWebElement(), options);
     }
 
     @Deprecated
     public void set(String attribute, String value) {
         if (!isNull(locatorType) && !isNull(attribute) && !isNull(value))
-//            JScripts.set(jsExecutor, getInteractableElement(), attribute, value);
             js.set(getWebElement(), attribute, value);
     }
 
     @Deprecated
     public void set(String attribute, boolean value) {
         if (!isNull(locatorType) && !isNull(attribute))
-//            JScripts.set(jsExecutor, getInteractableElement(), attribute, value);
             js.set(getWebElement(), attribute, value);
     }
 
     @Deprecated
     public Object get(String attribute) {
         if (!isNull(locatorType) && !isNull(attribute))
-//            return JScripts.get(jsExecutor, getInteractableElement(), attribute);
             return js.get(getWebElement(), attribute);
         return null;
     }

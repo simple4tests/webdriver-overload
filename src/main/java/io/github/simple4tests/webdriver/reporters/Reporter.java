@@ -14,7 +14,11 @@ public interface Reporter {
     List<String> errors = new ArrayList<>();
 
     default boolean hasErrors() {
-        return 0 < errors.size();
+        return !errors.isEmpty();
+    }
+
+    default void addError(String error) {
+        errors.add(error);
     }
 
     default void clearErrors() {
@@ -41,50 +45,71 @@ public interface Reporter {
     }
 
     default <T> void assertThat(final String check, final T actual, final Matcher<? super T> expected) {
-        reportCheck(check);
+        startAction(check);
+        reportScreenshot();
         try {
             MatcherAssert.assertThat("", actual, expected);
         } catch (AssertionError e) {
             reportError(getErrorDescription(check, String.format("Actual: %s%s", actual, e.getMessage())));
         }
+        endAction();
     }
 
     default void groovyAssertThat(final String check, final String actual, final String expectedAsGroovyMatcher) {
-        reportCheck(check);
+        startAction(check);
+        reportScreenshot();
         try {
             Groovy.getShell(Groovy.IMPORT_HAMCREST_MATCHERS)
                     .evaluate(String.format("assertThat '%s', %s", actual, expectedAsGroovyMatcher));
         } catch (Throwable t) {
             reportError(getErrorDescription(check, String.format("Actual: %s%s", actual, t.getMessage())));
         }
+        endAction();
     }
 
     default void groovyAssert(final String check, final String groovyAssertExpression) {
-        reportCheck(check);
+        startAction(check);
+        reportScreenshot();
         try {
             Groovy.getShell().evaluate(String.format("assert %s", groovyAssertExpression));
         } catch (Throwable t) {
             reportError(getErrorDescription(check, t.getMessage()));
         }
+        endAction();
     }
 
     private String getErrorDescription(String check, String mismatch) {
         return String.format("%s ?\n%s\n", check, mismatch);
     }
 
-    void reportAction(String action);
+    void startAction(String action);
+
+    void endAction();
 
     void reportData(String data);
 
     void reportData(Path path);
-
-    void reportAction(String action, String data);
-
-    void reportCheck(String check);
 
     void reportError(String error);
 
     void reportError(Path path);
 
     void reportScreenshot();
+
+    default void reportAction(String action) {
+        startAction(action);
+        endAction();
+    }
+
+    default void reportAction(String action, String data) {
+        startAction(action);
+        reportData(data);
+        endAction();
+    }
+
+    default void reportCheck(String check) {
+        startAction(check);
+        reportScreenshot();
+        endAction();
+    }
 }

@@ -9,40 +9,33 @@ public class SystemOutReporter implements Reporter {
     }
 
     @Override
-    public void reportAction(String action) {
+    public void startAction(String action) {
         printResult("action : ".concat(action));
+    }
+
+    @Override
+    public void endAction() {
     }
 
     @Override
     public void reportData(String data) {
-        printResult(String.format("data : \n%s", data));
-    }
-
-    @Override
-    public void reportAction(String action, String data) {
-        printResult("action : ".concat(action));
-        printResult(String.format("data : \n%s", data));
+        printResult(String.format("data : %s", data));
     }
 
     @Override
     public void reportData(Path path) {
-        printResult(String.format("data : \n%s", path.toAbsolutePath()));
-    }
-
-    @Override
-    public void reportCheck(String check) {
-        printResult("check : ".concat(check));
+        printResult(String.format("data : %s", path.toAbsolutePath()));
     }
 
     @Override
     public void reportError(String error) {
-        errors.add(error);
+        addError(error);
         printResult(String.format("error : %s", error));
     }
 
     @Override
     public void reportError(Path path) {
-        errors.add(path.toAbsolutePath().toString());
+        addError(path.toAbsolutePath().toString());
         printResult(String.format("error : %s", path.toAbsolutePath()));
     }
 

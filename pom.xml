@@ -5,7 +5,7 @@
 
     <groupId>io.github.simple4tests</groupId>
     <artifactId>webdriver-overload</artifactId>
-    <version>3.0.1-SNAPSHOT</version>
+    <version>3.0.2-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
@@ -57,13 +57,13 @@
         <maven-surefire-plugin.version>3.2.2</maven-surefire-plugin.version>
 
         <commons-text.version>1.11.0</commons-text.version>
-        <groovy.version>4.0.15</groovy.version>
+        <groovy.version>4.0.17</groovy.version>
         <hamcrest.version>2.2</hamcrest.version>
         <lombok.version>1.18.30</lombok.version>
         <snakeyaml.version>2.2</snakeyaml.version>
-        <selenium.version>4.15.0</selenium.version>
-        <cucumber.version>7.14.0</cucumber.version>
-        <serenity.version>4.0.21</serenity.version>
+        <selenium.version>4.16.1</selenium.version>
+        <cucumber.version>7.15.0</cucumber.version>
+        <serenity.version>4.0.43</serenity.version>
 
         <slf4j.version>2.0.9</slf4j.version>
         <junit.version>5.10.1</junit.version>
