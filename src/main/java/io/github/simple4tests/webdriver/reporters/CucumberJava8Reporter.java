@@ -22,12 +22,12 @@ public class CucumberJava8Reporter implements Reporter {
     }
 
     @Override
-    public void startAction(String action) {
-        scenario.attach("", "text/plain", "action : ".concat(action));
+    public void startStep(String step) {
+        scenario.attach("", "text/plain", "step : ".concat(step));
     }
 
     @Override
-    public void endAction() {}
+    public void endStep() {}
 
     @Override
     public void reportData(String data) {
@@ -37,12 +37,6 @@ public class CucumberJava8Reporter implements Reporter {
     @Override
     public void reportData(Path path) {
         scenario.attach("", "text/plain", "data : ".concat(path.toAbsolutePath().toString()));
-    }
-
-    @Override
-    public void reportCheck(String check) {
-        scenario.attach("", "text/plain", "check : ".concat(check));
-        reportScreenshot();
     }
 
     @Override

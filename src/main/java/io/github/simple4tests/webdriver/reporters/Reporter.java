@@ -13,6 +13,10 @@ public interface Reporter {
 
     List<String> errors = new ArrayList<>();
 
+    private String formatError(String step, String mismatch) {
+        return String.format("%s ?\n%s\n", step, mismatch);
+    }
+
     default boolean hasErrors() {
         return !errors.isEmpty();
     }
@@ -40,51 +44,47 @@ public interface Reporter {
         }
     }
 
-    default <T> void assertThat(final String check, final T actual, final T expected) {
-        assertThat(check, actual, Matchers.equalTo(expected));
+    default <T> void assertThat(final String step, final T actual, final T expected) {
+        assertThat(step, actual, Matchers.equalTo(expected));
     }
 
-    default <T> void assertThat(final String check, final T actual, final Matcher<? super T> expected) {
-        startAction(check);
+    default <T> void assertThat(final String step, final T actual, final Matcher<? super T> expected) {
+        startStep(step);
         reportScreenshot();
         try {
             MatcherAssert.assertThat("", actual, expected);
         } catch (AssertionError e) {
-            reportError(getErrorDescription(check, String.format("Actual: %s%s", actual, e.getMessage())));
+            reportError(formatError(step, String.format("Actual: %s%s", actual, e.getMessage())));
         }
-        endAction();
+        endStep();
     }
 
-    default void groovyAssertThat(final String check, final String actual, final String expectedAsGroovyMatcher) {
-        startAction(check);
+    default void groovyAssertThat(final String step, final String actual, final String expectedAsGroovyMatcher) {
+        startStep(step);
         reportScreenshot();
         try {
             Groovy.getShell(Groovy.IMPORT_HAMCREST_MATCHERS)
                     .evaluate(String.format("assertThat '%s', %s", actual, expectedAsGroovyMatcher));
         } catch (Throwable t) {
-            reportError(getErrorDescription(check, String.format("Actual: %s%s", actual, t.getMessage())));
+            reportError(formatError(step, String.format("Actual: %s%s", actual, t.getMessage())));
         }
-        endAction();
+        endStep();
     }
 
-    default void groovyAssert(final String check, final String groovyAssertExpression) {
-        startAction(check);
+    default void groovyAssert(final String step, final String groovyAssertExpression) {
+        startStep(step);
         reportScreenshot();
         try {
             Groovy.getShell().evaluate(String.format("assert %s", groovyAssertExpression));
         } catch (Throwable t) {
-            reportError(getErrorDescription(check, t.getMessage()));
+            reportError(formatError(step, t.getMessage()));
         }
-        endAction();
+        endStep();
     }
 
-    private String getErrorDescription(String check, String mismatch) {
-        return String.format("%s ?\n%s\n", check, mismatch);
-    }
+    void startStep(String step);
 
-    void startAction(String action);
-
-    void endAction();
+    void endStep();
 
     void reportData(String data);
 
@@ -97,19 +97,13 @@ public interface Reporter {
     void reportScreenshot();
 
     default void reportAction(String action) {
-        startAction(action);
-        endAction();
+        startStep(action);
+        endStep();
     }
 
     default void reportAction(String action, String data) {
-        startAction(action);
+        startStep(action);
         reportData(data);
-        endAction();
-    }
-
-    default void reportCheck(String check) {
-        startAction(check);
-        reportScreenshot();
-        endAction();
+        endStep();
     }
 }

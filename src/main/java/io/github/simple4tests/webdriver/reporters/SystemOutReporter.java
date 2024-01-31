@@ -9,12 +9,12 @@ public class SystemOutReporter implements Reporter {
     }
 
     @Override
-    public void startAction(String action) {
-        printResult("action : ".concat(action));
+    public void startStep(String step) {
+        printResult("step : ".concat(step));
     }
 
     @Override
-    public void endAction() {
+    public void endStep() {
     }
 
     @Override

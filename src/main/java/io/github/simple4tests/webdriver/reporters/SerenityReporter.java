@@ -21,14 +21,14 @@ public class SerenityReporter extends SystemOutReporter {
     }
 
     @Override
-    public void startAction(String action) {
-        super.startAction(action);
-        StepEventBus.getEventBus().stepStarted(ExecutedStepDescription.withTitle(action));
+    public void startStep(String step) {
+        super.startStep(step);
+        StepEventBus.getEventBus().stepStarted(ExecutedStepDescription.withTitle(step));
     }
 
     @Override
-    public void endAction() {
-        super.endAction();
+    public void endStep() {
+        super.endStep();
         StepEventBus.getEventBus().stepFinished();
     }
 
