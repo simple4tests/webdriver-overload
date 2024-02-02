@@ -49,7 +49,6 @@ public class SerenityReporter extends SystemOutReporter {
         }
     }
 
-
     @Override
     public void reportError(String error) {
         super.reportError(error);

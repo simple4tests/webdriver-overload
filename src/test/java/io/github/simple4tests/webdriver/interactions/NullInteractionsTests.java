@@ -21,14 +21,14 @@ public class NullInteractionsTests {
     public void interactions_GoogleNullTest(RepetitionInfo info) {
         driver = _TechActions.initChromeDriver();
 
-        Interactions interactions = new Interactions(driver);
+        Interactions ui = new Interactions(driver);
         if (2 == info.getCurrentRepetition()) {
             System.out.println("***** convertLocatorTypeToBy = false *****");
-            interactions.convertAllLocatorsToBy(false);
+            ui.convertAllLocatorsToBy(false);
         }
 
-        interactions.driver.navigate().to("http://www.google.fr");
-        interactions
+        ui.driver.navigate().to("http://www.google.fr");
+        ui
                 .click(null)
                 .sendKeys(null, "A")
                 .sendKeys("//*", (CharSequence) null)
@@ -41,14 +41,14 @@ public class NullInteractionsTests {
     public void interactionsJS_GoogleNullTest(RepetitionInfo info) {
         driver = _TechActions.initChromeDriver();
 
-        Interactions interactions = new Interactions(driver);
+        Interactions ui = new Interactions(driver);
         if (2 == info.getCurrentRepetition()) {
             System.out.println("***** convertLocatorTypeToBy = false *****");
-            interactions.convertAllLocatorsToBy(false);
+            ui.convertAllLocatorsToBy(false);
         }
 
-        interactions.driver.navigate().to("http://www.google.fr");
-        interactions
+        ui.driver.navigate().to("http://www.google.fr");
+        ui
                 .clickEvent(null)
                 .set(null, "value", "A")
                 .set("//*", null, "A")

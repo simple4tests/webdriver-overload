@@ -32,6 +32,7 @@ public class TheLabTests {
         driver.findElement(By.xpath(MENU_IS_CLOSED)).click();
         _TechActions.waitElementToBeVisible(driver, By.xpath(COLLECT_KITTENS));
         driver.findElement(By.xpath(COLLECT_KITTENS)).click();
+        _TechActions.waitElementToBePresent(driver, By.xpath(MENU_IS_CLOSED));
         driver.findElement(By.xpath(START_GAME)).click();
         while (driver.findElements(By.xpath(GAME_OVER)).isEmpty()) {
             _TechActions.sleep(50);
@@ -51,24 +52,25 @@ public class TheLabTests {
         if (info.getCurrentRepetition() < 3) driver = _TechActions.initChromeDriver();
         else driver = _TechActions.initFirefoxDriver();
 
-        Interactions interactions = new Interactions(driver);
+        Interactions ui = new Interactions(driver);
         if (2 == info.getCurrentRepetition() || 4 == info.getCurrentRepetition()) {
             System.out.println("***** convertLocatorTypeToBy = false *****");
-            interactions.convertAllLocatorsToBy(false);
+            ui.convertAllLocatorsToBy(false);
         }
-        interactions.setAutoScroll(false);
+        ui.setAutoScroll(false);
 
-        interactions.driver.navigate().to("http://thelab.boozang.com/");
-        interactions
+        ui.driver.navigate().to("http://thelab.boozang.com/");
+        ui
                 .click(MENU_IS_CLOSED)
                 .click(COLLECT_KITTENS)
+                .waitToBePresent(MENU_IS_CLOSED)
                 .click(START_GAME);
-        while (interactions.isAbsent(GAME_OVER)) {
-            interactions.sleep(50);
-            if (interactions.isPresent(KITTENS)
-                    && interactions.isAbsent(GAME_OVER)) {
+        while (ui.isAbsent(GAME_OVER)) {
+            ui.sleep(50);
+            if (ui.isPresent(KITTENS)
+                    && ui.isAbsent(GAME_OVER)) {
                 try {
-                    interactions.click(KITTENS);
+                    ui.click(KITTENS);
                 } catch (Exception ignored) {
                 }
             }
@@ -78,47 +80,48 @@ public class TheLabTests {
     @RepeatedTest(4)
     @Tag("InteractionsJS")
     public void interactionsJS_KittensTest(RepetitionInfo info) {
-        Interactions interactions;
+        Interactions ui;
         switch (info.getCurrentRepetition()) {
             case 1:
                 driver = _TechActions.initChromeDriver();
-                interactions = new Interactions(driver);
+                ui = new Interactions(driver);
                 break;
             case 2:
                 driver = _TechActions.initChromeDriver();
-                interactions = new Interactions(driver);
+                ui = new Interactions(driver);
                 System.out.println("***** convertLocatorTypeToBy = false *****");
-                interactions.convertAllLocatorsToBy(false);
+                ui.convertAllLocatorsToBy(false);
                 break;
             case 3:
                 driver = _TechActions.initFirefoxDriver();
-                interactions = new Interactions(driver);
-                interactions.setImplicitWaits(50, 25);
+                ui = new Interactions(driver);
+                ui.setImplicitWaits(100, 100);
                 break;
             case 4:
                 driver = _TechActions.initFirefoxDriver();
-                interactions = new Interactions(driver);
+                ui = new Interactions(driver);
                 System.out.println("***** convertLocatorTypeToBy = false *****");
-                interactions.setImplicitWaits(50, 25);
-                interactions.convertAllLocatorsToBy(false);
+                ui.setImplicitWaits(100, 100);
+                ui.convertAllLocatorsToBy(false);
                 break;
             default:
                 return;
         }
-        interactions.setAutoScroll(false);
+        ui.setAutoScroll(false);
 
-        interactions.driver.navigate().to("http://thelab.boozang.com/");
-        interactions
+        ui.driver.navigate().to("http://thelab.boozang.com/");
+        ui
                 .clickEvent(MENU_IS_CLOSED)
                 .clickEvent(COLLECT_KITTENS)
+                .waitToBePresent(MENU_IS_CLOSED)
                 .clickEvent(START_GAME);
-        interactions.setImplicitWaits(0);
-        while (interactions.isAbsent(GAME_OVER)) {
-            interactions.sleep(50);
-            if (interactions.isPresent(KITTENS)
-                    && interactions.isAbsent(GAME_OVER)) {
+        ui.setImplicitWaits(0);
+        while (ui.isAbsent(GAME_OVER)) {
+            ui.sleep(50);
+            if (ui.isPresent(KITTENS)
+                    && ui.isAbsent(GAME_OVER)) {
                 try {
-                    interactions.clickEvent(KITTENS);
+                    ui.clickEvent(KITTENS);
                 } catch (Exception ignored) {
                 }
             }
@@ -128,49 +131,50 @@ public class TheLabTests {
     @RepeatedTest(4)
     @Tag("InteractionsActions")
     public void interactionsActions_KittensTest(RepetitionInfo info) {
-        Interactions interactions;
+        Interactions ui;
         switch (info.getCurrentRepetition()) {
             case 1:
                 driver = _TechActions.initChromeDriver();
-                interactions = new Interactions(driver);
-                interactions.setImplicitWaits(50, 50);
+                ui = new Interactions(driver);
+                ui.setImplicitWaits(50, 50);
                 break;
             case 2:
                 driver = _TechActions.initChromeDriver();
-                interactions = new Interactions(driver);
+                ui = new Interactions(driver);
                 System.out.println("***** convertLocatorTypeToBy = false *****");
-                interactions.setImplicitWaits(50, 50);
-                interactions.convertAllLocatorsToBy(false);
+                ui.setImplicitWaits(50, 50);
+                ui.convertAllLocatorsToBy(false);
                 break;
             case 3:
                 driver = _TechActions.initFirefoxDriver();
-                interactions = new Interactions(driver);
-                interactions.setImplicitWaits(50, 50);
+                ui = new Interactions(driver);
+                ui.setImplicitWaits(50, 50);
                 break;
             case 4:
                 driver = _TechActions.initFirefoxDriver();
-                interactions = new Interactions(driver);
+                ui = new Interactions(driver);
                 System.out.println("***** convertLocatorTypeToBy = false *****");
-                interactions.setImplicitWaits(50, 50);
-                interactions.convertAllLocatorsToBy(false);
+                ui.setImplicitWaits(50, 50);
+                ui.convertAllLocatorsToBy(false);
                 break;
             default:
                 return;
         }
-        interactions.setAutoScroll(false);
+        ui.setAutoScroll(false);
 
-        interactions.driver.navigate().to("http://thelab.boozang.com/");
-        interactions
+        ui.driver.navigate().to("http://thelab.boozang.com/");
+        ui
                 .actionsClick(MENU_IS_CLOSED)
                 .actionsClick(COLLECT_KITTENS)
+                .waitToBePresent(MENU_IS_CLOSED)
                 .actionsClick(START_GAME);
-        interactions.setImplicitWaits(0);
-        while (interactions.isAbsent(GAME_OVER)) {
-            interactions.sleep(50);
-            if (interactions.isPresent(KITTENS)
-                    && interactions.isAbsent(GAME_OVER)) {
+        ui.setImplicitWaits(0);
+        while (ui.isAbsent(GAME_OVER)) {
+            ui.sleep(50);
+            if (ui.isPresent(KITTENS)
+                    && ui.isAbsent(GAME_OVER)) {
                 try {
-                    interactions.actionsClick(KITTENS);
+                    ui.actionsClick(KITTENS);
                 } catch (Exception ignored) {
                 }
             }

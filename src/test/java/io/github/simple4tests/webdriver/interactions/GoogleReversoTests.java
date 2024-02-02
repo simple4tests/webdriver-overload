@@ -9,6 +9,8 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 
+import java.time.Duration;
+
 public class GoogleReversoTests {
 
     private final String GOOGLE_ACCEPT = "//*[@id='L2AGLb']";
@@ -43,14 +45,13 @@ public class GoogleReversoTests {
                 driver,
                 By.xpath(REVERSO_LINK));
         driver.findElement(By.xpath(REVERSO_LINK)).click();
-        _TechActions.waitElementToBePresent(
-                driver,
-                By.xpath(REVERSO_ACCEPT));
-        driver.findElement(By.xpath(REVERSO_ACCEPT)).click();
+//        _TechActions.waitElementToBePresent(
+//                driver,
+//                By.xpath(REVERSO_ACCEPT));
+//        driver.findElement(By.xpath(REVERSO_ACCEPT)).click();
         _TechActions.scrollIntoView(
                 driver,
                 By.xpath(REVERSO_CONJUGAISON));
-//        driver.findElement(By.xpath(REVERSO_CONJUGAISON)).click();
         ((JavascriptExecutor) driver).executeScript(
                 "arguments[0].dispatchEvent(new MouseEvent('click', {bubbles: true}));",
                 driver.findElement(By.xpath(REVERSO_CONJUGAISON)));
@@ -65,23 +66,26 @@ public class GoogleReversoTests {
         if (info.getCurrentRepetition() < 3) driver = _TechActions.initChromeDriver();
         else driver = _TechActions.initFirefoxDriver();
 
-        Interactions interactions = new Interactions(driver);
+        Interactions ui = new Interactions(driver);
         if (2 == info.getCurrentRepetition() || 4 == info.getCurrentRepetition()) {
             System.out.println("***** convertLocatorTypeToBy = false *****");
-            interactions.convertAllLocatorsToBy(false);
+            ui.convertAllLocatorsToBy(false);
         }
 
-        interactions.driver.navigate().to("http://www.google.fr");
-        interactions
+        ui.driver.navigate().to("http://www.google.fr");
+        ui
                 .click(GOOGLE_ACCEPT)
                 .sendKeys(GOOGLE_SEARCH_CRITERIA, "reverso")
                 .click(GOOGLE_SEARCH_CRITERIA)
                 .waitToBePresent(GOOGLE_PROPOSALS_CRITERIA)
                 .sendKeys(GOOGLE_SEARCH_CRITERIA, Keys.ESCAPE, Keys.ENTER)
-                .click(REVERSO_LINK)
-                .click(REVERSO_ACCEPT)
-//                .click(REVERSO_CONJUGAISON)
-                .clickEvent(REVERSO_CONJUGAISON)
+                .click(REVERSO_LINK);
+        if (ui.wait.ignoreTimeoutException().until(
+                input -> ui.isPresent(REVERSO_ACCEPT),
+                Duration.ofMillis(500),
+                Duration.ofSeconds(3)))
+            ui.click(REVERSO_ACCEPT);
+        ui.clickEvent(REVERSO_CONJUGAISON)
                 .switchToTab(1);
     }
 
@@ -91,22 +95,26 @@ public class GoogleReversoTests {
         if (info.getCurrentRepetition() < 3) driver = _TechActions.initChromeDriver();
         else driver = _TechActions.initFirefoxDriver();
 
-        Interactions interactions = new Interactions(driver);
+        Interactions ui = new Interactions(driver);
         if (2 == info.getCurrentRepetition() || 4 == info.getCurrentRepetition()) {
             System.out.println("***** convertLocatorTypeToBy = false *****");
-            interactions.convertAllLocatorsToBy(false);
+            ui.convertAllLocatorsToBy(false);
         }
 
-        interactions.driver.navigate().to("http://www.google.fr");
-        interactions
+        ui.driver.navigate().to("http://www.google.fr");
+        ui
                 .clickEvent(GOOGLE_ACCEPT)
                 .set(GOOGLE_SEARCH_CRITERIA, "value", "reverso")
                 .click(GOOGLE_SEARCH_CRITERIA)
                 .waitToBePresent(GOOGLE_PROPOSALS_CRITERIA)
                 .sendKeys(GOOGLE_SEARCH_CRITERIA, Keys.ENTER)
-                .clickEvent(REVERSO_LINK)
-                .clickEvent(REVERSO_ACCEPT)
-                .clickEvent(REVERSO_CONJUGAISON)
+                .clickEvent(REVERSO_LINK);
+        if (ui.wait.ignoreTimeoutException().until(
+                input -> ui.isPresent(REVERSO_ACCEPT),
+                Duration.ofMillis(500),
+                Duration.ofSeconds(3)))
+            ui.click(REVERSO_ACCEPT);
+        ui.clickEvent(REVERSO_CONJUGAISON)
                 .switchToTab(1);
     }
 
@@ -116,22 +124,26 @@ public class GoogleReversoTests {
         if (info.getCurrentRepetition() < 3) driver = _TechActions.initChromeDriver();
         else driver = _TechActions.initFirefoxDriver();
 
-        Interactions interactions = new Interactions(driver);
+        Interactions ui = new Interactions(driver);
         if (2 == info.getCurrentRepetition() || 4 == info.getCurrentRepetition()) {
             System.out.println("***** convertLocatorTypeToBy = false *****");
-            interactions.convertAllLocatorsToBy(false);
+            ui.convertAllLocatorsToBy(false);
         }
 
-        interactions.driver.navigate().to("http://www.google.fr");
-        interactions
+        ui.driver.navigate().to("http://www.google.fr");
+        ui
                 .actionsClick(GOOGLE_ACCEPT)
                 .actionsSendKeys(GOOGLE_SEARCH_CRITERIA, "reverso")
                 .actionsClick(GOOGLE_SEARCH_CRITERIA)
                 .waitToBePresent(GOOGLE_PROPOSALS_CRITERIA)
                 .actionsSendKeys(GOOGLE_SEARCH_CRITERIA, Keys.ENTER)
-                .actionsClick(REVERSO_LINK)
-                .actionsClick(REVERSO_ACCEPT)
-                .clickEvent(REVERSO_CONJUGAISON)
+                .actionsClick(REVERSO_LINK);
+        if (ui.wait.ignoreTimeoutException().until(
+                input -> ui.isPresent(REVERSO_ACCEPT),
+                Duration.ofMillis(500),
+                Duration.ofSeconds(3)))
+            ui.actionsClick(REVERSO_ACCEPT);
+        ui.clickEvent(REVERSO_CONJUGAISON)
                 .switchToTab(1);
     }
 }

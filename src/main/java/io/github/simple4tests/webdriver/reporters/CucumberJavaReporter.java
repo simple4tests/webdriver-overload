@@ -27,7 +27,9 @@ public class CucumberJavaReporter implements Reporter {
     }
 
     @Override
-    public void endStep() {}
+    public void endStep() {
+
+    }
 
     @Override
     public void reportData(String data) {
