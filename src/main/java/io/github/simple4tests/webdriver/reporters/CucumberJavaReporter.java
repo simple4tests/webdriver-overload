@@ -11,7 +11,7 @@ import java.nio.file.Path;
 
 @NoArgsConstructor
 @AllArgsConstructor
-public class CucumberJavaReporter implements Reporter {
+public class CucumberJavaReporter extends ReporterWithErrorHandler {
 
     public Scenario scenario;
     public WebDriver driver;

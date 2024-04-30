@@ -6,42 +6,11 @@ import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
 
 public interface Reporter {
 
-    List<String> errors = new ArrayList<>();
-
     private String formatError(String step, String mismatch) {
         return String.format("%s ?\n%s\n", step, mismatch);
-    }
-
-    default boolean hasErrors() {
-        return !errors.isEmpty();
-    }
-
-    default void addError(String error) {
-        errors.add(error);
-    }
-
-    default void clearErrors() {
-        errors.clear();
-    }
-
-    default String getErrorsSummary() {
-        if (hasErrors()) {
-            return String.join("\n", errors);
-        }
-        return "NO ERRORS FOUND, CONGRATULATIONS!";
-    }
-
-    default void throwAssertionErrorIfAny(boolean reportErrorsSummary) {
-        if (hasErrors()) {
-            if (reportErrorsSummary)
-                reportAction("Report error(s) summary", getErrorsSummary());
-            throw new AssertionError(String.format("%d error(s) found", errors.size()));
-        }
     }
 
     default <T> void assertThat(final String step, final T actual, final T expected) {

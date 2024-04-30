@@ -11,7 +11,7 @@ import java.nio.file.Path;
 
 @NoArgsConstructor
 @AllArgsConstructor
-public class CucumberJava8Reporter implements Reporter {
+public class CucumberJava8Reporter extends ReporterWithErrorHandler {
 
     public Scenario scenario;
     public WebDriver driver;
@@ -27,7 +27,8 @@ public class CucumberJava8Reporter implements Reporter {
     }
 
     @Override
-    public void endStep() {}
+    public void endStep() {
+    }
 
     @Override
     public void reportData(String data) {
