@@ -32,24 +32,28 @@ public class CucumberJava8Reporter extends ReporterWithErrorHandler {
 
     @Override
     public void reportData(String data) {
-        scenario.attach("", "text/plain", "data : ".concat(data));
+//        scenario.attach("", "text/plain", "data : ".concat(data));
+        scenario.attach(data, "text/plain", "data");
     }
 
     @Override
     public void reportData(Path path) {
-        scenario.attach("", "text/plain", "data : ".concat(path.toAbsolutePath().toString()));
+//        scenario.attach("", "text/plain", "data : ".concat(path.toAbsolutePath().toString()));
+        reportData(path.toAbsolutePath().toString());
     }
 
     @Override
     public void reportError(String error) {
         addError(error);
-        scenario.attach("", "text/plain", "error : ".concat(error));
+//        scenario.attach("", "text/plain", "error : ".concat(error));
+        scenario.attach(error, "text/plain", "error");
     }
 
     @Override
     public void reportError(Path path) {
         addError(path.toAbsolutePath().toString());
-        scenario.attach("", "text/plain", "error : ".concat(path.toAbsolutePath().toString()));
+//        scenario.attach("", "text/plain", "error : ".concat(path.toAbsolutePath().toString()));
+        reportError(path.toAbsolutePath().toString());
     }
 
     @Override
