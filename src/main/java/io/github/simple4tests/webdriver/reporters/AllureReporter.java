@@ -22,6 +22,10 @@ public class AllureReporter extends SystemOutReporter {
 
     public WebDriver driver;
 
+    public void init(WebDriver driver) {
+        this.driver = driver;
+    }
+
     @Override
     public void startStep(String step) {
         super.startStep(step);
