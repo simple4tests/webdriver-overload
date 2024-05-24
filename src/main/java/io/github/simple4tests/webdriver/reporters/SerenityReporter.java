@@ -45,7 +45,7 @@ public class SerenityReporter extends SystemOutReporter {
         try {
             getCurrentStep().recordReportData(ReportData.withTitle("DATA").fromFile(path, StandardCharsets.UTF_8).asEvidence(false));
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(System.err);
         }
     }
 
@@ -63,7 +63,7 @@ public class SerenityReporter extends SystemOutReporter {
             getCurrentStep().recordReportData(ReportData.withTitle("ERROR").fromFile(path, StandardCharsets.UTF_8).asEvidence(true));
             getCurrentStep().setResult(TestResult.ERROR);
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(System.err);
         }
     }
 

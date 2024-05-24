@@ -51,10 +51,10 @@ public class AllureReporter extends SystemOutReporter {
             Allure.getLifecycle().addAttachment(
                     "DATA ".concat(path.getFileName().toString()),
                     null,
-                    (String) null,
+                    null,
                     Files.newInputStream(path));
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(System.err);
         }
     }
 
@@ -77,7 +77,7 @@ public class AllureReporter extends SystemOutReporter {
                     Files.newInputStream(path));
             Allure.getLifecycle().updateStep((stepResult) -> stepResult.setStatus(Status.FAILED));
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(System.err);
         }
     }
 
