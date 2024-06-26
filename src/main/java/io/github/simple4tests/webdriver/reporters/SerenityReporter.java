@@ -8,7 +8,6 @@ import net.thucydides.model.domain.TestStep;
 import net.thucydides.model.steps.ExecutedStepDescription;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 
 public class SerenityReporter extends SystemOutReporter {
@@ -43,7 +42,7 @@ public class SerenityReporter extends SystemOutReporter {
     public void reportData(Path path) {
         super.reportData(path);
         try {
-            getCurrentStep().recordReportData(ReportData.withTitle("DATA").fromFile(path, StandardCharsets.UTF_8).asEvidence(false));
+            getCurrentStep().recordReportData(ReportData.withTitle("DATA").fromPath(path).asEvidence(false));
         } catch (IOException e) {
             e.printStackTrace(System.err);
         }
@@ -60,7 +59,7 @@ public class SerenityReporter extends SystemOutReporter {
     public void reportError(Path path) {
         super.reportError(path);
         try {
-            getCurrentStep().recordReportData(ReportData.withTitle("ERROR").fromFile(path, StandardCharsets.UTF_8).asEvidence(true));
+            getCurrentStep().recordReportData(ReportData.withTitle("ERROR").fromPath(path).asEvidence(true));
             getCurrentStep().setResult(TestResult.ERROR);
         } catch (IOException e) {
             e.printStackTrace(System.err);

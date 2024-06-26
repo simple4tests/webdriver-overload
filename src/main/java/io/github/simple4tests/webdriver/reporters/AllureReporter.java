@@ -1,6 +1,5 @@
 package io.github.simple4tests.webdriver.reporters;
 
-
 import io.qameta.allure.Allure;
 import io.qameta.allure.model.Status;
 import io.qameta.allure.model.StatusDetails;
