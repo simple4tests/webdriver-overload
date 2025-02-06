@@ -14,7 +14,8 @@ public class RActions {
 
     public void scrollToElement(Object locator) {
         if (!element.isNull(locator))
-            actions.scrollToElement(element.at(locator).getInteractableElement(false)).perform();
+//            actions.scrollToElement(element.at(locator).getInteractableElement(false)).perform();
+            actions.scrollToElement(element.at(locator).getElement()).perform();
     }
 
     public void keyDown(Object locator, CharSequence key) {

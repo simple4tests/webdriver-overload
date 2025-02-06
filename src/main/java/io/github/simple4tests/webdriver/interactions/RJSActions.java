@@ -27,7 +27,8 @@ public class RJSActions {
         if (null != locator)
             JScripts.scrollIntoView(
                     element.jsExecutor,
-                    element.at(locator).getInteractableElement(false),
+//                    element.at(locator).getInteractableElement(false),
+                    element.at(locator).getElement(),
                     behavior,
                     block,
                     inline);
@@ -37,7 +38,8 @@ public class RJSActions {
         if (null != locator)
             JScripts.scrollIntoView(
                     element.jsExecutor,
-                    element.at(locator).getInteractableElement(false),
+//                    element.at(locator).getInteractableElement(false),
+                    element.at(locator).getElement(),
                     scrollBehavior,
                     scrollBlock,
                     scrollInline);
