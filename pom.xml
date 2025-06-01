@@ -62,7 +62,7 @@
         <lombok.version>1.18.38</lombok.version>
         <snakeyaml.version>2.4</snakeyaml.version>
         <selenium.version>4.32.0</selenium.version>
-        <cucumber.version>7.22.2</cucumber.version>
+        <cucumber.version>7.23.0</cucumber.version>
         <serenity.version>4.2.30</serenity.version>
         <allure.version>2.29.1</allure.version>
 
