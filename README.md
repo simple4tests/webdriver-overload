@@ -13,6 +13,7 @@ It is build on top of Selenium WebDriver and integrates with different framework
 ## Versions
 
 v2.x : To be used with Serenity-BDD 3.x
+
 v3.x : To be used with Serenity-BDD 4.x
 
 ## Examples of implementation
