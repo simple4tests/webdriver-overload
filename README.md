@@ -24,7 +24,6 @@ checkout [ohrm-tests](https://github.com/simple4tests/ohrm-tests) on GitHub
 ## Support & Contact
 
 Additional information can be found at https://simple4tests.github.io/
-and https://simple4tests.github.io/webdriver-overload/
 Contact us at simple4tests@gmail.com
 
 ## License

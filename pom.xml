@@ -5,12 +5,12 @@
 
     <groupId>io.github.simple4tests</groupId>
     <artifactId>webdriver-overload</artifactId>
-    <version>3.0.9</version>
+    <version>3.0.10</version>
     <packaging>jar</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
     <description>WebDriver overload</description>
-    <url>https://simple4tests.github.io/webdriver-overload/</url>
+    <url>https://simple4tests.github.io/</url>
 
     <licenses>
         <license>
@@ -52,23 +52,23 @@
 
         <nexus-staging-maven-plugin.version>1.7.0</nexus-staging-maven-plugin.version>
         <maven-source-plugin.version>3.3.1</maven-source-plugin.version>
-        <maven-javadoc-plugin.version>3.11.2</maven-javadoc-plugin.version>
-        <maven-gpg-plugin.version>3.2.7</maven-gpg-plugin.version>
-        <maven-surefire-plugin.version>3.5.2</maven-surefire-plugin.version>
+        <maven-javadoc-plugin.version>3.11.3</maven-javadoc-plugin.version>
+        <maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
+        <maven-surefire-plugin.version>3.5.4</maven-surefire-plugin.version>
 
-        <commons-text.version>1.13.1</commons-text.version>
-        <groovy.version>4.0.26</groovy.version>
+        <commons-text.version>1.14.0</commons-text.version>
+        <groovy.version>4.0.28</groovy.version>
         <hamcrest.version>3.0</hamcrest.version>
-        <lombok.version>1.18.38</lombok.version>
-        <snakeyaml.version>2.4</snakeyaml.version>
-        <selenium.version>4.33.0</selenium.version>
-        <cucumber.version>7.23.0</cucumber.version>
-        <serenity.version>4.2.32</serenity.version>
-        <allure.version>2.29.1</allure.version>
+        <lombok.version>1.18.40</lombok.version>
+        <snakeyaml.version>2.5</snakeyaml.version>
+        <selenium.version>4.35.0</selenium.version>
+        <cucumber.version>7.28.2</cucumber.version>
+        <serenity.version>4.2.34</serenity.version>
+        <allure-java-commons.version>2.30.0</allure-java-commons.version>
 
         <slf4j.version>2.0.17</slf4j.version>
-        <junit.version>5.13.0</junit.version>
-        <assertj.version>3.27.3</assertj.version>
+        <junit.version>5.13.4</junit.version>
+        <assertj.version>3.27.4</assertj.version>
 
         <skipTests>true</skipTests>
     </properties>
@@ -128,7 +128,7 @@
         <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-java-commons</artifactId>
-            <version>${allure.version}</version>
+            <version>${allure-java-commons.version}</version>
             <scope>provided</scope>
             <optional>true</optional>
         </dependency>
