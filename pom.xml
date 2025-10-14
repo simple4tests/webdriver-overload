@@ -59,16 +59,16 @@
         <commons-text.version>1.14.0</commons-text.version>
         <groovy.version>4.0.28</groovy.version>
         <hamcrest.version>3.0</hamcrest.version>
-        <lombok.version>1.18.40</lombok.version>
+        <lombok.version>1.18.42</lombok.version>
         <snakeyaml.version>2.5</snakeyaml.version>
-        <selenium.version>4.35.0</selenium.version>
-        <cucumber.version>7.28.2</cucumber.version>
+        <selenium.version>4.36.0</selenium.version>
+        <cucumber.version>7.30.0</cucumber.version>
         <serenity.version>4.2.34</serenity.version>
         <allure-java-commons.version>2.30.0</allure-java-commons.version>
 
         <slf4j.version>2.0.17</slf4j.version>
-        <junit.version>5.13.4</junit.version>
-        <assertj.version>3.27.4</assertj.version>
+        <junit.version>5.14.0</junit.version>
+        <assertj.version>3.27.6</assertj.version>
 
         <skipTests>true</skipTests>
     </properties>
