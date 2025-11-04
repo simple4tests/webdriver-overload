@@ -34,41 +34,32 @@
         <url>http://github.com/simple4tests/webdriver-overload/tree/main</url>
     </scm>
 
-<!--    <distributionManagement>-->
-<!--        <snapshotRepository>-->
-<!--            <id>central</id>-->
-<!--            <url>https://central.sonatype.com/repository/maven-snapshots/</url>-->
-<!--        </snapshotRepository>-->
-<!--    </distributionManagement>-->
-
     <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.release>21</maven.compiler.release>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.build.resourceEncoding>UTF-8</project.build.resourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <project.encoding>UTF-8</project.encoding>
 
-        <nexus-staging-maven-plugin.version>1.7.0</nexus-staging-maven-plugin.version>
-<!--        <central-publishing-maven-plugin.version>0.9.0</central-publishing-maven-plugin.version>-->
+        <central-publishing-maven-plugin.version>0.9.0</central-publishing-maven-plugin.version>
         <maven-source-plugin.version>3.3.1</maven-source-plugin.version>
-        <maven-javadoc-plugin.version>3.11.3</maven-javadoc-plugin.version>
+        <maven-javadoc-plugin.version>3.12.0</maven-javadoc-plugin.version>
         <maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
         <maven-surefire-plugin.version>3.5.4</maven-surefire-plugin.version>
 
         <commons-text.version>1.14.0</commons-text.version>
-        <groovy.version>4.0.28</groovy.version>
+        <groovy.version>5.0.2</groovy.version>
         <hamcrest.version>3.0</hamcrest.version>
         <lombok.version>1.18.42</lombok.version>
         <snakeyaml.version>2.5</snakeyaml.version>
-        <selenium.version>4.36.0</selenium.version>
-        <cucumber.version>7.30.0</cucumber.version>
-        <serenity.version>4.2.34</serenity.version>
+        <selenium.version>4.38.0</selenium.version>
+        <cucumber.version>7.31.0</cucumber.version>
+        <serenity.version>4.3.2</serenity.version>
         <allure-java-commons.version>2.30.0</allure-java-commons.version>
 
         <slf4j.version>2.0.17</slf4j.version>
-        <junit.version>5.14.0</junit.version>
+        <junit.version>6.0.1</junit.version>
         <assertj.version>3.27.6</assertj.version>
 
         <skipTests>true</skipTests>
@@ -162,19 +153,13 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.sonatype.plugins</groupId>
-                <artifactId>nexus-staging-maven-plugin</artifactId>
-                <version>${nexus-staging-maven-plugin.version}</version>
-<!--                <groupId>org.sonatype.central</groupId>-->
-<!--                <artifactId>central-publishing-maven-plugin</artifactId>-->
-<!--                <version>${central-publishing-maven-plugin.version}</version>-->
+                <groupId>org.sonatype.central</groupId>
+                <artifactId>central-publishing-maven-plugin</artifactId>
+                <version>${central-publishing-maven-plugin.version}</version>
                 <extensions>true</extensions>
                 <configuration>
-                    <serverId>ossrh</serverId>
-                    <nexusUrl>https://ossrh-staging-api.central.sonatype.com</nexusUrl>
-                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
-<!--                    <publishingServerId>central</publishingServerId>-->
-<!--                    <autoPublish>true</autoPublish>-->
+                    <publishingServerId>central</publishingServerId>
+                    <autoPublish>true</autoPublish>
                 </configuration>
             </plugin>
             <plugin>

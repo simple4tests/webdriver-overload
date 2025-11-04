@@ -17,11 +17,6 @@ public class AssertTests {
     public static class Country {
         public String name;
         public int size;
-
-//        public Country(String name, int size) {
-//            this.name = name;
-//            this.size = size;
-//        }
     }
 
     @Test
