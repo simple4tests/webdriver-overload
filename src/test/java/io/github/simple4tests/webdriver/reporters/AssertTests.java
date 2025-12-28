@@ -1,6 +1,5 @@
 package io.github.simple4tests.webdriver.reporters;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.assertj.core.api.Assertions;
 import org.hamcrest.Matchers;
@@ -13,10 +12,14 @@ public class AssertTests {
     SystemOutReporter reporter = new SystemOutReporter();
 
     @Data
-    @AllArgsConstructor
     public static class Country {
         public String name;
         public int size;
+
+        public Country(String name, int size) {
+            this.name = name;
+            this.size = size;
+        }
     }
 
     @Test

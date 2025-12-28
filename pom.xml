@@ -5,7 +5,7 @@
 
     <groupId>io.github.simple4tests</groupId>
     <artifactId>webdriver-overload</artifactId>
-    <version>3.1.0</version>
+    <version>3.2.0</version>
     <packaging>jar</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
@@ -43,20 +43,20 @@
         <project.encoding>UTF-8</project.encoding>
 
         <central-publishing-maven-plugin.version>0.9.0</central-publishing-maven-plugin.version>
-        <maven-source-plugin.version>3.3.1</maven-source-plugin.version>
+        <maven-source-plugin.version>3.4.0</maven-source-plugin.version>
         <maven-javadoc-plugin.version>3.12.0</maven-javadoc-plugin.version>
         <maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
         <maven-surefire-plugin.version>3.5.4</maven-surefire-plugin.version>
 
-        <commons-text.version>1.14.0</commons-text.version>
-        <groovy.version>5.0.2</groovy.version>
+        <commons-text.version>1.15.0</commons-text.version>
+        <groovy.version>5.0.3</groovy.version>
         <hamcrest.version>3.0</hamcrest.version>
         <lombok.version>1.18.42</lombok.version>
         <snakeyaml.version>2.5</snakeyaml.version>
-        <selenium.version>4.38.0</selenium.version>
-        <cucumber.version>7.31.0</cucumber.version>
-        <serenity.version>4.3.2</serenity.version>
-        <allure-java-commons.version>2.30.0</allure-java-commons.version>
+        <selenium.version>4.39.0</selenium.version>
+        <cucumber.version>7.33.0</cucumber.version>
+        <serenity.version>5.0.2</serenity.version>
+        <allure-java-commons.version>2.32.0</allure-java-commons.version>
 
         <slf4j.version>2.0.17</slf4j.version>
         <junit.version>6.0.1</junit.version>
