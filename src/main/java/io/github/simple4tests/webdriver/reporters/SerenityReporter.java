@@ -13,7 +13,7 @@ import java.nio.file.Path;
 public class SerenityReporter extends SystemOutReporter {
 
     private TestStep getCurrentStep() {
-        TestOutcome outcome = StepEventBus.getParallelEventBus().getBaseStepListener().getCurrentTestOutcome();
+        TestOutcome outcome = StepEventBus.getEventBus().getBaseStepListener().getCurrentTestOutcome();
         return outcome.currentStep().isPresent() ?
                 outcome.currentStep().get() :
                 outcome.recordStep(TestStep.forStepCalled("Background").withResult(TestResult.SUCCESS)).currentStep().get();
@@ -22,13 +22,13 @@ public class SerenityReporter extends SystemOutReporter {
     @Override
     public void startStep(String step) {
         super.startStep(step);
-        StepEventBus.getParallelEventBus().stepStarted(ExecutedStepDescription.withTitle(step));
+        StepEventBus.getEventBus().stepStarted(ExecutedStepDescription.withTitle(step));
     }
 
     @Override
     public void endStep() {
         super.endStep();
-        StepEventBus.getParallelEventBus().stepFinished();
+        StepEventBus.getEventBus().stepFinished();
     }
 
     @Override
@@ -68,6 +68,6 @@ public class SerenityReporter extends SystemOutReporter {
 
     @Override
     public void reportScreenshot() {
-        StepEventBus.getParallelEventBus().takeScreenshot();
+        StepEventBus.getEventBus().takeScreenshot();
     }
 }
