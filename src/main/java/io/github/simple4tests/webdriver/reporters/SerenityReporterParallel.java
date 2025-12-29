@@ -10,7 +10,7 @@ import net.thucydides.model.steps.ExecutedStepDescription;
 import java.io.IOException;
 import java.nio.file.Path;
 
-public class SerenityParallelReporter extends SystemOutReporter {
+public class SerenityReporterParallel extends SystemOutReporter {
 
     private TestStep getCurrentStep() {
         TestOutcome outcome = StepEventBus.getParallelEventBus().getBaseStepListener().getCurrentTestOutcome();
