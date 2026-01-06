@@ -68,6 +68,6 @@ public class SerenityReporterParallel extends SystemOutReporter {
 
     @Override
     public void reportScreenshot() {
-        StepEventBus.getParallelEventBus().takeScreenshot();
+        StepEventBus.getParallelEventBus().getBaseStepListener().takeScreenshot();
     }
 }
