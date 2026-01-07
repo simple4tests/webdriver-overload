@@ -16,6 +16,8 @@ v2.x : To be used with Serenity-BDD 3.x
 
 v3.x : To be used with Serenity-BDD 4.x
 
+v3.2.x : To be used with Serenity-BDD 5.x
+
 ## Examples of implementation
 
 For full examples based on cucumber and including the 'simple4tests.webdriver-overload' package,
