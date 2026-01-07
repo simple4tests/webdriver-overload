@@ -1,6 +1,5 @@
 package io.github.simple4tests.webdriver.reporters;
 
-import lombok.Data;
 import org.assertj.core.api.Assertions;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -11,7 +10,6 @@ public class AssertTests {
 
     SystemOutReporter reporter = new SystemOutReporter();
 
-    @Data
     public static class Country {
         public String name;
         public int size;
@@ -20,6 +18,14 @@ public class AssertTests {
             this.name = name;
             this.size = size;
         }
+
+        public String getName() {
+            return name;
+        }
+
+        public int getSize() {
+            return size;
+        }
     }
 
     @Test
@@ -27,8 +33,12 @@ public class AssertTests {
 
         reporter.clearErrors();
 
-        reporter.reportAction("My first action");
-        reporter.reportAction("My second action with data", "This is my data for second action");
+        reporter.startStep("My first action");
+        reporter.endStep();
+
+        reporter.startStep("My second action with data");
+        reporter.reportData("This is my data for second action");
+        reporter.endStep();
 
         Assertions.assertThat("A STRING")
                 .isEqualToIgnoringCase("A string")

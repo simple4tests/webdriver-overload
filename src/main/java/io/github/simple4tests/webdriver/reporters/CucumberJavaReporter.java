@@ -1,16 +1,12 @@
 package io.github.simple4tests.webdriver.reporters;
 
 import io.cucumber.java.Scenario;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 
 import java.nio.file.Path;
 
-@NoArgsConstructor
-@AllArgsConstructor
 public class CucumberJavaReporter extends ReporterWithErrorHandler {
 
     public Scenario scenario;

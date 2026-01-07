@@ -51,7 +51,6 @@
         <commons-text.version>1.15.0</commons-text.version>
         <groovy.version>5.0.3</groovy.version>
         <hamcrest.version>3.0</hamcrest.version>
-        <lombok.version>1.18.42</lombok.version>
         <snakeyaml.version>2.5</snakeyaml.version>
         <selenium.version>4.39.0</selenium.version>
         <cucumber.version>7.33.0</cucumber.version>
@@ -75,11 +74,6 @@
             <groupId>org.apache.groovy</groupId>
             <artifactId>groovy</artifactId>
             <version>${groovy.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
         </dependency>
         <dependency>
             <groupId>org.hamcrest</groupId>
