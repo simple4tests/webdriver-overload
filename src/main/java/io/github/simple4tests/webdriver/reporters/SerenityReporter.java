@@ -1,40 +1,49 @@
 package io.github.simple4tests.webdriver.reporters;
 
+import net.serenitybdd.core.reports.AddReportContentEvent;
+import net.serenitybdd.core.reports.AddReportScreenshotEvent;
+import net.serenitybdd.core.reports.ReportDataSaver;
 import net.thucydides.core.steps.StepEventBus;
+import net.thucydides.core.steps.events.StepFinishedEvent;
+import net.thucydides.core.steps.events.StepStartedEvent;
+import net.thucydides.core.steps.events.UpdateCurrentStepFailureCause;
+import net.thucydides.core.steps.session.TestSession;
+import net.thucydides.core.webdriver.SerenityWebdriverManager;
+import net.thucydides.model.ThucydidesSystemProperty;
 import net.thucydides.model.domain.ReportData;
-import net.thucydides.model.domain.TestOutcome;
-import net.thucydides.model.domain.TestResult;
-import net.thucydides.model.domain.TestStep;
 import net.thucydides.model.steps.ExecutedStepDescription;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.nio.file.Path;
 
 public class SerenityReporter extends SystemOutReporter {
 
-    private TestStep getCurrentStep() {
-        TestOutcome outcome = StepEventBus.getEventBus().getBaseStepListener().getCurrentTestOutcome();
-        return outcome.currentStep().isPresent() ?
-                outcome.currentStep().get() :
-                outcome.recordStep(TestStep.forStepCalled("Background").withResult(TestResult.SUCCESS)).currentStep().get();
-    }
+    public int screenshot_id = 0;
 
     @Override
     public void startStep(String step) {
         super.startStep(step);
-        StepEventBus.getEventBus().stepStarted(ExecutedStepDescription.withTitle(step));
+        TestSession.addEvent(new StepStartedEvent(ExecutedStepDescription.withTitle(step)));
     }
 
     @Override
     public void endStep() {
         super.endStep();
-        StepEventBus.getEventBus().stepFinished();
+        TestSession.addEvent(new StepFinishedEvent());
     }
 
     @Override
     public void reportData(String data) {
         super.reportData(data);
-        getCurrentStep().recordReportData(ReportData.withTitle("DATA").andContents(data).asEvidence(false));
+        StepEventBus eventBus = TestSession.getTestSessionContext().getStepEventBus();
+        TestSession.addEvent(new AddReportContentEvent(
+                new ReportDataSaver(eventBus),
+                ReportData.withTitle("DATA").andContents(data)));
     }
 
     // Charset.forName(StandardCharsets.UTF_8.name());
@@ -42,7 +51,11 @@ public class SerenityReporter extends SystemOutReporter {
     public void reportData(Path path) {
         super.reportData(path);
         try {
-            getCurrentStep().recordReportData(ReportData.withTitle("DATA").fromPath(path).asEvidence(false));
+            StepEventBus eventBus = TestSession.getTestSessionContext().getStepEventBus();
+            Charset encoding = Charset.forName(ThucydidesSystemProperty.SERENITY_REPORT_ENCODING.from(eventBus.getEnvironmentVariables(), StandardCharsets.UTF_8.name()));
+            TestSession.addEvent(new AddReportContentEvent(
+                    new ReportDataSaver(eventBus),
+                    ReportData.withTitle("DATA").fromFile(path, encoding)));
         } catch (IOException e) {
             e.printStackTrace(System.err);
         }
@@ -51,23 +64,35 @@ public class SerenityReporter extends SystemOutReporter {
     @Override
     public void reportError(String error) {
         super.reportError(error);
-        getCurrentStep().recordReportData(ReportData.withTitle("ERROR").andContents(error).asEvidence(true));
-        getCurrentStep().setResult(TestResult.ERROR);
+        TestSession.addEvent(new UpdateCurrentStepFailureCause(new Throwable(error)));
     }
 
     @Override
     public void reportError(Path path) {
         super.reportError(path);
-        try {
-            getCurrentStep().recordReportData(ReportData.withTitle("ERROR").fromPath(path).asEvidence(true));
-            getCurrentStep().setResult(TestResult.ERROR);
-        } catch (IOException e) {
-            e.printStackTrace(System.err);
-        }
+        reportData(path);
+        TestSession.addEvent(new UpdateCurrentStepFailureCause(new Throwable(path.getFileName().toString())));
     }
 
     @Override
     public void reportScreenshot() {
-        StepEventBus.getEventBus().takeScreenshot();
+        createSerenityOutputDirectory();
+        AddReportScreenshotEvent screenshotEvent = new AddReportScreenshotEvent(
+                TestSession.getTestSessionContext().getSessionId() + ++screenshot_id,
+                ((TakesScreenshot) SerenityWebdriverManager.inThisTestThread().getCurrentDriver())
+                        .getScreenshotAs(OutputType.BYTES)
+        );
+        TestSession.addEvent(screenshotEvent);
+    }
+
+    private void createSerenityOutputDirectory() {
+        try {
+            Path outputDirectory = TestSession.getTestSessionContext().getStepEventBus().getBaseStepListener()
+                    .getOutputDirectory().getAbsoluteFile().toPath();
+            if (!Files.exists(outputDirectory))
+                Files.createDirectories(outputDirectory);
+        } catch (IOException e) {
+            e.printStackTrace(System.err);
+        }
     }
 }
