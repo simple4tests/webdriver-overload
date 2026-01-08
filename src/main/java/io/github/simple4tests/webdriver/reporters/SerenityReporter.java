@@ -7,14 +7,14 @@ import net.thucydides.core.steps.events.StepFinishedEvent;
 import net.thucydides.core.steps.events.StepStartedEvent;
 import net.thucydides.core.steps.events.UpdateCurrentStepFailureCause;
 import net.thucydides.core.steps.session.TestSession;
-import net.thucydides.model.ThucydidesSystemProperty;
+import net.thucydides.core.webdriver.SerenityWebdriverManager;
 import net.thucydides.model.domain.ReportData;
 import net.thucydides.model.screenshots.ScreenshotAndHtmlSource;
 import net.thucydides.model.steps.ExecutedStepDescription;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -58,10 +58,9 @@ public class SerenityReporter extends SystemOutReporter {
         super.reportData(path);
         try {
             StepEventBus eventBus = TestSession.getTestSessionContext().getStepEventBus();
-            Charset encoding = Charset.forName(ThucydidesSystemProperty.SERENITY_REPORT_ENCODING.from(eventBus.getEnvironmentVariables(), StandardCharsets.UTF_8.name()));
             TestSession.addEvent(new AddReportContentEvent(
                     new ReportDataSaver(eventBus),
-                    ReportData.withTitle("DATA").fromFile(path, encoding)));
+                    ReportData.withTitle("DATA").fromPath(path)));
         } catch (IOException e) {
             e.printStackTrace(System.err);
         }
@@ -82,8 +81,33 @@ public class SerenityReporter extends SystemOutReporter {
 
     @Override
     public void reportScreenshot() {
-        screenshots
-                .computeIfAbsent(TestSession.getTestSessionContext().getSessionId(), k -> new ArrayList<>())
-                .addAll(TestSession.getTestSessionContext().getStepEventBus().takeScreenshots());
+        StepEventBus eventBus = TestSession.getTestSessionContext().getStepEventBus();
+        if (takeScreenshotWhenStepFinished()) {
+            String sessionId = TestSession.getTestSessionContext().getSessionId();
+            screenshots.computeIfAbsent(sessionId, k -> new ArrayList<>())
+                    .addAll(eventBus.takeScreenshots());
+        } else {
+            try {
+                TestSession.addEvent(new AddReportContentEvent(
+                        new ReportDataSaver(eventBus),
+                        ReportData.withTitle("SCREENSHOT").fromPath(
+                                ((TakesScreenshot) SerenityWebdriverManager.inThisTestThread().getCurrentDriver())
+                                        .getScreenshotAs(OutputType.FILE).toPath()
+                        )));
+            } catch (IOException e) {
+                e.printStackTrace(System.err);
+            }
+        }
+    }
+
+    private boolean takeScreenshotWhenStepFinished() {
+        List<String> takeScreenshotAtStepFinished = List.of(
+                "FOR_EACH_ACTION",
+                "BEFORE_AND_AFTER_EACH_STEP",
+                "AFTER_EACH_STEP"
+        );
+        String takeScreenshotsProperty = TestSession.getTestSessionContext().getStepEventBus()
+                .getEnvironmentVariables().getProperty("serenity.take.screenshots");
+        return null == takeScreenshotsProperty || takeScreenshotAtStepFinished.contains(takeScreenshotsProperty);
     }
 }
