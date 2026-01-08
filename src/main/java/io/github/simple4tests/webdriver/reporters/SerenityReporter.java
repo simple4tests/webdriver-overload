@@ -23,20 +23,10 @@ import java.util.Map;
 
 public class SerenityReporter extends SystemOutReporter {
 
-    private boolean inStep = false;
-    //    private List<ScreenshotAndHtmlSource> screenshotAndHtmlSources = null;
     private final Map<String, List<ScreenshotAndHtmlSource>> screenshots = new HashMap<>();
 
     @Override
     public void startStep(String step) {
-        if (inStep) endStep();
-        if (screenshots.containsKey(TestSession.getTestSessionContext().getSessionId())) {
-            String screenshotStep = "Screenshot";
-            super.startStep(screenshotStep);
-            TestSession.addEvent(new StepStartedEvent(ExecutedStepDescription.withTitle(screenshotStep)));
-            endStep();
-        }
-        inStep = true;
         super.startStep(step);
         TestSession.addEvent(new StepStartedEvent(ExecutedStepDescription.withTitle(step)));
     }
@@ -44,11 +34,6 @@ public class SerenityReporter extends SystemOutReporter {
     @Override
     public void endStep() {
         super.endStep();
-//        if (null == screenshotAndHtmlSources)
-//            TestSession.addEvent(new StepFinishedEvent());
-//        else
-//            TestSession.addEvent(new StepFinishedEvent(screenshotAndHtmlSources));
-//        screenshotAndHtmlSources = null;
         String sessionId = TestSession.getTestSessionContext().getSessionId();
         if (screenshots.containsKey(sessionId)) {
             TestSession.addEvent(new StepFinishedEvent(screenshots.get(sessionId)));
@@ -56,7 +41,6 @@ public class SerenityReporter extends SystemOutReporter {
         } else {
             TestSession.addEvent(new StepFinishedEvent());
         }
-        inStep = false;
     }
 
     @Override
@@ -98,10 +82,6 @@ public class SerenityReporter extends SystemOutReporter {
 
     @Override
     public void reportScreenshot() {
-//        if (null == screenshotAndHtmlSources)
-//            screenshotAndHtmlSources = TestSession.getTestSessionContext().getStepEventBus().takeScreenshots();
-//        else
-//            screenshotAndHtmlSources.addAll(TestSession.getTestSessionContext().getStepEventBus().takeScreenshots());
         screenshots
                 .computeIfAbsent(TestSession.getTestSessionContext().getSessionId(), k -> new ArrayList<>())
                 .addAll(TestSession.getTestSessionContext().getStepEventBus().takeScreenshots());
