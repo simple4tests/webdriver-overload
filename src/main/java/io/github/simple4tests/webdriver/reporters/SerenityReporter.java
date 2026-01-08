@@ -90,10 +90,10 @@ public class SerenityReporter extends SystemOutReporter {
             try {
                 TestSession.addEvent(new AddReportContentEvent(
                         new ReportDataSaver(eventBus),
-                        ReportData.withTitle("SCREENSHOT").fromPath(
-                                ((TakesScreenshot) SerenityWebdriverManager.inThisTestThread().getCurrentDriver())
-                                        .getScreenshotAs(OutputType.FILE).toPath()
-                        )));
+                        ReportData.withTitle("SCREENSHOT")
+                                .fromPath(((TakesScreenshot) SerenityWebdriverManager.inThisTestThread()
+                                        .getCurrentDriver()).getScreenshotAs(OutputType.FILE).toPath())
+                                .asEvidence(true)));
             } catch (IOException e) {
                 e.printStackTrace(System.err);
             }
