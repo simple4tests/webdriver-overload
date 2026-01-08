@@ -1,32 +1,42 @@
 package io.github.simple4tests.webdriver.reporters;
 
 import net.serenitybdd.core.reports.AddReportContentEvent;
-import net.serenitybdd.core.reports.AddReportScreenshotEvent;
 import net.serenitybdd.core.reports.ReportDataSaver;
 import net.thucydides.core.steps.StepEventBus;
 import net.thucydides.core.steps.events.StepFinishedEvent;
 import net.thucydides.core.steps.events.StepStartedEvent;
 import net.thucydides.core.steps.events.UpdateCurrentStepFailureCause;
 import net.thucydides.core.steps.session.TestSession;
-import net.thucydides.core.webdriver.SerenityWebdriverManager;
 import net.thucydides.model.ThucydidesSystemProperty;
 import net.thucydides.model.domain.ReportData;
+import net.thucydides.model.screenshots.ScreenshotAndHtmlSource;
 import net.thucydides.model.steps.ExecutedStepDescription;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class SerenityReporter extends SystemOutReporter {
 
-    public int screenshot_id = 0;
+    private boolean inStep = false;
+    //    private List<ScreenshotAndHtmlSource> screenshotAndHtmlSources = null;
+    private final Map<String, List<ScreenshotAndHtmlSource>> screenshots = new HashMap<>();
 
     @Override
     public void startStep(String step) {
+        if (inStep) endStep();
+        if (screenshots.containsKey(TestSession.getTestSessionContext().getSessionId())) {
+            String screenshotStep = "Screenshot";
+            super.startStep(screenshotStep);
+            TestSession.addEvent(new StepStartedEvent(ExecutedStepDescription.withTitle(screenshotStep)));
+            endStep();
+        }
+        inStep = true;
         super.startStep(step);
         TestSession.addEvent(new StepStartedEvent(ExecutedStepDescription.withTitle(step)));
     }
@@ -34,7 +44,19 @@ public class SerenityReporter extends SystemOutReporter {
     @Override
     public void endStep() {
         super.endStep();
-        TestSession.addEvent(new StepFinishedEvent());
+//        if (null == screenshotAndHtmlSources)
+//            TestSession.addEvent(new StepFinishedEvent());
+//        else
+//            TestSession.addEvent(new StepFinishedEvent(screenshotAndHtmlSources));
+//        screenshotAndHtmlSources = null;
+        String sessionId = TestSession.getTestSessionContext().getSessionId();
+        if (screenshots.containsKey(sessionId)) {
+            TestSession.addEvent(new StepFinishedEvent(screenshots.get(sessionId)));
+            screenshots.remove(sessionId);
+        } else {
+            TestSession.addEvent(new StepFinishedEvent());
+        }
+        inStep = false;
     }
 
     @Override
@@ -76,23 +98,12 @@ public class SerenityReporter extends SystemOutReporter {
 
     @Override
     public void reportScreenshot() {
-        createSerenityOutputDirectory();
-        AddReportScreenshotEvent screenshotEvent = new AddReportScreenshotEvent(
-                TestSession.getTestSessionContext().getSessionId() + ++screenshot_id,
-                ((TakesScreenshot) SerenityWebdriverManager.inThisTestThread().getCurrentDriver())
-                        .getScreenshotAs(OutputType.BYTES)
-        );
-        TestSession.addEvent(screenshotEvent);
-    }
-
-    private void createSerenityOutputDirectory() {
-        try {
-            Path outputDirectory = TestSession.getTestSessionContext().getStepEventBus().getBaseStepListener()
-                    .getOutputDirectory().getAbsoluteFile().toPath();
-            if (!Files.exists(outputDirectory))
-                Files.createDirectories(outputDirectory);
-        } catch (IOException e) {
-            e.printStackTrace(System.err);
-        }
+//        if (null == screenshotAndHtmlSources)
+//            screenshotAndHtmlSources = TestSession.getTestSessionContext().getStepEventBus().takeScreenshots();
+//        else
+//            screenshotAndHtmlSources.addAll(TestSession.getTestSessionContext().getStepEventBus().takeScreenshots());
+        screenshots
+                .computeIfAbsent(TestSession.getTestSessionContext().getSessionId(), k -> new ArrayList<>())
+                .addAll(TestSession.getTestSessionContext().getStepEventBus().takeScreenshots());
     }
 }
