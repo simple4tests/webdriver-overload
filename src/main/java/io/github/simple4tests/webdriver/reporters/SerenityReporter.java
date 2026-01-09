@@ -7,6 +7,7 @@ import net.thucydides.core.steps.events.StepFinishedEvent;
 import net.thucydides.core.steps.events.StepStartedEvent;
 import net.thucydides.core.steps.events.UpdateCurrentStepFailureCause;
 import net.thucydides.core.steps.session.TestSession;
+import net.thucydides.core.steps.session.TestSessionContext;
 import net.thucydides.core.webdriver.SerenityWebdriverManager;
 import net.thucydides.model.domain.ReportData;
 import net.thucydides.model.screenshots.ScreenshotAndHtmlSource;
@@ -24,6 +25,7 @@ import java.util.Map;
 public class SerenityReporter extends SystemOutReporter {
 
     private final Map<String, List<ScreenshotAndHtmlSource>> screenshots = new HashMap<>();
+    private final Map<String, Integer> countScreenshots = new HashMap<>();
 
     @Override
     public void startStep(String step) {
@@ -81,33 +83,38 @@ public class SerenityReporter extends SystemOutReporter {
 
     @Override
     public void reportScreenshot() {
-        StepEventBus eventBus = TestSession.getTestSessionContext().getStepEventBus();
-        if (takeScreenshotWhenStepFinished()) {
-            String sessionId = TestSession.getTestSessionContext().getSessionId();
-            screenshots.computeIfAbsent(sessionId, k -> new ArrayList<>())
-                    .addAll(eventBus.takeScreenshots());
-        } else {
-            try {
-                TestSession.addEvent(new AddReportContentEvent(
-                        new ReportDataSaver(eventBus),
-                        ReportData.withTitle("SCREENSHOT")
-                                .fromPath(((TakesScreenshot) SerenityWebdriverManager.inThisTestThread()
-                                        .getCurrentDriver()).getScreenshotAs(OutputType.FILE).toPath())
-                                .asEvidence(true)));
-            } catch (IOException e) {
-                e.printStackTrace(System.err);
-            }
-        }
+        TestSessionContext testSessionContext = TestSession.getTestSessionContext();
+        if (takeScreenshotWhenStepFinished(testSessionContext))
+            screenshots.computeIfAbsent(testSessionContext.getSessionId(), k -> new ArrayList<>())
+                    .addAll(testSessionContext.getStepEventBus().takeScreenshots());
+        else
+            attachScreenshotToStep(testSessionContext);
     }
 
-    private boolean takeScreenshotWhenStepFinished() {
+    private boolean takeScreenshotWhenStepFinished(TestSessionContext testSessionContext) {
         List<String> takeScreenshotAtStepFinished = List.of(
                 "FOR_EACH_ACTION",
                 "BEFORE_AND_AFTER_EACH_STEP",
                 "AFTER_EACH_STEP"
         );
-        String takeScreenshotsProperty = TestSession.getTestSessionContext().getStepEventBus()
+        String takeScreenshotsProperty = testSessionContext.getStepEventBus()
                 .getEnvironmentVariables().getProperty("serenity.take.screenshots");
         return null == takeScreenshotsProperty || takeScreenshotAtStepFinished.contains(takeScreenshotsProperty);
+    }
+
+    private void attachScreenshotToStep(TestSessionContext testSessionContext) {
+        countScreenshots.merge(testSessionContext.getSessionId(), 1, Integer::sum);
+        Path screenshotPath = ((TakesScreenshot) SerenityWebdriverManager.inThisTestThread()
+                .getCurrentDriver()).getScreenshotAs(OutputType.FILE).toPath();
+        try {
+            TestSession.addEvent(new AddReportContentEvent(
+                    new ReportDataSaver(testSessionContext.getStepEventBus()),
+                    ReportData
+                            .withTitle("SCREENSHOT_" + countScreenshots.get(testSessionContext.getSessionId()))
+                            .fromPath(screenshotPath)
+                            .asEvidence(true)));
+        } catch (IOException e) {
+            e.printStackTrace(System.err);
+        }
     }
 }
