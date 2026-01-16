@@ -83,12 +83,14 @@ public class SerenityReporter extends SystemOutReporter {
 
     @Override
     public void reportScreenshot() {
-        TestSessionContext testSessionContext = TestSession.getTestSessionContext();
-        if (takeScreenshotWhenStepFinished(testSessionContext))
-            screenshots.computeIfAbsent(testSessionContext.getSessionId(), k -> new ArrayList<>())
-                    .addAll(testSessionContext.getStepEventBus().takeScreenshots());
-        else
-            attachScreenshotToStep(testSessionContext);
+        if (null != SerenityWebdriverManager.inThisTestThread().getCurrentDriver()) {
+            TestSessionContext testSessionContext = TestSession.getTestSessionContext();
+            if (takeScreenshotWhenStepFinished(testSessionContext))
+                screenshots.computeIfAbsent(testSessionContext.getSessionId(), k -> new ArrayList<>())
+                        .addAll(testSessionContext.getStepEventBus().takeScreenshots());
+            else
+                attachScreenshotToStep(testSessionContext);
+        }
     }
 
     private boolean takeScreenshotWhenStepFinished(TestSessionContext testSessionContext) {
