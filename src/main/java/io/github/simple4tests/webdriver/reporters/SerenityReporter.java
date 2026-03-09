@@ -105,17 +105,17 @@ public class SerenityReporter extends SystemOutReporter {
     }
 
     private void attachScreenshotToStep(TestSessionContext testSessionContext) {
-        countScreenshots.merge(testSessionContext.getSessionId(), 1, Integer::sum);
-        Path screenshotPath = ((TakesScreenshot) SerenityWebdriverManager.inThisTestThread()
-                .getCurrentDriver()).getScreenshotAs(OutputType.FILE).toPath();
         try {
+            Path screenshotPath = ((TakesScreenshot) SerenityWebdriverManager.inThisTestThread()
+                    .getCurrentDriver()).getScreenshotAs(OutputType.FILE).toPath();
+            countScreenshots.merge(testSessionContext.getSessionId(), 1, Integer::sum);
             TestSession.addEvent(new AddReportContentEvent(
                     new ReportDataSaver(testSessionContext.getStepEventBus()),
                     ReportData
                             .withTitle("SCREENSHOT_" + countScreenshots.get(testSessionContext.getSessionId()))
                             .fromPath(screenshotPath)
                             .asEvidence(true)));
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace(System.err);
         }
     }

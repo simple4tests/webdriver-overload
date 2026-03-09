@@ -5,7 +5,7 @@
 
     <groupId>io.github.simple4tests</groupId>
     <artifactId>webdriver-overload</artifactId>
-    <version>3.2.2</version>
+    <version>3.2.3</version>
     <packaging>jar</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
@@ -46,20 +46,20 @@
         <maven-source-plugin.version>3.4.0</maven-source-plugin.version>
         <maven-javadoc-plugin.version>3.12.0</maven-javadoc-plugin.version>
         <maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
-        <maven-surefire-plugin.version>3.5.4</maven-surefire-plugin.version>
+        <maven-surefire-plugin.version>3.5.5</maven-surefire-plugin.version>
 
         <commons-text.version>1.15.0</commons-text.version>
-        <groovy.version>5.0.3</groovy.version>
+        <groovy.version>5.0.4</groovy.version>
         <hamcrest.version>3.0</hamcrest.version>
-        <snakeyaml.version>2.5</snakeyaml.version>
-        <selenium.version>4.39.0</selenium.version>
-        <cucumber.version>7.33.0</cucumber.version>
-        <serenity.version>5.1.0</serenity.version>
-        <allure-java-commons.version>2.32.0</allure-java-commons.version>
+        <snakeyaml.version>2.6</snakeyaml.version>
+        <selenium.version>4.41.0</selenium.version>
+        <cucumber.version>7.34.3</cucumber.version>
+        <serenity.version>5.3.3</serenity.version>
+        <allure-java-commons.version>2.33.0</allure-java-commons.version>
 
         <slf4j.version>2.0.17</slf4j.version>
-        <junit.version>6.0.2</junit.version>
-        <assertj.version>3.27.6</assertj.version>
+        <junit.version>6.0.3</junit.version>
+        <assertj.version>3.27.7</assertj.version>
 
         <skipTests>true</skipTests>
     </properties>
