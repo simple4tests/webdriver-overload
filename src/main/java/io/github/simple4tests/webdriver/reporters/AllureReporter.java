@@ -1,6 +1,8 @@
 package io.github.simple4tests.webdriver.reporters;
 
 import io.qameta.allure.Allure;
+import io.qameta.allure.AllureExternalKey;
+import io.qameta.allure.AttachmentOptions;
 import io.qameta.allure.model.Status;
 import io.qameta.allure.model.StatusDetails;
 import io.qameta.allure.model.StepResult;
@@ -8,10 +10,11 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.UUID;
+// import java.util.UUID;
 
 public class AllureReporter extends SystemOutReporter {
 
@@ -25,7 +28,8 @@ public class AllureReporter extends SystemOutReporter {
     public void startStep(String step) {
         super.startStep(step);
         Allure.getLifecycle().startStep(
-                UUID.randomUUID().toString(),
+                // UUID.randomUUID().toString(),
+                AllureExternalKey.random(AllureReporter.class),
                 (new StepResult()).setName(step).setStatus(Status.PASSED));
     }
 
@@ -50,8 +54,8 @@ public class AllureReporter extends SystemOutReporter {
             Allure.getLifecycle().addAttachment(
                     "DATA ".concat(path.getFileName().toString()),
                     null,
-                    null,
-                    Files.newInputStream(path));
+                    Files.newInputStream(path),
+                    AttachmentOptions.empty());
         } catch (IOException e) {
             e.printStackTrace(System.err);
         }
@@ -72,8 +76,8 @@ public class AllureReporter extends SystemOutReporter {
             Allure.getLifecycle().addAttachment(
                     "ERROR ".concat(path.getFileName().toString()),
                     null,
-                    null,
-                    Files.newInputStream(path));
+                    Files.newInputStream(path),
+                    AttachmentOptions.empty());
             Allure.getLifecycle().updateStep((stepResult) -> stepResult.setStatus(Status.FAILED));
         } catch (IOException e) {
             e.printStackTrace(System.err);
@@ -85,7 +89,7 @@ public class AllureReporter extends SystemOutReporter {
         Allure.getLifecycle().addAttachment(
                 "screenshot",
                 null,
-                null,
-                ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES));
+                new ByteArrayInputStream(((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES)),
+                AttachmentOptions.empty());
     }
 }
