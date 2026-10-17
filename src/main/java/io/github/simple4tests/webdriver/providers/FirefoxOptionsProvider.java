@@ -5,7 +5,6 @@ import io.github.simple4tests.webdriver.utils.Yml;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
 
-import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +19,7 @@ public class FirefoxOptionsProvider {
         public Map<String, Object> capabilities = Map.of();
         public Map<String, Object> preferences = Map.of();
         public Profile profile = new Profile();
+        public List<String> extensions = List.of();
 
         public void normalize() {
             binary = Substitutor.normalizePath(binary);
@@ -27,15 +27,14 @@ public class FirefoxOptionsProvider {
             capabilities = Substitutor.replaceSystemProperties(capabilities);
             preferences = Substitutor.replaceSystemProperties(preferences);
             profile.normalize();
+            extensions = Substitutor.normalizePath(extensions);
         }
 
         public static class Profile {
             public Map<String, Object> preferences = Map.of();
-            public List<String> extensions = List.of();
 
             public void normalize() {
                 preferences = Substitutor.replaceSystemProperties(preferences);
-                extensions = Substitutor.normalizePath(extensions);
             }
         }
     }
@@ -57,19 +56,14 @@ public class FirefoxOptionsProvider {
         if (null == options) {
             return firefoxOptions;
         }
-
         options.normalize();
 
         if (!options.binary.isEmpty()) {
             firefoxOptions.setBinary(options.binary);
         }
-
         firefoxOptions.addArguments(options.arguments);
-
         options.capabilities.forEach(firefoxOptions::setCapability);
-
         options.preferences.forEach(firefoxOptions::addPreference);
-
         firefoxOptions.setProfile(getFirefoxProfile(options.profile));
 
         return firefoxOptions;
@@ -77,11 +71,14 @@ public class FirefoxOptionsProvider {
 
     private static FirefoxProfile getFirefoxProfile(Options.Profile profile) {
         FirefoxProfile firefoxProfile = new FirefoxProfile();
-
         profile.preferences.forEach(firefoxProfile::setPreference);
-
-        profile.extensions.stream().map(File::new).forEach(firefoxProfile::addExtension);
-
         return firefoxProfile;
+    }
+
+    public static List<String> getExtensions(String optionsAsYamlResource) {
+        if (null == optionsAsYamlResource || optionsAsYamlResource.isEmpty())
+            return List.of();
+        Options options = Yml.loadAs(optionsAsYamlResource, Options.class);
+        return options.extensions;
     }
 }

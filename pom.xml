@@ -52,7 +52,7 @@
         <groovy.version>6.0.0</groovy.version>
         <hamcrest.version>3.0</hamcrest.version>
         <snakeyaml.version>2.7</snakeyaml.version>
-        <selenium.version>4.49.0</selenium.version>
+        <selenium.version>4.51.0</selenium.version>
         <cucumber.version>8.0.4</cucumber.version>
         <serenity.version>5.4.1</serenity.version>
         <allure-java-commons.version>3.0.0</allure-java-commons.version>

@@ -47,23 +47,18 @@ public class ChromeOptionsProvider {
         if (null == options) {
             return chromeOptions;
         }
-
         options.normalize();
 
         if (!options.binary.isEmpty()) {
             chromeOptions.setBinary(options.binary);
         }
-
         if (!options.arguments.isEmpty()) {
             chromeOptions.addArguments(options.arguments);
         }
-
         options.capabilities.forEach(chromeOptions::setCapability);
-
         if (!options.experimentalOptions.isEmpty()) {
             chromeOptions.setExperimentalOption("prefs", options.experimentalOptions);
         }
-
         chromeOptions.addExtensions(options.extensions.stream()
                 .map(File::new)
                 .collect(Collectors.toList()));

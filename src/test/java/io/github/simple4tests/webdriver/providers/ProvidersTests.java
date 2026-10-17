@@ -34,4 +34,11 @@ public class ProvidersTests {
         driver.navigate().to("http://www.google.com");
         driver.quit();
     }
+
+    @Test
+    public void firefoxExtensionsTests() {
+        WebDriver driver = WebDriverProvider.get("firefox", Paths.get("c:/dev/tools/selenium/geckodriver.exe"), "firefox_options_extensions.yml");
+        driver.navigate().to("http://www.google.com");
+        driver.quit();
+    }
 }
