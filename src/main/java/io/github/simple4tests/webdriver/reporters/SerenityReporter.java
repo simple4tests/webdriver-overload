@@ -17,7 +17,6 @@ import org.openqa.selenium.TakesScreenshot;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -85,24 +84,24 @@ public class SerenityReporter extends SystemOutReporter {
     public void reportScreenshot() {
         if (null != SerenityWebdriverManager.inThisTestThread().getCurrentDriver()) {
             TestSessionContext testSessionContext = TestSession.getTestSessionContext();
-            if (takeScreenshotWhenStepFinished(testSessionContext))
-                screenshots.computeIfAbsent(testSessionContext.getSessionId(), k -> new ArrayList<>())
-                        .addAll(testSessionContext.getStepEventBus().takeScreenshots());
-            else
-                attachScreenshotToStep(testSessionContext);
+//            if (takeScreenshotWhenStepFinished(testSessionContext))
+//                screenshots.computeIfAbsent(testSessionContext.getSessionId(), k -> new ArrayList<>())
+//                        .addAll(testSessionContext.getStepEventBus().takeScreenshots());
+//            else
+            attachScreenshotToStep(testSessionContext);
         }
     }
 
-    private boolean takeScreenshotWhenStepFinished(TestSessionContext testSessionContext) {
-        List<String> takeScreenshotAtStepFinished = List.of(
-                "FOR_EACH_ACTION",
-                "BEFORE_AND_AFTER_EACH_STEP",
-                "AFTER_EACH_STEP"
-        );
-        String takeScreenshotsProperty = testSessionContext.getStepEventBus()
-                .getEnvironmentVariables().getProperty("serenity.take.screenshots");
-        return null == takeScreenshotsProperty || takeScreenshotAtStepFinished.contains(takeScreenshotsProperty);
-    }
+//    private boolean takeScreenshotWhenStepFinished(TestSessionContext testSessionContext) {
+//        List<String> takeScreenshotAtStepFinished = List.of(
+//                "FOR_EACH_ACTION",
+//                "BEFORE_AND_AFTER_EACH_STEP",
+//                "AFTER_EACH_STEP"
+//        );
+//        String takeScreenshotsProperty = testSessionContext.getStepEventBus()
+//                .getEnvironmentVariables().getProperty("serenity.take.screenshots");
+//        return null == takeScreenshotsProperty || takeScreenshotAtStepFinished.contains(takeScreenshotsProperty);
+//    }
 
     private void attachScreenshotToStep(TestSessionContext testSessionContext) {
         try {
